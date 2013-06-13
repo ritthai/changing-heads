@@ -56,9 +56,11 @@ var adventure = (function () {
 			actionDescriptionBox = $("#action-description-box");
 		if (!mouseIsOnScreen() || adventure.isInConversation || !actionDescription) {
 			actionDescriptionBox.hide();
+			$('#screen').removeClass('is-clickable');
 		} else {
 			actionDescriptionElement.html(actionDescription);
 			actionDescriptionBox.show();
+			$('#screen').addClass('is-clickable');
 		}
 	};
 

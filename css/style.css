@@ -47,7 +47,7 @@ body {
 }
 
 .dialog-box.dialog-box_height_short {
-	height: 1.5em;
+	height: 3em;
 }
 
 .dialog {
@@ -107,4 +107,8 @@ body {
     transform: scaleX(-1);
     filter: FlipH;
     -ms-filter: "FlipH";
+}
+
+.is-clickable {
+	cursor: pointer;
 }

@@ -60,7 +60,7 @@ See the file license.txt for copying permission.
 	};
 	
 	var endConversation = function () {
-		$("#dialog-box").hide();
+		$("#dialog-box").fadeOut();
 		adventure.currentConversation = {};
 		setTimeout(function () { adventure.isInConversation = false; }, 100);
 	};
@@ -101,6 +101,7 @@ See the file license.txt for copying permission.
 		adventure.currentConversation = adventure.conversations[conversationName];
 		clearDialog();
 		$("#dialog-box").show();
+		$("#action-description-box").hide();
 		proceedConversation();
 	};
 }());
