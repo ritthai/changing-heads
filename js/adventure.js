@@ -21,6 +21,11 @@ var adventure = (function () {
 
 	movePlayer = function (coordinates, callback) {
 		var player = $("#player");
+		if (coordinates.x < player.position().left + player.width()/2) {
+			player.addClass('is-flipped-horizontally');
+		} else {
+			player.removeClass('is-flipped-horizontally');
+		}
 		player.animate({left:coordinates.x - player.width()/2, top:coordinates.y - player.height()}, callback);
 	};
 

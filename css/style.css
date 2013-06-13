@@ -19,7 +19,7 @@ body {
 }
 
 #player {
-	width: 100px;
+	width: 60px;
 	height: 200px;
 	position: absolute;
 	background-image: url(../img/player.png);
@@ -93,4 +93,18 @@ body {
 	max-width: 800px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.important-notice {
+	font-weight: bold;
+	font-size: 120%;
+}
+
+.is-flipped-horizontally {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
 }
