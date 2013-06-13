@@ -12,20 +12,20 @@ See the file license.txt for copying permission.
 	</head>
 	<body>
 		<div class="container">
+			<div class="important-notice">NOTE: This game is still in development.</div>
 
-		<div class="important-notice">NOTE: This game is still in development.</div>
-		<div id="screen">
-			<div id="scene"></div>
-			<div id="player"></div>
-			<div id="dialog-box">
-				<div id="dialog-background"></div>
-				<div id="dialog"></div>
+			<div id="screen" class="screen">
+				<div id="scene" class="scene"></div>
+				<div id="player" class="player"></div>
+				<div id="dialog-box" class="dialog-box">
+					<div id="dialog-background" class="dialog-background"></div>
+					<div id="dialog" class="dialog"></div>
+				</div>
+				<div id="action-description-box" class="dialog-box dialog-box_height_short`">
+					<div id="action-description-background" class="dialog-background"></div>
+					<div id="action-description" class="dialog dialog_text-alignment_center"></div>
+				</div>
 			</div>
-			<div id="action-description-box">
-				<div id="action-description-background"></div>
-				<div id="action-description"></div>
-			</div>
-		</div>
 
 			<p>
 				<a href="https://github.com/ritthai/changing-heads">Changing Heads source on GitHub</a>
@@ -33,6 +33,7 @@ See the file license.txt for copying permission.
 		</div>
 
 		<script src="lib/jquery-1.8.2.js"></script>
+
 		<script src="js/adventure.js"></script>
 		<script src="js/conversation-manager.js"></script>
 		<script src="js/conversations.js"></script>
@@ -49,7 +50,6 @@ See the file license.txt for copying permission.
 
 		  ga('create', 'UA-41695613-1', 'ritchiethai.com');
 		  ga('send', 'pageview');
-
 		</script>
 	</body>
 </html>

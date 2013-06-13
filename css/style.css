@@ -8,7 +8,7 @@ body {
 	font-family: Arial;
 }
 
-#screen {
+.screen {
 	position: relative;
 	width: 800px;
 	height: 600px;
@@ -18,16 +18,7 @@ body {
 	overflow: hidden;
 }
 
-#player {
-	width: 60px;
-	height: 200px;
-	position: absolute;
-	background-image: url(../img/player.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-}
-
-#scene {
+.scene {
 	position: absolute;
 	width: 100%;
 	height:100%;
@@ -36,51 +27,56 @@ body {
 	background-repeat: no-repeat;
 }
 
-#action-description-box, #dialog-box {
+.player {
+	width: 60px;
+	height: 200px;
+	position: absolute;
+	background-image: url(../img/player.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+/* Dialog */
+
+.dialog-box {
 	position: absolute;
 	bottom: 0px;
 	width: 100%;
+	height: 10em;
 	display: none;
 }
 
-#action-description-box {
+.dialog-box.dialog-box_height_short {
 	height: 1.5em;
 }
 
-#dialog-box {
-	height: 10em;
-}
-
-#action-description, #dialog {
+.dialog {
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	color: white;
-}
-
-#action-description {
-	text-align: center;
-}
-
-#dialog {
 	padding: 5px;
 }
 
-#dialog a {
+.dialog.dialog_text-alignment_center {
+	text-align: center;
+}
+
+.dialog a {
 	color: white;
 	width: 100%;
 	display: inline-block;
 }
 
-#dialog a:hover {
+.dialog a:hover {
 	background-color: #666;
 }
 
-#dialog a:active {
+.dialog a:active {
 	background-color: #063;
 }
 
-#action-description-background, #dialog-background {
+.dialog-background {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -88,6 +84,8 @@ body {
 	opacity: 0.7;
 	filter: alpha(opacity=70); /* For IE8 and earlier */
 }
+
+/* Page */
 
 .container {
 	max-width: 800px;
@@ -99,6 +97,8 @@ body {
 	font-weight: bold;
 	font-size: 120%;
 }
+
+/* Game Sprites */
 
 .is-flipped-horizontally {
     -moz-transform: scaleX(-1);
