@@ -142,7 +142,7 @@ See the file license.txt for copying permission.
 	                        "Simon",
 	                        "Oh, I'm not an animator; I'm a storyboard artist. It's going pretty good. I don't know; I'm kind of having writer's block or something.",
 "Kylie", "Oh no! That's not good. Well, maybe being back home will give you a chance to do some soul searching.",
-"Simon", "Hey, let's check out the Changing Heads. Maybe you can write a news story about it, and I can get inspired.",
+"Simon", "Hey, let's check out the Changing Heads. Maybe you can write a news story, and I can get inspired.",
 "Kylie", "Yeah, sounds good. I'll meet you there."
 	                ],
 	                "next": "talkingToSimonInTeaShopAboutAnimation"
