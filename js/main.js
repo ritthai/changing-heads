@@ -6,11 +6,13 @@ See the file license.txt for copying permission.
 
 (function () {
 	init = function () {
-		var scenes = currentAdventure.makeScenes();
+		var scenes = currentAdventure.getScenes();
+		var conversations = currentAdventure.getConversations();
 		var configuration = {
 				startSceneName: 'teaShop',
 				backgroundDirectory: 'img/backgrounds/',
-				scenes: scenes
+				scenes: scenes,
+				conversations: conversations
 			};
 
 		adventure.configure(configuration);

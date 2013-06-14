@@ -95,8 +95,10 @@ See the file license.txt for copying permission.
 			}());
 		}
 	};
+
+	adventure.conversationManager = {};
 	
-	adventure.startConversation = function (conversationName) {
+	adventure.conversationManager.startConversation = function (conversationName) {
 		adventure.isInConversation = true;
 		adventure.currentConversation = adventure.conversations[conversationName];
 		clearDialog();

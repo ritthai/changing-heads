@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-currentAdventure.makeScenes = function () {
+currentAdventure.getScenes = function () {
 	var scenes = {
 		"theChangingHeads": {
 			background: "changing-heads.jpg",

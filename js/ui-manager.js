@@ -12,9 +12,30 @@ adventure.getUIManager = function () {
 		return result;
 	};
 
+	var mouseIsOnScreen = function () {
+		var screen = $("#screen"),
+			isOnScreen = adventure.mousePosition.x >= 0 && adventure.mousePosition.y >= 0
+				&& adventure.mousePosition.x <= screen.width() && adventure.mousePosition.y <= screen.height();
+		return isOnScreen;
+	};
+
+	var showActionDescription = function () {
+		var actionDescription = adventure.getHotspotAt(adventure.mousePosition).description,
+			actionDescriptionElement = $("#action-description"),
+			actionDescriptionBox = $("#action-description-box");
+		if (!mouseIsOnScreen() || adventure.isInConversation || !actionDescription) {
+			actionDescriptionBox.hide();
+			$('#screen').removeClass('is-clickable');
+		} else {
+			actionDescriptionElement.html(actionDescription);
+			actionDescriptionBox.show();
+			$('#screen').addClass('is-clickable');
+		}
+	};
+
 	var onMouseMove = function (event) {
 		adventure.mousePosition = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
-		adventure.showActionDescription();
+		showActionDescription();
 	};
 
 	var onArrive = function (event) {
@@ -112,5 +133,8 @@ adventure.getUIManager = function () {
 		document.addEventListener('touchmove', onTouchMove, false);
 	};
 
-	return { bindHandlers: bindHandlers };
+	return {
+		bindHandlers: bindHandlers,
+		showActionDescription: showActionDescription
+	};
 };

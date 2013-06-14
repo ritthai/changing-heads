@@ -21,7 +21,7 @@ var adventure = (function () {
 		worldState,
 		mousePosition,
 		currentScene,
-		uiManager
+		uiManager,
 
 	sceneToPageCoordinates = function (coordinates) {
 		var screen = $("#screen"),
@@ -61,27 +61,6 @@ var adventure = (function () {
 		return {description: "", shape: {type: ""}, onArrive: function () {}};
 	},
 
-	mouseIsOnScreen = function () {
-		var screen = $("#screen"),
-			isOnScreen = adventure.mousePosition.x >= 0 && adventure.mousePosition.y >= 0
-				&& adventure.mousePosition.x <= screen.width() && adventure.mousePosition.y <= screen.height();
-		return isOnScreen;
-	},
-	
-	showActionDescription = function () {
-		var actionDescription = getHotspotAt(adventure.mousePosition).description,
-			actionDescriptionElement = $("#action-description"),
-			actionDescriptionBox = $("#action-description-box");
-		if (!mouseIsOnScreen() || adventure.isInConversation || !actionDescription) {
-			actionDescriptionBox.hide();
-			$('#screen').removeClass('is-clickable');
-		} else {
-			actionDescriptionElement.html(actionDescription);
-			actionDescriptionBox.show();
-			$('#screen').addClass('is-clickable');
-		}
-	},
-
 	loadScene = function (scene) {
 		adventure.currentScene = scene;
 		$('#scene').css("background-image", "url(" + backgroundDirectory + adventure.currentScene.background + ")");
@@ -93,16 +72,19 @@ var adventure = (function () {
 			adventure.putPlayerAt(scene.playerPositionOnEnter.x, scene.playerPositionOnEnter.y);
 		}
 		if (scene.conversationToStartOnEnter) {
-			adventure.startConversation(scene.conversationToStartOnEnter);
+			adventure.conversationManager.startConversation(scene.conversationToStartOnEnter);
 		}
-		adventure.showActionDescription();
+		uiManager.showActionDescription();
 	},
 
 	start = function () {
 		adventure.worldState = {};
 		mousePosition = {x: -1, y: -1};
 		currentScene = scenes[startSceneName];
+
+		adventure.startConversation = adventure.conversationManager.startConversation;
 		loadScene(currentScene);
+
 		uiManager = adventure.getUIManager();
 		uiManager.bindHandlers();
 	},
@@ -116,9 +98,11 @@ var adventure = (function () {
 		}
 		if (configuration.scenes) {
 			scenes = configuration.scenes;
+			adventure.scenes = scenes;
 		}
-
-		adventure.scenes = scenes;
+		if (configuration.conversations) {
+			adventure.conversations = configuration.conversations;
+		}
 	};
 
 	var adventureToReturn = {
@@ -126,10 +110,10 @@ var adventure = (function () {
 		start: start,
 		startBuilding: startBuilding,
 		stopBuilding: stopBuilding,
+
 		putPlayerAt: putPlayerAt,
 		movePlayer: movePlayer,
 		getHotspotAt: getHotspotAt,
-		showActionDescription: showActionDescription,
 		loadScene: loadScene,
 
 		scenes: scenes,
