@@ -23,7 +23,11 @@ adventure.getConversationManager = function (conversations) {
 		var i;
 		for (i = 0; i < dialog.length; i += 2) {
 			if (i + 1 < dialog.length) {
-				writeDialogLn(dialog[i] + ': ' + dialog[i + 1]);
+				if (dialog[i] === '') {
+					writeDialogLn(dialog[i + 1])
+				} else {
+					writeDialogLn(dialog[i] + ': ' + dialog[i + 1]);
+				}
 			}
 		}
 	};
@@ -92,9 +96,9 @@ adventure.getConversationManager = function (conversations) {
 			overridingDialog = currentConversation.onEnter();
 		}
 		if (typeof overrideDialog !== 'undefined') {
-			writeDialogLn(overridingDialog);
+			writeDialog(overridingDialog);
 		} else {
-			writeDialogLn(currentConversation.dialog);
+			writeDialog(currentConversation.dialog);
 		}
 		writeDialogLn('');
 		showOptions();

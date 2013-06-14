@@ -66,6 +66,7 @@ body {
 	color: #cff;
 	width: 100%;
 	display: inline-block;
+	cursor: pointer;
 }
 
 .dialog a:hover {

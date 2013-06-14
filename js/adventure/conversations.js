@@ -34,7 +34,7 @@ adventure.getConversations = function () {
 	        ]
 	    },
 	    "examineNormalSizedHead": {
-	        "dialog": "Kylie: Huh. Looks like they've finally gotten the size right. Wait... Oh my! Simon!<br />Simon: Huh? ...Oh, Kylie. I must've dozed off.",
+	        "dialog": ["Kylie", "Huh. Looks like they've finally gotten the size right. Wait... Oh my! Simon!", "Simon", "Huh? ...Oh, Kylie. I must've dozed off."],
 	        "options": [
 	            {
 	                "description": "",
@@ -47,7 +47,7 @@ adventure.getConversations = function () {
 	        ]
 	    },
 	    "talkToSimonAreYouOkay": {
-	        "dialog": "Simon: Hey, it's fine. I've just been staying up late working on the new storyboards.<br />Kylie: What about your body?<br />Simon: Yeah, I guess all those late nights take their toll. But I'm still-<br /><br />Simon looks down.",
+	        "dialog": ["Simon", "Hey, it's fine. I've just been staying up late working on the new storyboards.", "Kylie", "What about your body?", "Simon", "Yeah, I guess all those late nights take their toll. But I'm still-", "", "", "", "Simon looks down."],
 	        "options": [
 	            {
 	                "description": "Continue",
@@ -56,7 +56,7 @@ adventure.getConversations = function () {
 	        ]
 	    },
 	    "talkToSimonWheresMyBody": {
-	        "dialog": "Simon: Oh hell! Where's my body?!? It must've happend while I was asleep.<br />Kylie: Was anybody else around? <br /> Simon: No! Well, the Changing Heads, but no-one else. <br /> Kylie: Maybe they'll know something. They're not very good at talking, but... aw geez, this is messed up.",
+	        "dialog": ["Simon", "Oh hell! Where's my body?!? It must've happend while I was asleep.", "Kylie", "Was anybody else around?", "Simon", "No! Well, the Changing Heads, but no-one else.", "Kylie", "Maybe they'll know something. They're not very good at talking, but... aw geez, this is messed up."],
 	        "options": [
 	            {
 	                "description": "Finish talking",
@@ -65,7 +65,7 @@ adventure.getConversations = function () {
 	        ]
 	    },
 	    "talkToTheChangingHeads": {
-	        "dialog": "Kylie: Hey, where's Simon's body.<br /> Heads: Go to the east, to Cassandra's cave. She'll help.",
+	        "dialog": ["Kylie", "Hey, where's Simon's body.", "Heads", "Go to the east, to Cassandra's cave. She'll help."],
 	        "options": [
 	            {
 	                "description": "Finish talking",
@@ -74,7 +74,7 @@ adventure.getConversations = function () {
 	        ]
 	    },
 	    "talkToCassandra": {
-	        "dialog": "Kylie: Um. Excuse me. Hello Miss Cassandra, I'm Kylie and-<br />Cassandra: Nice to meet you, Kylie. Have a seat. Drink some tea with me.",
+	        "dialog": ["Kylie", "Um. Excuse me. Hello Miss Cassandra, I'm Kylie and-", "Cassandra", "Nice to meet you, Kylie. Have a seat. Drink some tea with me."],
 	        "options": [
 	            {
 	                "description": "No thanks. The caffeine keeps me up at night.",
@@ -119,7 +119,7 @@ adventure.getConversations = function () {
 	        ]
 	    },
 		"talkingToSimonInTeaShop": {
-	        "dialog": "Kylie: Yo, Simon! How're you doing? Good flight? <br /> Simon: Eh, alright. The flight got delayed so that was annoying, but yeah. How about you?",
+	        "dialog": ["Kylie", "Yo, Simon! How're you doing? Good flight?", "Simon", "Eh, alright. The flight got delayed so that was annoying, but yeah. How about you?"],
 	        "options": [
 	            {
 	                "description": "Awesome! I got into the journalism school I wanted.",
