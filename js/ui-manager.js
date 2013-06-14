@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-(function () {
+adventure.getUIManager = function () {
 	var pageToSceneCoordinates = function (coordinates) {
 		var screen = $("#screen"),
 			offset = screen.offset(),
@@ -20,8 +20,13 @@ See the file license.txt for copying permission.
 	var onArrive = function (event) {
 		var hotspot = adventure.getHotspotAt(event);
 		if (hotspot.onArrive) { hotspot.onArrive() };
-		if (hotspot.destinationScene) { adventure.loadScene(adventure.scenes[hotspot.destinationScene]); }
-		if (hotspot.destinationPosition) { adventure.putPlayerAt(hotspot.destinationPosition.x, hotspot.destinationPosition.y); }
+		if (hotspot.destinationScene) {
+			adventure.loadScene(adventure.scenes[hotspot.destinationScene]);
+		}
+		if (hotspot.destinationPosition) {
+			adventure.putPlayerAt(
+				hotspot.destinationPosition.x, hotspot.destinationPosition.y);
+		}
 	};
 	
 	var eventIsOnScreen = function (event) {
@@ -85,7 +90,7 @@ See the file license.txt for copying permission.
 		adventure.movePlayer(coordinates, function () { onArrive(coordinates); });
 	};
 	
-	adventure.bindHandlers = function () {
+	var bindHandlers = function () {
 		$(document).click(onClick);
 		$(document).mousemove(onMouseMove);
 		document.addEventListener("touchend",
@@ -106,4 +111,6 @@ See the file license.txt for copying permission.
 			},
 			false);
 	};
-}());
+
+	return { bindHandlers: bindHandlers };
+};
