@@ -6,7 +6,7 @@ See the file license.txt for copying permission.
 
 (function () {
 
-	adventure.currentConversation = {};
+	var currentConversation = {};
 	adventure.isInConversation = false;
 
 	var clearDialog = function () {
@@ -36,7 +36,7 @@ See the file license.txt for copying permission.
 			endConversation();
 			return;
 		}
-		adventure.currentConversation = adventure.conversations[option.next];
+		currentConversation = adventure.conversations[option.next];
 		proceedConversation();
 	};
 
@@ -61,23 +61,23 @@ See the file license.txt for copying permission.
 	
 	var endConversation = function () {
 		$("#dialog-box").fadeOut();
-		adventure.currentConversation = {};
+		currentConversation = {};
 		setTimeout(function () { adventure.isInConversation = false; }, 100);
 	};
 	
 	var proceedConversation = function () {
 		var i, overridingDialog;
-		if (typeof adventure.currentConversation.onEnter !== "undefined") {
-			overridingDialog = adventure.currentConversation.onEnter();
+		if (typeof currentConversation.onEnter !== "undefined") {
+			overridingDialog = currentConversation.onEnter();
 		}
 		if (typeof overrideDialog !== "undefined" && overrideDialog !== null) {
 			writeDialogLn(overridingDialog);
 		} else {
-			writeDialogLn(adventure.currentConversation.dialog);
+			writeDialogLn(currentConversation.dialog);
 		}
 		writeDialogLn("");
 
-		var options = adventure.currentConversation.options;
+		var options = currentConversation.options;
 		for (i = 0; i < options.length; i++) {
 			var option = options[i];
 			var optionDescription = option.description;
@@ -100,7 +100,7 @@ See the file license.txt for copying permission.
 	
 	adventure.conversationManager.startConversation = function (conversationName) {
 		adventure.isInConversation = true;
-		adventure.currentConversation = adventure.conversations[conversationName];
+		currentConversation = adventure.conversations[conversationName];
 		clearDialog();
 		$("#dialog-box").show();
 		$("#action-description-box").hide();
