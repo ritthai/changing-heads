@@ -9,9 +9,7 @@ var currentAdventure = {};
 var adventure = {};
 
 adventure.getEngine = function () {
-	var adventureToReturn,
-
-		backgroundDirectory,
+	var 	backgroundDirectory,
 		startSceneName,
 		scenes,
 		worldState,
@@ -83,20 +81,38 @@ adventure.getEngine = function () {
 	},
 
 	startAssumingConfigurationDone = function () {
+		var adventureProviderForUIManager = {
+			getHotspotAt: getHotspotAt,
+			putPlayerAt: putPlayerAt,
+			movePlayer: movePlayer,
+			loadScene: loadScene,
+			startConversation: function () {}
+		};
+
+		var adventureProviderForSceneFunctions = {
+			putPlayerAt: putPlayerAt,
+			movePlayer: movePlayer,
+			loadScene: loadScene,
+			startConversation: function () {},
+
+			worldState: {}
+		};
+
 		scenes = adventure.getScenes();
 		conversations = adventure.getConversations();
-		sceneFunctions = adventure.getSceneFunctions(adventureToReturn);
+		sceneFunctions = adventure.getSceneFunctions(
+			adventureProviderForSceneFunctions);
 
-		adventureToReturn.worldState = {};
-		mousePosition = {x: -1, y: -1};
 		currentScene = scenes[startSceneName];
 
 		conversationManager = adventure.getConversationManager(conversations);
-		adventureToReturn.startConversation = conversationManager.startConversation;
+		adventureProviderForUIManager.startConversation = conversationManager.startConversation;
+		adventureProviderForSceneFunctions.startConversation = conversationManager.startConversation;
 
 		loadScene(currentScene);
 
-		uiManager = adventure.getUIManager(adventureToReturn, isInConversation, scenes, sceneFunctions);
+		uiManager = adventure.getUIManager(adventureProviderForUIManager,
+				isInConversation, scenes, sceneFunctions);
 		uiManager.bindHandlers();
 	},
 
@@ -111,20 +127,9 @@ adventure.getEngine = function () {
 		startAssumingConfigurationDone();
 	};
 
-	adventureToReturn = {
-		configure: configure,
-		start: start,
-
-		putPlayerAt: putPlayerAt,
-		movePlayer: movePlayer,
-		getHotspotAt: getHotspotAt,
-		loadScene: loadScene,
-
-		scenes: scenes,
-		worldState: {},
-		mousePosition: mousePosition,
-		currentScene: currentScene
+	adventureEngineToReturn = {
+		start: start
 	};
 
-	return adventureToReturn;
+	return adventureEngineToReturn;
 };

@@ -13,7 +13,6 @@ See the file license.txt for copying permission.
 	<body>
 		<div class="container">
 			<div class="important-notice">NOTE: This game is still in development.</div>
-			<div id="debug-box"></div>
 
 			<div id="screen" class="screen">
 				<div id="scene" class="scene"></div>
@@ -35,16 +34,19 @@ See the file license.txt for copying permission.
 
 		<script src="lib/jquery-1.8.2.js"></script>
 
-		<script src="js/adventure.js"></script>
-		<script src="js/build-mode-manager.js"></script>
-		<script src="js/ui-manager.js"></script>
-		<script src="js/conversation-manager.js"></script>
+		<!-- These make up the core adventure engine -->
+		<script src="js/adventure-engine/engine.js"></script>
+		<script src="js/adventure-engine/build-mode-manager.js"></script>
+		<script src="js/adventure-engine/ui-manager.js"></script>
+		<script src="js/adventure-engine/conversation-manager.js"></script>
 
-		<script src="js/scenes.js"></script>
-		<script src="js/scene-functions.js"></script>
-		<script src="js/conversations.js"></script>
-		<script src="js/config.js"></script>
+		<!-- These contain content and config for a particular adventure -->
+		<script src="js/adventure/scenes.js"></script>
+		<script src="js/adventure/scene-functions.js"></script>
+		<script src="js/adventure/conversations.js"></script>
+		<script src="js/adventure/config.js"></script>
 
+		<!-- This is the main function that calls everything else -->
 		<script src="js/main.js"></script>
 
 		<script>

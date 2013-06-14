@@ -9,6 +9,8 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 
 	var isInConversation = isInConversationHandler;
 
+	var mousePosition;
+
 	var firstCoordinateIsRecorded;
 	var firstCoordinate;
 
@@ -30,11 +32,11 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 	};
 
 	var mouseIsOnScreen = function () {
-		return sceneCoordinatesAreOnScreen(adventureProvider.mousePosition);
+		return sceneCoordinatesAreOnScreen(mousePosition);
 	};
 
 	var showActionDescription = function () {
-		var actionDescription = adventureProvider.getHotspotAt(adventureProvider.mousePosition).description,
+		var actionDescription = adventureProvider.getHotspotAt(mousePosition).description,
 			actionDescriptionElement = $("#action-description"),
 			actionDescriptionBox = $("#action-description-box");
 		if (!mouseIsOnScreen() || isInConversation() || !actionDescription) {
@@ -48,7 +50,7 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 	};
 
 	var onMouseMove = function (event) {
-		adventureProvider.mousePosition = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
+		mousePosition = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
 		showActionDescription();
 	};
 
@@ -124,6 +126,7 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 	};
 
 	var init = function () {
+		mousePosition = {x: -1, y: -1};
 		buildModeManager = adventure.getBuildModeManager();
 	};
 
