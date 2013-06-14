@@ -4,9 +4,12 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getUIManager = function () {
+adventure.getUIManager = function (isInConversationHandler, sceneFunctions) {
 	var buildModeManager;
-	var firstCoordinateIsRecorded = false;
+
+	var isInConversation = isInConversationHandler;
+
+	var firstCoordinateIsRecorded;
 	var firstCoordinate;
 
 	var pageToSceneCoordinates = function (coordinates) {
@@ -34,7 +37,7 @@ adventure.getUIManager = function () {
 		var actionDescription = adventure.getHotspotAt(adventure.mousePosition).description,
 			actionDescriptionElement = $("#action-description"),
 			actionDescriptionBox = $("#action-description-box");
-		if (!mouseIsOnScreen() || adventure.isInConversation || !actionDescription) {
+		if (!mouseIsOnScreen() || isInConversation() || !actionDescription) {
 			actionDescriptionBox.hide();
 			$('#screen').removeClass('is-clickable');
 		} else {
@@ -90,9 +93,9 @@ adventure.getUIManager = function () {
 			buildModeManager.onClickWhenInBuildMode(coordinates);
 			return;
 		}
-		if (adventure.isInConversation) return;
-		if (hotspot.onHit) { adventure.sceneFunctions[hotspot.onHit](); }
-		if (adventure.isInConversation) return;
+		if (isInConversation()) return;
+		if (hotspot.onHit) { sceneFunctions[hotspot.onHit](); }
+		if (isInConversation()) return;
 		onClickWhereActionIsNotPrevented(coordinates, hotspot);
 	};
 

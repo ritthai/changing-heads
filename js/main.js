@@ -12,7 +12,8 @@ See the file license.txt for copying permission.
 				startSceneName: 'teaShop',
 				backgroundDirectory: 'img/backgrounds/',
 				scenes: scenes,
-				conversations: conversations
+				conversations: conversations,
+				sceneFunctions: adventure.sceneFunctions
 			};
 
 		adventure.configure(configuration);

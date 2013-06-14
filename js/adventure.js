@@ -15,6 +15,8 @@ var adventure = (function () {
 		currentScene,
 		uiManager,
 		conversationManager,
+		sceneFunctions,
+		conversations,
 
 	sceneToPageCoordinates = function (coordinates) {
 		var screen = $("#screen"),
@@ -54,6 +56,10 @@ var adventure = (function () {
 		return {description: "", shape: {type: ""}, onArrive: function () {}};
 	},
 
+	isInConversation = function () {
+		return adventure.isInConversation;
+	},
+
 	loadScene = function (scene) {
 		adventure.currentScene = scene;
 		$('#scene').css("background-image", "url(" + backgroundDirectory + adventure.currentScene.background + ")");
@@ -80,24 +86,19 @@ var adventure = (function () {
 
 		loadScene(currentScene);
 
-		uiManager = adventure.getUIManager();
+		uiManager = adventure.getUIManager(isInConversation, sceneFunctions);
 		uiManager.bindHandlers();
 	},
 
 	configure = function (configuration) {
-		if (configuration.backgroundDirectory) {
-			backgroundDirectory = configuration.backgroundDirectory;
-		}
-		if (configuration.startSceneName) {
-			startSceneName = configuration.startSceneName;
-		}
-		if (configuration.scenes) {
-			scenes = configuration.scenes;
-			adventure.scenes = scenes;
-		}
-		if (configuration.conversations) {
-			adventure.conversations = configuration.conversations;
-		}
+		backgroundDirectory = configuration.backgroundDirectory;
+		startSceneName = configuration.startSceneName;
+		scenes = configuration.scenes;
+		sceneFunction = configuration.sceneFunctions;
+		conversations = configuration.conversations;
+
+		adventure.scenes = scenes;
+		adventure.conversations = conversations;
 	};
 
 	var adventureToReturn = {
