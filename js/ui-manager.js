@@ -5,6 +5,10 @@ See the file license.txt for copying permission.
 */
 
 adventure.getUIManager = function () {
+	var buildModeManager;
+	var firstCoordinateIsRecorded = false;
+	var firstCoordinate;
+
 	var pageToSceneCoordinates = function (coordinates) {
 		var screen = $("#screen"),
 			offset = screen.offset(),
@@ -12,11 +16,18 @@ adventure.getUIManager = function () {
 		return result;
 	};
 
-	var mouseIsOnScreen = function () {
+	var sceneCoordinatesAreOnScreen = function (sceneCoordinates) {
 		var screen = $("#screen"),
-			isOnScreen = adventure.mousePosition.x >= 0 && adventure.mousePosition.y >= 0
-				&& adventure.mousePosition.x <= screen.width() && adventure.mousePosition.y <= screen.height();
+			isOnScreen =
+				sceneCoordinates.x >= 0 &&
+				sceneCoordinates.y >= 0 &&
+				sceneCoordinates.x <= screen.width() &&
+				sceneCoordinates.y <= screen.height();
 		return isOnScreen;
+	};
+
+	var mouseIsOnScreen = function () {
+		return sceneCoordinatesAreOnScreen(adventure.mousePosition);
 	};
 
 	var showActionDescription = function () {
@@ -49,51 +60,8 @@ adventure.getUIManager = function () {
 				hotspot.destinationPosition.x, hotspot.destinationPosition.y);
 		}
 	};
-	
-	var eventIsOnScreen = function (event) {
-		var	screen = $("#screen"),
-			offset = screen.offset(),
-			width = screen.width(),
-			height = screen.height(),
-			x = event.pageX - offset.left,
-			y = event.pageY - offset.top,
-			isOnScreen = (event.pageX > offset.left && event.pageY > offset.top
-				&& event.pageX < offset.left + width && event.pageY < offset.top + height);
-		return isOnScreen;
-	};
 
-	var onClick = function (event) {
-		onMouseMove(event);
-		var coordinates = pageToSceneCoordinates({x: event.pageX, y: event.pageY}),
-			hotspot = adventure.getHotspotAt(coordinates);
-		if (!eventIsOnScreen(event)) return;
-		if (adventure.isInBuildMode) {
-			if (adventure.firstCoordinateIsRecorded) {
-				var firstCoordinate = adventure.firstCoordinate;
-				var secondCoordinate = coordinates;
-				var x1 = firstCoordinate.x;
-				var y1 = firstCoordinate.y;
-				var x2 = secondCoordinate.x;
-				var y2 = secondCoordinate.y;
-
-				var output = ', {' + '\n' +
-				'	description: "Examine",' + '\n' +
-				'	shape: { type: "rectangle", topLeftCorner: {x: ' + x1 + ', y: ' + y1 + '}, ' +
-					'bottomRightCorner: {x: ' + x2 + ', y: ' + y2 + '} }' + '\n' +
-				'}' + '\n';
-
-				console.log(output);
-
-				adventure.firstCoordinateIsRecorded = false;
-			} else {
-				adventure.firstCoordinate = coordinates;
-				adventure.firstCoordinateIsRecorded = true;
-			}
-			return;
-		}
-		if (adventure.isInConversation) return;
-		if (hotspot.onHit) adventure.sceneFunctions[hotspot.onHit]();
-		if (adventure.isInConversation) return;
+	var onClickWhereActionIsNotPrevented = function (coordinates, hotspot) {
 		var shouldPreventDefault = false;
 		if (hotspot.positionToMovePlayerTo) {
 			adventure.movePlayer(hotspot.positionToMovePlayerTo);
@@ -103,26 +71,45 @@ adventure.getUIManager = function () {
 			adventure.startConversation(hotspot.conversationToStart);
 			shouldPreventDefault = true;
 		}
-		if (hotspot.shouldPreventDefault
-				&& hotspot.shouldPreventDefault || shouldPreventDefault) {
+		if (!(shouldPreventDefault || hotspot.shouldPreventDefault || hotspot.isSolid)) {
+			adventure.movePlayer(coordinates, function () { onArrive(coordinates); });
+		}
+	};
+
+	var eventIsOnScreen = function (event) {
+		var sceneCoordinates = pageToSceneCoordinates({ x: event.pageX, y: event.pageY });
+		return sceneCoordinatesAreOnScreen(sceneCoordinates);
+	};
+
+	var onClick = function (event) {
+		var coordinates = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
+		var hotspot = adventure.getHotspotAt(coordinates);
+		onMouseMove(event);
+		if (!eventIsOnScreen(event)) { return; }
+		if (adventure.isInBuildMode) {
+			buildModeManager.onClickWhenInBuildMode(coordinates);
 			return;
 		}
-		if (hotspot.isSolid) { return; }
-		adventure.movePlayer(coordinates, function () { onArrive(coordinates); });
+		if (adventure.isInConversation) return;
+		if (hotspot.onHit) { adventure.sceneFunctions[hotspot.onHit](); }
+		if (adventure.isInConversation) return;
+		onClickWhereActionIsNotPrevented(coordinates, hotspot);
+	};
+
+	var getTouchEventFromTouchesEvent = function (event) {
+		var touches = event.changedTouches || event.targetTouches;
+		var touch = touches[0];
+		return touch;
 	};
 
 	var onTouchEnd = function (event) {
-		var touches = event.changedTouches || event.targetTouches;
-		var touch = touches[0];
-		onClick(touch);
+		var touchEvent =  getTouchEventFromTouchesEvent(event);
+		onClick(touchEvent);
 	};
 
 	var onTouchMove = function (event) {
+		var touchEvent =  getTouchEventFromTouchesEvent(event);
 		event.preventDefault();
-		var touches = event.changedTouches || event.targetTouches;
-		var touch = touches[touches.length - 1];
-		var stringToShow = '';
-		var sceneCoordinates = pageToSceneCoordinates({x: touch.pageX, y: touch.pageY});
 		onMouseMove(touch);
 	};
 	
@@ -132,6 +119,12 @@ adventure.getUIManager = function () {
 		document.addEventListener('touchend', onTouchEnd, false);
 		document.addEventListener('touchmove', onTouchMove, false);
 	};
+
+	var init = function () {
+		buildModeManager = adventure.getBuildModeManager();
+	};
+
+	init();
 
 	return {
 		bindHandlers: bindHandlers,
