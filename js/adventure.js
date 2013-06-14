@@ -44,7 +44,7 @@ var adventure = (function () {
 
 	getHotspotAt = function (point) {
 		var i, hotspot, inHotspot, shape,
-			hotspots = adventure.currentScene.hotspots;
+			hotspots = currentScene.hotspots;
 		for (i = 0; i < hotspots.length; i += 1) {
 			hotspot = hotspots[i];
 			shape = hotspot.shape;
@@ -57,18 +57,18 @@ var adventure = (function () {
 	},
 
 	isInConversation = function () {
-		return adventure.isInConversation;
+		return conversationManager.isInConversation();
 	},
 
 	loadScene = function (scene) {
-		adventure.currentScene = scene;
-		$('#scene').css("background-image", "url(" + backgroundDirectory + adventure.currentScene.background + ")");
+		currentScene = scene;
+		$('#scene').css("background-image", "url(" + backgroundDirectory + currentScene.background + ")");
 		if (scene.onEnter) {
-			var shouldPreventDefault = adventure.sceneFunctions[scene.onEnter]() == false;
+			var shouldPreventDefault = sceneFunctions[scene.onEnter]() == false;
 			if (shouldPreventDefault) { return; }
 		}
 		if (scene.playerPositionOnEnter) {
-			adventure.putPlayerAt(scene.playerPositionOnEnter.x, scene.playerPositionOnEnter.y);
+			putPlayerAt(scene.playerPositionOnEnter.x, scene.playerPositionOnEnter.y);
 		}
 		if (scene.conversationToStartOnEnter) {
 			conversationManager.startConversation(scene.conversationToStartOnEnter);
@@ -77,12 +77,12 @@ var adventure = (function () {
 	},
 
 	start = function () {
-		adventure.worldState = {};
+		adventureToReturn.worldState = {};
 		mousePosition = {x: -1, y: -1};
 		currentScene = scenes[startSceneName];
 
 		conversationManager = adventure.getConversationManager();
-		adventure.startConversation = conversationManager.startConversation;
+		adventureToReturn.startConversation = conversationManager.startConversation;
 
 		loadScene(currentScene);
 
@@ -94,7 +94,7 @@ var adventure = (function () {
 		backgroundDirectory = configuration.backgroundDirectory;
 		startSceneName = configuration.startSceneName;
 		scenes = configuration.scenes;
-		sceneFunction = configuration.sceneFunctions;
+		sceneFunctions = configuration.sceneFunctions;
 		conversations = configuration.conversations;
 
 		adventure.scenes = scenes;

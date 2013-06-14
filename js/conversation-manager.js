@@ -7,7 +7,7 @@ See the file license.txt for copying permission.
 adventure.getConversationManager = function () {
 
 	var currentConversation = {};
-	adventure.isInConversation = false;
+	var isInConversation = false;
 
 	var clearDialog = function () {
 		$("#dialog").html("");
@@ -62,7 +62,7 @@ adventure.getConversationManager = function () {
 	var endConversation = function () {
 		$("#dialog-box").fadeOut();
 		currentConversation = {};
-		setTimeout(function () { adventure.isInConversation = false; }, 100);
+		setTimeout(function () { isInConversation = false; }, 100);
 	};
 	
 	var proceedConversation = function () {
@@ -96,8 +96,12 @@ adventure.getConversationManager = function () {
 		}
 	};
 
+	var getIsInConversation = function () {
+		return isInConversation;
+	}
+
 	var startConversation = function (conversationName) {
-		adventure.isInConversation = true;
+		isInConversation = true;
 		currentConversation = adventure.conversations[conversationName];
 		clearDialog();
 		$("#dialog-box").show();
@@ -105,5 +109,8 @@ adventure.getConversationManager = function () {
 		proceedConversation();
 	};
 
-	return { startConversation: startConversation }
+	return {
+		startConversation: startConversation,
+		isInConversation: getIsInConversation
+	}
 };
