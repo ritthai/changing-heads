@@ -4,9 +4,22 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
+var startBuilding;
+var stopBuilding;
+
 adventure.getBuildModeManager = function () {
-	var firstCoordinateIsRecorded = false;
+	var buildModeManager;
+
+	var firstCoordinateIsRecorded;
 	var firstCoordinate;
+
+	startBuilding = function () {
+		buildModeManager.isInBuildMode = true;
+	};
+
+	stopBuilding = function () {
+		buildModeManager.isInBuildMode = false;
+	};
 
 	var onClickWhenInBuildMode = function (coordinates) {
 		if (firstCoordinateIsRecorded) {
@@ -31,5 +44,15 @@ adventure.getBuildModeManager = function () {
 		}
 	};
 
-	return { onClickWhenInBuildMode: onClickWhenInBuildMode };
+	var init = function () {
+		firstCoordinateIsRecorded = false;
+		buildModeManager = {
+			isInBuildMode: false,
+			onClickWhenInBuildMode: onClickWhenInBuildMode
+		}
+	}
+
+	init();
+
+	return buildModeManager;
 };

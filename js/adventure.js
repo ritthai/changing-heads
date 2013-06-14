@@ -4,14 +4,6 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-var startBuilding = function () {
-	adventure.isInBuildMode = true;
-};
-
-var stopBuilding = function () {
-	adventure.isInBuildMode = false;
-};
-
 var currentAdventure = {};
 
 var adventure = (function () {
@@ -111,8 +103,6 @@ var adventure = (function () {
 	var adventureToReturn = {
 		configure: configure,
 		start: start,
-		startBuilding: startBuilding,
-		stopBuilding: stopBuilding,
 
 		putPlayerAt: putPlayerAt,
 		movePlayer: movePlayer,

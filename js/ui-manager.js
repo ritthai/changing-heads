@@ -86,7 +86,7 @@ adventure.getUIManager = function () {
 		var hotspot = adventure.getHotspotAt(coordinates);
 		onMouseMove(event);
 		if (!eventIsOnScreen(event)) { return; }
-		if (adventure.isInBuildMode) {
+		if (buildModeManager.isInBuildMode) {
 			buildModeManager.onClickWhenInBuildMode(coordinates);
 			return;
 		}
