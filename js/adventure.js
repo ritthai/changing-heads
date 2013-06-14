@@ -5,6 +5,14 @@ See the file license.txt for copying permission.
 */
 
 var adventure = (function () {
+	var startBuilding = function () {
+		adventure.isInBuildMode = true;
+	};
+
+	var stopBuilding = function () {
+		adventure.isInBuildMode = false;
+	};
+
 	var sceneToPageCoordinates = function (coordinates) {
 		var screen = $("#screen"),
 			offset = screen.offset(),
@@ -80,11 +88,21 @@ var adventure = (function () {
 		adventure.showActionDescription();
 	};
 
+	start = function () {
+		adventure.mousePosition = {x: -1, y: -1};
+		adventure.currentScene = adventure.scenes[adventure.startSceneName];
+		adventure.loadScene(adventure.currentScene);
+		adventure.bindHandlers();
+	};
+
 	return {
 		putPlayerAt: putPlayerAt,
 		movePlayer: movePlayer,
 		getHotspotAt: getHotspotAt,
 		showActionDescription: showActionDescription,
-		loadScene: loadScene
+		loadScene: loadScene,
+		startBuilding: startBuilding,
+		stopBuilding: stopBuilding,
+		start: start
 	};
 }());
