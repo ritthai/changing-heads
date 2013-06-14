@@ -4,8 +4,8 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-(function () {
-	adventure.sceneFunctions = {
+currentAdventure.getSceneFunctions = function () {
+	var sceneFunctions = {
 		'enterTeaShopAndSeeSimon': function () {
 			if (adventure.worldState['hasSeenSimonInTeaShop']) { return; }
 			adventure.worldState['hasSeenSimonInTeaShop'] = true;
@@ -29,4 +29,5 @@ See the file license.txt for copying permission.
 			return false;
 		}
 	};
-}());
+	return sceneFunctions;
+};
