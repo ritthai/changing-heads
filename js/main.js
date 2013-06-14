@@ -5,13 +5,15 @@ See the file license.txt for copying permission.
 */
 
 (function () {
-	var START_SCENE_NAME = "teaShop",
-		BACKGROUND_DIR = "img/backgrounds/";
-
 	init = function () {
-		adventure.BACKGROUND_DIR = 'img/backgrounds/';
-		adventure.startSceneName = 'teaShop';
-		adventure.initScenes();
+		var scenes = currentAdventure.makeScenes();
+		var configuration = {
+				startSceneName: 'teaShop',
+				backgroundDirectory: 'img/backgrounds/',
+				scenes: scenes
+			};
+
+		adventure.configure(configuration);
 		adventure.start();
 	};
 	

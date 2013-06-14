@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-(function () {
+currentAdventure.makeScenes = function () {
 	var scenes = {
 		"theChangingHeads": {
 			background: "changing-heads.jpg",
@@ -120,8 +120,5 @@ See the file license.txt for copying permission.
 			]
 		}
 	};
-
-	adventure.initScenes = function () {
-		adventure.scenes = scenes;
-	};
-}());
+	return scenes;
+};

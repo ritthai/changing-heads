@@ -89,27 +89,27 @@ adventure.getUIManager = function () {
 		if (hotspot.isSolid) { return; }
 		adventure.movePlayer(coordinates, function () { onArrive(coordinates); });
 	};
+
+	var onTouchEnd = function (event) {
+		var touches = event.changedTouches || event.targetTouches;
+		var touch = touches[0];
+		onClick(touch);
+	};
+
+	var onTouchMove = function (event) {
+		event.preventDefault();
+		var touches = event.changedTouches || event.targetTouches;
+		var touch = touches[touches.length - 1];
+		var stringToShow = '';
+		var sceneCoordinates = pageToSceneCoordinates({x: touch.pageX, y: touch.pageY});
+		onMouseMove(touch);
+	};
 	
 	var bindHandlers = function () {
 		$(document).click(onClick);
 		$(document).mousemove(onMouseMove);
-		document.addEventListener("touchend",
-			function (event) {
-				var touches = event.changedTouches || event.targetTouches;
-				var touch = touches[0];
-				onClick(touch);
-			},
-			false);
-		document.addEventListener("touchmove",
-			function (event) {
-				event.preventDefault();
-				var touches = event.changedTouches || event.targetTouches;
-				var touch = touches[touches.length - 1];
-				var stringToShow = '';
-				var sceneCoordinates = pageToSceneCoordinates({x: touch.pageX, y: touch.pageY});
-				onMouseMove(touch);
-			},
-			false);
+		document.addEventListener('touchend', onTouchEnd, false);
+		document.addEventListener('touchmove', onTouchMove, false);
 	};
 
 	return { bindHandlers: bindHandlers };
