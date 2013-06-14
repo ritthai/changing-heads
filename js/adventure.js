@@ -22,6 +22,7 @@ var adventure = (function () {
 		mousePosition,
 		currentScene,
 		uiManager,
+		conversationManager,
 
 	sceneToPageCoordinates = function (coordinates) {
 		var screen = $("#screen"),
@@ -72,7 +73,7 @@ var adventure = (function () {
 			adventure.putPlayerAt(scene.playerPositionOnEnter.x, scene.playerPositionOnEnter.y);
 		}
 		if (scene.conversationToStartOnEnter) {
-			adventure.conversationManager.startConversation(scene.conversationToStartOnEnter);
+			conversationManager.startConversation(scene.conversationToStartOnEnter);
 		}
 		uiManager.showActionDescription();
 	},
@@ -82,7 +83,9 @@ var adventure = (function () {
 		mousePosition = {x: -1, y: -1};
 		currentScene = scenes[startSceneName];
 
-		adventure.startConversation = adventure.conversationManager.startConversation;
+		conversationManager = adventure.getConversationManager();
+		adventure.startConversation = conversationManager.startConversation;
+
 		loadScene(currentScene);
 
 		uiManager = adventure.getUIManager();

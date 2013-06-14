@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-(function () {
+adventure.getConversationManager = function () {
 
 	var currentConversation = {};
 	adventure.isInConversation = false;
@@ -96,9 +96,7 @@ See the file license.txt for copying permission.
 		}
 	};
 
-	adventure.conversationManager = {};
-	
-	adventure.conversationManager.startConversation = function (conversationName) {
+	var startConversation = function (conversationName) {
 		adventure.isInConversation = true;
 		currentConversation = adventure.conversations[conversationName];
 		clearDialog();
@@ -106,4 +104,6 @@ See the file license.txt for copying permission.
 		$("#action-description-box").hide();
 		proceedConversation();
 	};
-}());
+
+	return { startConversation: startConversation }
+};
