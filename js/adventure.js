@@ -6,8 +6,12 @@ See the file license.txt for copying permission.
 
 var currentAdventure = {};
 
-var adventure = (function () {
-	var backgroundDirectory,
+var adventure = {};
+
+adventure.getEngine = function () {
+	var adventureToReturn,
+
+		backgroundDirectory,
 		startSceneName,
 		scenes,
 		worldState,
@@ -16,8 +20,10 @@ var adventure = (function () {
 		uiManager,
 		conversationManager,
 		sceneFunctions,
-		conversations,
+		conversations;
 
+	var
+	
 	sceneToPageCoordinates = function (coordinates) {
 		var screen = $("#screen"),
 			offset = screen.offset(),
@@ -76,7 +82,11 @@ var adventure = (function () {
 		uiManager.showActionDescription();
 	},
 
-	start = function () {
+	startAssumingConfigurationDone = function () {
+		scenes = adventure.getScenes();
+		conversations = adventure.getConversations();
+		sceneFunctions = adventure.getSceneFunctions(adventureToReturn);
+
 		adventureToReturn.worldState = {};
 		mousePosition = {x: -1, y: -1};
 		currentScene = scenes[startSceneName];
@@ -86,19 +96,22 @@ var adventure = (function () {
 
 		loadScene(currentScene);
 
-		uiManager = adventure.getUIManager(isInConversation, scenes, sceneFunctions);
+		uiManager = adventure.getUIManager(adventureToReturn, isInConversation, scenes, sceneFunctions);
 		uiManager.bindHandlers();
 	},
 
 	configure = function (configuration) {
 		backgroundDirectory = configuration.backgroundDirectory;
 		startSceneName = configuration.startSceneName;
-		scenes = configuration.scenes;
-		sceneFunctions = configuration.sceneFunctions;
-		conversations = configuration.conversations;
 	};
 
-	var adventureToReturn = {
+	var start = function () {
+		var configuration = adventure.getConfiguration();
+		configure(configuration);
+		startAssumingConfigurationDone();
+	};
+
+	adventureToReturn = {
 		configure: configure,
 		start: start,
 
@@ -114,4 +127,4 @@ var adventure = (function () {
 	};
 
 	return adventureToReturn;
-}());
+};

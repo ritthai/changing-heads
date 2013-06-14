@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-currentAdventure.getSceneFunctions = function (adventureProvider) {
+adventure.getSceneFunctions = function (adventureProvider) {
 	var sceneFunctions = {
 		'enterTeaShopAndSeeSimon': function () {
 			if (adventureProvider.worldState['hasSeenSimonInTeaShop']) { return; }

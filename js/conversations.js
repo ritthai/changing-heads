@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-currentAdventure.getConversations = function () {
+adventure.getConversations = function () {
 	var conversations = {
 	    "introduceTheChangingHeads": {
 	        "dialog": "Kylie: Alright, Simon should be here any minute. I guess I'll just look around while I'm waiting.",

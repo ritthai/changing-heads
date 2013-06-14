@@ -5,20 +5,19 @@ See the file license.txt for copying permission.
 */
 
 (function () {
-	init = function () {
-		var scenes = currentAdventure.getScenes();
-		var conversations = currentAdventure.getConversations();
-		var sceneFunctions = currentAdventure.getSceneFunctions(adventure);
-		var configuration = {
-				startSceneName: 'teaShop',
-				backgroundDirectory: 'img/backgrounds/',
-				scenes: scenes,
-				conversations: conversations,
-				sceneFunctions: sceneFunctions
-			};
+	var START_SCENE_NAME = 'teaShop';
+	var BACKGROUND_DIRECTORY = 'img/backgrounds/';
 
-		adventure.configure(configuration);
-		adventure.start();
+	adventure.getConfiguration = function () {
+		var configuration = {
+				startSceneName: START_SCENE_NAME,
+				backgroundDirectory: BACKGROUND_DIRECTORY
+			};
+		return configuration;
+	};
+
+	var init = function () {
+		var adventureEngine = adventure.getEngine().start();
 	};
 	
 	$(init);

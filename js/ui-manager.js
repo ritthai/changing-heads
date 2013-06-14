@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getUIManager = function (isInConversationHandler, scenes, sceneFunctions) {
+adventure.getUIManager = function (adventureProvider, isInConversationHandler, scenes, sceneFunctions) {
 	var buildModeManager;
 
 	var isInConversation = isInConversationHandler;
@@ -30,11 +30,11 @@ adventure.getUIManager = function (isInConversationHandler, scenes, sceneFunctio
 	};
 
 	var mouseIsOnScreen = function () {
-		return sceneCoordinatesAreOnScreen(adventure.mousePosition);
+		return sceneCoordinatesAreOnScreen(adventureProvider.mousePosition);
 	};
 
 	var showActionDescription = function () {
-		var actionDescription = adventure.getHotspotAt(adventure.mousePosition).description,
+		var actionDescription = adventureProvider.getHotspotAt(adventureProvider.mousePosition).description,
 			actionDescriptionElement = $("#action-description"),
 			actionDescriptionBox = $("#action-description-box");
 		if (!mouseIsOnScreen() || isInConversation() || !actionDescription) {
@@ -48,18 +48,18 @@ adventure.getUIManager = function (isInConversationHandler, scenes, sceneFunctio
 	};
 
 	var onMouseMove = function (event) {
-		adventure.mousePosition = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
+		adventureProvider.mousePosition = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
 		showActionDescription();
 	};
 
 	var onArrive = function (event) {
-		var hotspot = adventure.getHotspotAt(event);
+		var hotspot = adventureProvider.getHotspotAt(event);
 		if (hotspot.onArrive) { hotspot.onArrive() };
 		if (hotspot.destinationScene) {
-			adventure.loadScene(scenes[hotspot.destinationScene]);
+			adventureProvider.loadScene(scenes[hotspot.destinationScene]);
 		}
 		if (hotspot.destinationPosition) {
-			adventure.putPlayerAt(
+			adventureProvider.putPlayerAt(
 				hotspot.destinationPosition.x, hotspot.destinationPosition.y);
 		}
 	};
@@ -67,15 +67,15 @@ adventure.getUIManager = function (isInConversationHandler, scenes, sceneFunctio
 	var onClickWhereActionIsNotPrevented = function (coordinates, hotspot) {
 		var shouldPreventDefault = false;
 		if (hotspot.positionToMovePlayerTo) {
-			adventure.movePlayer(hotspot.positionToMovePlayerTo);
+			adventureProvider.movePlayer(hotspot.positionToMovePlayerTo);
 			shouldPreventDefault = true;
 		}
 		if (hotspot.conversationToStart) {
-			adventure.startConversation(hotspot.conversationToStart);
+			adventureProvider.startConversation(hotspot.conversationToStart);
 			shouldPreventDefault = true;
 		}
 		if (!(shouldPreventDefault || hotspot.shouldPreventDefault || hotspot.isSolid)) {
-			adventure.movePlayer(coordinates, function () { onArrive(coordinates); });
+			adventureProvider.movePlayer(coordinates, function () { onArrive(coordinates); });
 		}
 	};
 
@@ -86,7 +86,7 @@ adventure.getUIManager = function (isInConversationHandler, scenes, sceneFunctio
 
 	var onClick = function (event) {
 		var coordinates = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
-		var hotspot = adventure.getHotspotAt(coordinates);
+		var hotspot = adventureProvider.getHotspotAt(coordinates);
 		onMouseMove(event);
 		if (!eventIsOnScreen(event)) { return; }
 		if (buildModeManager.isInBuildMode) {
