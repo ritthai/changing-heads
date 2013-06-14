@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getUIManager = function (isInConversationHandler, sceneFunctions) {
+adventure.getUIManager = function (isInConversationHandler, scenes, sceneFunctions) {
 	var buildModeManager;
 
 	var isInConversation = isInConversationHandler;
@@ -56,7 +56,7 @@ adventure.getUIManager = function (isInConversationHandler, sceneFunctions) {
 		var hotspot = adventure.getHotspotAt(event);
 		if (hotspot.onArrive) { hotspot.onArrive() };
 		if (hotspot.destinationScene) {
-			adventure.loadScene(adventure.scenes[hotspot.destinationScene]);
+			adventure.loadScene(scenes[hotspot.destinationScene]);
 		}
 		if (hotspot.destinationPosition) {
 			adventure.putPlayerAt(

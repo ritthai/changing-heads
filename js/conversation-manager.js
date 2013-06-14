@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getConversationManager = function () {
+adventure.getConversationManager = function (conversations) {
 
 	var currentConversation = {};
 	var isInConversation = false;
@@ -36,7 +36,7 @@ adventure.getConversationManager = function () {
 			endConversation();
 			return;
 		}
-		currentConversation = adventure.conversations[option.next];
+		currentConversation = conversations[option.next];
 		proceedConversation();
 	};
 
@@ -102,7 +102,7 @@ adventure.getConversationManager = function () {
 
 	var startConversation = function (conversationName) {
 		isInConversation = true;
-		currentConversation = adventure.conversations[conversationName];
+		currentConversation = conversations[conversationName];
 		clearDialog();
 		$("#dialog-box").show();
 		$("#action-description-box").hide();

@@ -81,12 +81,12 @@ var adventure = (function () {
 		mousePosition = {x: -1, y: -1};
 		currentScene = scenes[startSceneName];
 
-		conversationManager = adventure.getConversationManager();
+		conversationManager = adventure.getConversationManager(conversations);
 		adventureToReturn.startConversation = conversationManager.startConversation;
 
 		loadScene(currentScene);
 
-		uiManager = adventure.getUIManager(isInConversation, sceneFunctions);
+		uiManager = adventure.getUIManager(isInConversation, scenes, sceneFunctions);
 		uiManager.bindHandlers();
 	},
 
@@ -96,9 +96,6 @@ var adventure = (function () {
 		scenes = configuration.scenes;
 		sceneFunctions = configuration.sceneFunctions;
 		conversations = configuration.conversations;
-
-		adventure.scenes = scenes;
-		adventure.conversations = conversations;
 	};
 
 	var adventureToReturn = {
