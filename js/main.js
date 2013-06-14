@@ -59,6 +59,7 @@ See the file license.txt for copying permission.
 	};
 
 	var onClick = function (event) {
+		onMouseMove(event);
 		var coordinates = pageToSceneCoordinates({x: event.pageX, y: event.pageY}),
 			hotspot = adventure.getHotspotAt(coordinates);
 		if (!eventIsOnScreen(event)) return;
@@ -106,6 +107,23 @@ See the file license.txt for copying permission.
 	var bindHandlers = function () {
 		$(document).click(onClick);
 		$(document).mousemove(onMouseMove);
+		document.addEventListener("touchend",
+			function (event) {
+				var touches = event.changedTouches || event.targetTouches;
+				var touch = touches[0];
+				onClick(touch);
+			},
+			false);
+		document.addEventListener("touchmove",
+			function (event) {
+				event.preventDefault();
+				var touches = event.changedTouches || event.targetTouches;
+				var touch = touches[touches.length - 1];
+				var stringToShow = '';
+				var sceneCoordinates = pageToSceneCoordinates({x: touch.pageX, y: touch.pageY});
+				onMouseMove(touch);
+			},
+			false);
 	};
 
 	
