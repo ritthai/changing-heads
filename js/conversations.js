@@ -39,10 +39,8 @@ currentAdventure.getConversations = function () {
 	            {
 	                "description": "",
 	                "dialog": [
-	                    [
 	                        "Kylie",
 	                        "Simon! Are you okay?"
-	                    ]
 	                ],
 	                "next": "talkToSimonAreYouOkay"
 	            }
@@ -106,7 +104,6 @@ currentAdventure.getConversations = function () {
 	            {
 	                "description": "My friend's body was stolen.",
 	                "dialog": [
-	                    
 	                        "Kylie",
 	                        "Thank you, but there's something I wanted to ask you.",
 							"Cassandra",
@@ -127,7 +124,6 @@ currentAdventure.getConversations = function () {
 	            {
 	                "description": "Awesome! I got into the journalism school I wanted.",
 	                "dialog": [
-	                    
 	                        "Simon",
 	                        "Hey, congratulations! So, what, are you going to write for a newspaper, or be on TV, or what?",
 "Kylie", "No, newspapers are kind of dying out right? And television too. I wanna do new media.",

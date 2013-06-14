@@ -4,101 +4,101 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
+// TODO: This is not decoupled from the HTML yet
+
 adventure.getConversationManager = function (conversations) {
 
 	var currentConversation = {};
 	var isInConversation = false;
 
-	var clearDialog = function () {
-		$("#dialog").html("");
-	};
+	var getIsInConversation = function () {
+		return isInConversation;
+	}
 	
 	var writeDialogLn = function (text) {
 		$("#dialog").append(text + "<br />");
 	};
 
-	var chooseOption = function (option) {
-		clearDialog();
-		if (typeof option.onEnter !== "undefined") option.onEnter();
-		if (option.dialog) {
-			if (typeof option.dialog[0] === 'string') {
-				var i;
-				for (i = 0; i < option.dialog.length; i += 2) {
-					if (i + 1 < option.dialog.length) {
-						writeDialogLn(option.dialog[i] + ': ' + option.dialog[i + 1]);
-					}
-				}
-			} else {
-				writeDialogLn(option.dialog[0][0] + ": " + option.dialog[0][1]);
+	var writeAlternatingArrayDialog = function (dialog) {
+		var i;
+		for (i = 0; i < dialog.length; i += 2) {
+			if (i + 1 < dialog.length) {
+				writeDialogLn(dialog[i] + ': ' + dialog[i + 1]);
 			}
 		}
+	};
+
+	var writeDialog = function (dialog) {
+		if (!dialog) { return; }
+		if (typeof dialog === 'string') {
+			writeDialogLn(dialog);
+		} else if (typeof dialog[0] === 'string') {
+			writeAlternatingArrayDialog(dialog);
+		}
+	};
+
+	var clearDialog = function () {
+		$('#dialog').html('');
+	};
+
+	var endConversation = function () {
+		$('#dialog-box').fadeOut();
+		currentConversation = {};
+		// TODO: This is kind of a hack. Should fix it.
+		setTimeout(function () { isInConversation = false; }, 100);
+	};
+
+	var chooseOption = function (option) {
+		clearDialog();
+		if (option.onEnter) { option.onEnter(); }
 		if (option.next === "end") {
 			endConversation();
 			return;
 		}
+		if (option.dialog) { writeDialog(option.dialog); }
 		currentConversation = conversations[option.next];
 		proceedConversation();
 	};
+	
+	var printOptionLink = function (option, description, i) {
+		var link;
+		var id = 'option-' + i;
+		writeDialogLn('<a id="' + id + '">' + description + '</a>');
+		link = document.getElementById(id);
+		link.onclick = function (event) {
+			event.preventDefault;
+			chooseOption(option);
+		};
+	};
 
-	var writeDialog = function (dialog) {
-		if (dialog) {
-			if (typeof dialog === 'string') {
-				writeDialogLn(dialog);
-			} else if (typeof dialog[0] === 'string') {
-				var i;
-				for (i = 0; i < dialog.length; i += 2) {
-					if (i + 1 < dialog.length) {
-						writeDialogLn(dialog[i] + ': ' + dialog[i + 1]);
-					}
-				}
-			} else {
-				writeDialogLn(option.dialog[0][0] + ": " + option.dialog[0][1]);
-				// TODO: Remove this dialog format if it's not being used.
-				// Otherwise, finish coding it.
-			}
+	var showOption = function (option, i) {
+		var optionDescription = option.description;
+		var description = optionDescription ?
+				optionDescription : option.dialog[1];
+		printOptionLink(option, description, i);
+	};
+
+	var showOptions = function () {
+		var options = currentConversation.options,
+			i;
+		for (i = 0; i < options.length; i++) {
+			showOption(options[i], i);
 		}
 	};
-	
-	var endConversation = function () {
-		$("#dialog-box").fadeOut();
-		currentConversation = {};
-		setTimeout(function () { isInConversation = false; }, 100);
-	};
-	
+
 	var proceedConversation = function () {
-		var i, overridingDialog;
-		if (typeof currentConversation.onEnter !== "undefined") {
+		var overridingDialog;
+		if (currentConversation.onEnter) {
 			overridingDialog = currentConversation.onEnter();
 		}
-		if (typeof overrideDialog !== "undefined" && overrideDialog !== null) {
+		if (typeof overrideDialog !== 'undefined') {
 			writeDialogLn(overridingDialog);
 		} else {
 			writeDialogLn(currentConversation.dialog);
 		}
-		writeDialogLn("");
-
-		var options = currentConversation.options;
-		for (i = 0; i < options.length; i++) {
-			var option = options[i];
-			var optionDescription = option.description;
-			var description = (typeof optionDescription === "undefined"
-					|| optionDescription === null
-					|| optionDescription === "")
-				? option.dialog[0][1] : optionDescription;
-			writeDialogLn('<a href="javascript:void(0);" id="option-' + i + '">' + description + '</a>');
-			var link = document.getElementById('option-' + i);
-			(function () {
-				var option = options[i];
-				link.onclick = function () {
-					chooseOption(option);
-				};
-			}());
-		}
+		writeDialogLn('');
+		showOptions();
 	};
-
-	var getIsInConversation = function () {
-		return isInConversation;
-	}
 
 	var startConversation = function (conversationName) {
 		isInConversation = true;

@@ -63,7 +63,7 @@ body {
 }
 
 .dialog a {
-	color: white;
+	color: #cff;
 	width: 100%;
 	display: inline-block;
 }
@@ -73,7 +73,7 @@ body {
 }
 
 .dialog a:active {
-	background-color: #063;
+	background-color: #333;
 }
 
 .dialog-background {
