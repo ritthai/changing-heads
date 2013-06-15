@@ -34,6 +34,11 @@ adventure.getScenes = function () {
 					id: 'simon-head',
 					url: 'img/characters/simon-head.png',
 					shape: { type: "rectangle", topLeftCorner: {x: 544, y: 401}, bottomRightCorner: {x: 580, y: 450} }
+				},
+				{
+					id: 'exitIndicator',
+					url: 'img/icons/right-arrow.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 722, y: 461}, bottomRightCorner: {x: 760, y: 493} }
 				}
 			]
 		},
@@ -66,6 +71,18 @@ adventure.getScenes = function () {
 					destinationPosition: {x: 135, y: 374}
 				}
 			],
+			images: [
+				{
+					id: 'exitToChangingHeadsIndicator',
+					url: 'img/icons/left-arrow.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 23, y: 467}, bottomRightCorner: {x: 62, y: 508} }
+				}
+				, {
+					id: 'exitToTeaShopIndicator',
+					url: 'img/icons/right-arrow.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 714, y: 501}, bottomRightCorner: {x: 750, y: 539} }
+				}
+			]
 		},
 		'caveOfCassandra': {
 			background: "cave-of-cassandra.jpg",

@@ -130,9 +130,13 @@ adventure.getEngine = function () {
 	var loadScene = function (scene) {
 		unloadScene();
 		currentScene = clone(scene);
-		performSceneActions();
+// TODO: performSceneActions should be done here, but
+// right now images are beind hidden by jQuery after they are rendered
+// so scene actions need to be done later at the moment.
+//		performSceneActions();
 		setBackgroundImageOfScene(backgroundDirectory + currentScene.background);
 		addSceneImages();
+		performSceneActions();
 		uiManager.showActionDescription();
 	};
 
