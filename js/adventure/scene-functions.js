@@ -9,19 +9,19 @@ adventure.getSceneFunctions = function (adventureProvider) {
 
 	var sceneFunctions = {
 		'enterTeaShopAndSeeSimon': function () {
-			if (!adventureProvider.worldState['hasSeenSimonInTeaShop']) {
-				adventureProvider.worldState['hasSeenSimonInTeaShop'] = true;
+			if (!worldState['hasSeenSimonInTeaShop']) {
+				worldState['hasSeenSimonInTeaShop'] = true;
 				adventureProvider.putPlayerAt(135, 374);
-				adventureProvider.startConversation('wonderWhereSimonIsAtTeaShop');
+				adventureProvider.startConversation('startMenu');
 				return false;
 			}
-			if (adventureProvider.worldState['hasWaitedForSimonAtChangingHeads']) {
+			if (worldState['hasWaitedForSimonAtChangingHeads']) {
 				adventureProvider.hideSceneImageById('simon');
 				adventureProvider.hideHotspotById('talkToSimon');
 			}
 		},
 		'onTalkingToSimonAboutAnimation': function () {
-			adventureProvider.worldState['hasDecidedToGoToChangingHeads'] = true;
+			worldState['hasDecidedToGoToChangingHeads'] = true;
 		},
 		'enterChangingHeads': function () {
 			if (!worldState['hasDecidedToGoToChangingHeads']) {
@@ -36,12 +36,19 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			}
 		},
 		'onHittingNormalSizedHead': function () {
-			adventureProvider.worldState['hasFoundSimon'] = true;
+			worldState['hasFoundSimon'] = true;
 		},
 		'onHittingTheChangingHeads': function () {
-			if (!adventureProvider.worldState['hasFoundSimon']) { return; }
+			if (!worldState['hasFoundSimon']) { return; }
 			adventureProvider.startConversation('talkToTheChangingHeads');
+			worldState['hasDecidedToSeeCassandra'] = true;
 			return false;
+		},
+		'onHittingCaveOfCassandra': function () {
+			if (!worldState['hasDecidedToSeeCassandra']) {
+				adventureProvider.startConversation('mentionFearOfCassandra');
+				return false;
+			}
 		}
 	};
 	return sceneFunctions;

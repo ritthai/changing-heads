@@ -17,6 +17,15 @@ adventure.getConversations = function () {
             }
         ]
     },
+	"startMenu": {
+        "dialog": "Changing Heads by Ritchie Thai",
+        "options": [
+            {
+                "description": "Start playing",
+                "next": "wonderWhereSimonIsAtTeaShop"
+            }
+        ]
+	},
     "wonderWhereSimonIsAtTeaShop": {
         "dialog": "Kylie: Huh, Simon should be... Ah! Hey, Simon!",
         "options": [
@@ -80,9 +89,9 @@ adventure.getConversations = function () {
             "Kylie",
             "Was anybody else around?",
             "Simon",
-            "No! Well, the Changing Heads, but no-one else.",
+            "No! Well, those giant heads, but no-one else.",
             "Kylie",
-            "Maybe they'll know something. They're not very good at talking, but... aw geez, this is messed up."
+            "Ugh. Maybe they'll know something. Do they even talk?"
         ],
         "options": [
             {
@@ -94,17 +103,49 @@ adventure.getConversations = function () {
     "talkToTheChangingHeads": {
         "dialog": [
             "Kylie",
-            "Hey, where's Simon's body.",
+            "Hey! Can you guys hear me?",
             "Heads",
-            "Go to the east, to Cassandra's cave. She'll help."
+            "We hear you fellow creature. We hear you brother. We hear you sister.",
+            "Heads",
+            "We are sorry. Please forgive us. Our brother is foolish, but he means no harm.",
         ],
         "options": [
             {
-                "description": "Finish talking",
-                "next": "end"
+                "description": "Brother?",
+                "next": "headsDescribeTheThievingHead"
             }
         ]
     },
+	"headsDescribeTheThievingHead": {
+		    "dialog": [
+		        "Heads",
+		        "The body thief. Our brother. A traitor to our cause",
+		        "Heads",
+		        "He lacks patience. Unwilling to wait to grow a body, he turned into a petty criminal.",
+		        "Heads",
+		        "The human from the cave by the pond. It warned us.",
+				"Kylie",
+				"Cassandra?!? That scary lady? Ugh. I guess I need to talk to her."
+		    ],
+		    "options": [
+		        {
+		            "description": "Finish talking",
+		            "next": "end"
+		        }
+		    ]
+		},
+	"mentionFearOfCassandra": {
+        "dialog": [
+            "Kylie (in her head)",
+            "That's where Cassandra lives... I heard that she lives out here because she burned a man to death one day. Better move along before she fries me for loitering.",
+        ],
+        "options": [
+            {
+                "description": "Continue",
+                "next": "end"
+            }
+        ]
+	},
     "talkToCassandra": {
         "dialog": [
             "Kylie",
@@ -120,8 +161,6 @@ adventure.getConversations = function () {
                     "Oh... Thank you. Um. Sorry, I'd rather not; the caffeine keeps me up at night.",
                     "Cassandra",
                     "That's perfect then. This is chamomile. It relaxes the mind.",
-                    "Developer's Note",
-                    "Rest of conversation not written yet."
                 ],
                 "next": "preEnd"
             },
@@ -131,9 +170,7 @@ adventure.getConversations = function () {
                     "Kylie",
                     "Tea?",
                     "Cassandra",
-                    "Yes. It's delicious, and has all sorts of medical benefits.",
-                    "Developer's Note",
-                    "Rest of conversation not written yet."
+                    "Yes. It's delicious, and helps relax the mind.",
                 ],
                 "next": "preEnd"
             },

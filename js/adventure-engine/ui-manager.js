@@ -96,7 +96,11 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 			return;
 		}
 		if (isInConversation()) return;
-		if (hotspot.onHit) { sceneFunctions[hotspot.onHit](); }
+		if (hotspot.onHit) { 
+			var onHitResult = sceneFunctions[hotspot.onHit]();
+			var shouldPreventDefault = onHitResult === false;
+			if (shouldPreventDefault) { return; }
+		}
 		if (isInConversation()) return;
 		onClickWhereActionIsNotPrevented(coordinates, hotspot);
 	};

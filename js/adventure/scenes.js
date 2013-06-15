@@ -60,7 +60,8 @@ adventure.getScenes = function () {
 					description: "Enter Cassandra's Cave",
 					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 0}, bottomRightCorner: {x: 350, y: 199} },
 					destinationScene: 'caveOfCassandra',
-					destinationPosition: {x: 135, y: 374}
+					destinationPosition: {x: 135, y: 374},
+					onHit: 'onHittingCaveOfCassandra'
 				}, {
 					description: "Pond",
 					shape: { type: "rectangle", topLeftCorner: {x: 116, y: 5}, bottomRightCorner: {x: 797, y: 442} },
