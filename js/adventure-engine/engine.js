@@ -70,23 +70,6 @@ adventure.getEngine = function () {
 		return conversationManager.isInConversation();
 	};
 
-	var performSceneActions = function () {
-		var scene = currentScene;
-		if (scene.onEnter) {
-			var onEnterResult = sceneFunctions[scene.onEnter]();
-			var shouldPreventDefault = onEnterResult == false;
-			if (shouldPreventDefault) { return; }
-		}
-		if (scene.playerPositionOnEnter) {
-			putPlayerAt(scene.playerPositionOnEnter.x, scene.playerPositionOnEnter.y);
-		}
-		if (scene.conversationToStartOnEnter) {
-			conversationManager.startConversation(scene.conversationToStartOnEnter);
-		}
-	};
-
-	
-
 	var addSceneImage = function (image) {
 		var id = 'scene-image_' + image.id;
 		var x = image.shape.topLeftCorner.x;
@@ -121,16 +104,35 @@ adventure.getEngine = function () {
 		util.setBackgroundImageOfJqueryElement($scene, url);
 	};
 
+	var performSceneActions = function () {
+		var scene = currentScene;
+		if (scene.onEnter) {
+			var onEnterResult = sceneFunctions[scene.onEnter](scene);
+			var shouldPreventDefault = onEnterResult == false;
+			if (shouldPreventDefault) { return; }
+		}
+		if (scene.playerPositionOnEnter) {
+			putPlayerAt(scene.playerPositionOnEnter.x, scene.playerPositionOnEnter.y);
+		}
+		if (scene.conversationToStartOnEnter) {
+			conversationManager.startConversation(scene.conversationToStartOnEnter);
+		}
+	};
+
+	var clone = function (objectToClone) {
+		return $.extend(true, {}, objectToClone);
+	};
+
 	var unloadScene = function () {
 		$('#scene .scene-entity').remove();
 	};
 
 	var loadScene = function (scene) {
 		unloadScene();
-		currentScene = scene;
+		currentScene = clone(scene);
+		performSceneActions();
 		setBackgroundImageOfScene(backgroundDirectory + currentScene.background);
 		addSceneImages();
-		performSceneActions(scene);
 		uiManager.showActionDescription();
 	};
 

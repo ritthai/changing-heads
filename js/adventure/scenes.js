@@ -118,6 +118,7 @@ adventure.getScenes = function () {
 					isSolid: true
 				}
 				, {
+					id: 'talkToSimon',
 					description: "Talk to Simon",
 					shape: { type: "rectangle", topLeftCorner: {x: 549, y: 219}, bottomRightCorner: {x: 647, y: 445} },
 					positionToMovePlayerTo: {x: 473, y: 436},
