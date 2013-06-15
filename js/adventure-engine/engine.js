@@ -103,6 +103,10 @@ adventure.getEngine = function () {
 			height(height);
 	};
 
+	var hideSceneImageById = function (id) {
+		$('#scene-image_' + id).hide();
+	};
+
 	var addSceneImages = function () {
 		var i, image;
 		var images = currentScene.images;
@@ -143,6 +147,7 @@ adventure.getEngine = function () {
 			putPlayerAt: putPlayerAt,
 			movePlayer: movePlayer,
 			loadScene: loadScene,
+			hideSceneImageById: hideSceneImageById,
 			startConversation: function () {},
 
 			worldState: {}

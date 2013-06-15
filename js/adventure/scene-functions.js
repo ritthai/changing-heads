@@ -7,11 +7,15 @@ See the file license.txt for copying permission.
 adventure.getSceneFunctions = function (adventureProvider) {
 	var sceneFunctions = {
 		'enterTeaShopAndSeeSimon': function () {
-			if (adventureProvider.worldState['hasSeenSimonInTeaShop']) { return; }
-			adventureProvider.worldState['hasSeenSimonInTeaShop'] = true;
-			adventureProvider.putPlayerAt(135, 374);
-			adventureProvider.startConversation('wonderWhereSimonIsAtTeaShop');
-			return false;
+			if (!adventureProvider.worldState['hasSeenSimonInTeaShop']) {
+				adventureProvider.worldState['hasSeenSimonInTeaShop'] = true;
+				adventureProvider.putPlayerAt(135, 374);
+				adventureProvider.startConversation('wonderWhereSimonIsAtTeaShop');
+				return false;
+			}
+			if (adventureProvider.worldState['hasWaitedForSimonAtChangingHeads']) {
+				adventureProvider.hideSceneImageById('simon');
+			}
 		},
 		'enterChangingHeads': function () {
 			if (adventureProvider.worldState['hasWaitedForSimonAtChangingHeads']) { return; }
