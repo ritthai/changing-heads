@@ -9,6 +9,8 @@ var currentAdventure = {};
 var adventure = {};
 
 adventure.getEngine = function () {
+	var util = adventure.util;
+
 	var 	backgroundDirectory,
 		startSceneName,
 		scenes,
@@ -20,9 +22,7 @@ adventure.getEngine = function () {
 		sceneFunctions,
 		conversations;
 
-	var
-	
-	sceneToPageCoordinates = function (coordinates) {
+	var sceneToPageCoordinates = function (coordinates) {
 		var screen = $("#screen"),
 			offset = screen.offset(),
 			resultX = coordinates.x + offset.left,
@@ -44,31 +44,37 @@ adventure.getEngine = function () {
 			player.removeClass('is-flipped-horizontally');
 		}
 		player.animate({left:coordinates.x - player.width()/2, top:coordinates.y - player.height()}, callback);
-	},
+	};
 
-	getHotspotAt = function (point) {
-		var i, hotspot, inHotspot, shape,
+	var pointIsInShape = function (point, shape) {
+		var result = shape.type === "rectangle"
+			&& shape.topLeftCorner.x <= point.x && shape.topLeftCorner.y <= point.y
+			&& shape.bottomRightCorner.x >= point.x && shape.bottomRightCorner.y >= point.y;
+		return result;
+	};
+
+	var getHotspotAt = function (point) {
+		var i, hotspot, isInHotspot, shape, nullObject,
 			hotspots = currentScene.hotspots;
 		for (i = 0; i < hotspots.length; i += 1) {
 			hotspot = hotspots[i];
 			shape = hotspot.shape;
-			inHotspot = shape.type === "rectangle"
-				&& shape.topLeftCorner.x <= point.x && shape.topLeftCorner.y <= point.y
-				&& shape.bottomRightCorner.x >= point.x && shape.bottomRightCorner.y >= point.y;
-			if (inHotspot) return hotspot;
+			isInHotspot = pointIsInShape(point, shape);
+			if (isInHotspot) { return hotspot; }
 		}
-		return {description: "", shape: {type: ""}, onArrive: function () {}};
+		nullObject = {description: '', shape: {type: ''}, onArrive: function () {}};
+		return nullObject;
 	},
 
 	isInConversation = function () {
 		return conversationManager.isInConversation();
-	},
+	};
 
-	loadScene = function (scene) {
-		currentScene = scene;
-		$('#scene').css("background-image", "url(" + backgroundDirectory + currentScene.background + ")");
+	var performSceneActions = function () {
+		var scene = currentScene;
 		if (scene.onEnter) {
-			var shouldPreventDefault = sceneFunctions[scene.onEnter]() == false;
+			var onEnterResult = sceneFunctions[scene.onEnter]();
+			var shouldPreventDefault = onEnterResult == false;
 			if (shouldPreventDefault) { return; }
 		}
 		if (scene.playerPositionOnEnter) {
@@ -77,10 +83,54 @@ adventure.getEngine = function () {
 		if (scene.conversationToStartOnEnter) {
 			conversationManager.startConversation(scene.conversationToStartOnEnter);
 		}
-		uiManager.showActionDescription();
-	},
+	};
 
-	startAssumingConfigurationDone = function () {
+	
+
+	var addSceneImage = function (image) {
+		var id = 'scene-image_' + image.id;
+		var x = image.shape.topLeftCorner.x;
+		var y = image.shape.topLeftCorner.y;
+		var width = image.shape.bottomRightCorner.x - x;
+		var height = image.shape.bottomRightCorner.y - y;
+
+		$('#scene').append('<div id="' + id + '" class="scene-entity scene-entity_image"></div>');
+		var $sceneImage = $('#' + id);
+		$sceneImage.css('background-image', 'url(' + image.url + ')').
+			css('left', x + 'px').
+			css('top', y + 'px');
+		$sceneImage.width(width).
+			height(height);
+	};
+
+	var addSceneImages = function () {
+		var i, image;
+		var images = currentScene.images;
+		if (!images) { return; }
+		for (i = 0; i < images.length; i++) {
+			addSceneImage(images[i]);
+		}
+	};
+
+	var setBackgroundImageOfScene = function (url) {
+		var $scene = $('#scene');
+		util.setBackgroundImageOfJqueryElement($scene, url);
+	};
+
+	var unloadScene = function () {
+		$('#scene .scene-entity').remove();
+	};
+
+	var loadScene = function (scene) {
+		unloadScene();
+		currentScene = scene;
+		setBackgroundImageOfScene(backgroundDirectory + currentScene.background);
+		addSceneImages();
+		performSceneActions(scene);
+		uiManager.showActionDescription();
+	};
+
+	var startAssumingConfigurationDone = function () {
 		var adventureProviderForUIManager = {
 			getHotspotAt: getHotspotAt,
 			putPlayerAt: putPlayerAt,
@@ -109,11 +159,11 @@ adventure.getEngine = function () {
 		adventureProviderForUIManager.startConversation = conversationManager.startConversation;
 		adventureProviderForSceneFunctions.startConversation = conversationManager.startConversation;
 
-		loadScene(currentScene);
-
 		uiManager = adventure.getUIManager(adventureProviderForUIManager,
 				isInConversation, scenes, sceneFunctions);
 		uiManager.bindHandlers();
+
+		loadScene(currentScene);
 	},
 
 	configure = function (configuration) {

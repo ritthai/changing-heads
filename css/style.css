@@ -31,7 +31,7 @@ body {
 	width: 60px;
 	height: 200px;
 	position: absolute;
-	background-image: url(../img/player.png);
+	background-image: url(../img/characters/kylie.png);
 	background-size: contain;
 	background-repeat: no-repeat;
 }
@@ -74,7 +74,7 @@ body {
 }
 
 .dialog a:active {
-	background-color: #333;
+	background-color: #999;
 }
 
 .dialog-background {
@@ -109,6 +109,15 @@ body {
 }
 
 /* Game Sprites */
+
+.scene-entity {
+	background-size: contain;
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.scene-entity_image {
+}
 
 .is-flipped-horizontally {
     -moz-transform: scaleX(-1);

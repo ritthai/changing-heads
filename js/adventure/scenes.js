@@ -117,6 +117,13 @@ adventure.getScenes = function () {
 					conversationToStart: 'talkingToSimonInTeaShop',
 					isSolid: true
 				}
+			],
+			images: [
+				{
+					id: "simon",
+					url: "img/characters/simon.png",
+					shape: { type: "rectangle", topLeftCorner: {x: 570, y: 224}, bottomRightCorner: {x: 787, y: 433} }
+				}
 			]
 		}
 	};
