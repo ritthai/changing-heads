@@ -58,6 +58,7 @@ adventure.getEngine = function () {
 			hotspots = currentScene.hotspots;
 		for (i = 0; i < hotspots.length; i += 1) {
 			hotspot = hotspots[i];
+			if (hotspot.hidden) { continue; }
 			shape = hotspot.shape;
 			isInHotspot = pointIsInShape(point, shape);
 			if (isInHotspot) { return hotspot; }
@@ -87,7 +88,27 @@ adventure.getEngine = function () {
 	};
 
 	var hideSceneImageById = function (id) {
-		$('#scene-image_' + id).hide();
+		var i;
+		var scene = currentScene;
+		var images = scene.images;
+		for (i = 0; i < images.length; i++) {
+			var image = images[i];
+			if (image.id === id) {
+				image.hidden = true;
+			}
+		}
+	};
+
+	var hideHotspotById = function (id) {
+		var i;
+		var scene = currentScene;
+		var hotspots = scene.hotspots;
+		for (i = 0; i < hotspots.length; i++) {
+			var hotspot = hotspots[i];
+			if (hotspot.id === id) {
+				hotspot.hidden = true;
+			}
+		}
 	};
 
 	var addSceneImages = function () {
@@ -95,7 +116,10 @@ adventure.getEngine = function () {
 		var images = currentScene.images;
 		if (!images) { return; }
 		for (i = 0; i < images.length; i++) {
-			addSceneImage(images[i]);
+			image = images[i];
+			if (!image.hidden) {
+				addSceneImage(images[i]);
+			}
 		}
 	};
 
@@ -130,13 +154,9 @@ adventure.getEngine = function () {
 	var loadScene = function (scene) {
 		unloadScene();
 		currentScene = clone(scene);
-// TODO: performSceneActions should be done here, but
-// right now images are beind hidden by jQuery after they are rendered
-// so scene actions need to be done later at the moment.
-//		performSceneActions();
+		performSceneActions();
 		setBackgroundImageOfScene(backgroundDirectory + currentScene.background);
 		addSceneImages();
-		performSceneActions();
 		uiManager.showActionDescription();
 	};
 
@@ -154,6 +174,7 @@ adventure.getEngine = function () {
 			movePlayer: movePlayer,
 			loadScene: loadScene,
 			hideSceneImageById: hideSceneImageById,
+			hideHotspotById: hideHotspotById,
 			startConversation: function () {},
 
 			worldState: {}

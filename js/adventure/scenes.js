@@ -12,6 +12,7 @@ adventure.getScenes = function () {
 			onEnter: "enterChangingHeads",
 			hotspots: [ 
 				{
+					id: "examineNormalSizedHead",
 					description: "Examine normal sized head",
 					shape: { type: "rectangle", topLeftCorner: {x: 526, y: 381}, bottomRightCorner: {x: 594, y: 450} },
 					positionToMovePlayerTo: {x: 471, y: 455},

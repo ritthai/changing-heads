@@ -17,6 +17,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			}
 			if (adventureProvider.worldState['hasWaitedForSimonAtChangingHeads']) {
 				adventureProvider.hideSceneImageById('simon');
+				adventureProvider.hideHotspotById('talkToSimon');
 			}
 		},
 		'onTalkingToSimonAboutAnimation': function () {
@@ -25,6 +26,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		'enterChangingHeads': function () {
 			if (!worldState['hasDecidedToGoToChangingHeads']) {
 				adventureProvider.hideSceneImageById('simon-head');
+				adventureProvider.hideHotspotById('examineNormalSizedHead');
 			}
 			if (worldState['hasDecidedToGoToChangingHeads'] &&
 					!worldState['hasWaitedForSimonAtChangingHeads']) {
