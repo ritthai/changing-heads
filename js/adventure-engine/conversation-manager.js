@@ -6,7 +6,7 @@ See the file license.txt for copying permission.
 
 // TODO: This is not decoupled from the HTML yet
 
-adventure.getConversationManager = function (conversations) {
+adventure.getConversationManager = function (conversations, sceneFunctions) {
 
 	var currentConversation = {};
 	var isInConversation = false;
@@ -93,7 +93,7 @@ adventure.getConversationManager = function (conversations) {
 	var proceedConversation = function () {
 		var overridingDialog;
 		if (currentConversation.onEnter) {
-			overridingDialog = currentConversation.onEnter();
+			overridingDialog = sceneFunctions[currentConversation.onEnter]();
 		}
 		if (typeof overrideDialog !== 'undefined') {
 			writeDialog(overridingDialog);

@@ -29,6 +29,13 @@ adventure.getScenes = function () {
 					destinationPosition: {x: 135, y: 374}
 				}
 			],
+			images: [
+				{
+					id: 'simon-head',
+					url: 'img/characters/simon-head.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 544, y: 401}, bottomRightCorner: {x: 580, y: 450} }
+				}
+			]
 		},
 		"pond": {
 			background: "pond.jpg",
@@ -112,8 +119,8 @@ adventure.getScenes = function () {
 				}
 				, {
 					description: "Talk to Simon",
-					shape: { type: "rectangle", topLeftCorner: {x: 570, y: 224}, bottomRightCorner: {x: 787, y: 433} },
-					positionToMovePlayerTo: {x: 541, y: 398},
+					shape: { type: "rectangle", topLeftCorner: {x: 549, y: 219}, bottomRightCorner: {x: 647, y: 445} },
+					positionToMovePlayerTo: {x: 473, y: 436},
 					conversationToStart: 'talkingToSimonInTeaShop',
 					isSolid: true
 				}

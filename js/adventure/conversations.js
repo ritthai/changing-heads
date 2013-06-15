@@ -38,7 +38,7 @@ adventure.getConversations = function () {
     "examineNormalSizedHead": {
         "dialog": [
             "Kylie",
-            "Huh. Looks like they've finally gotten the size right. Wait... Oh my! Simon!",
+            "Why is this one so much smaller? Wait... Oh my! Simon!",
             "Simon",
             "Huh? ...Oh, Kylie. I must've dozed off."
         ],
@@ -176,16 +176,10 @@ adventure.getConversations = function () {
                 "next": "talkingToSimonInTeaShopAboutJournalismSchool"
             },
             {
-                "description": "I'm good. Hey, tell me about being an animator! ",
+                "description": "I'm good. Hey, tell me about being an animator!",
                 "dialog": [
-                    "Simon",
-                    "Oh, I'm not an animator; I'm a storyboard artist. It's going pretty good. I don't know; I'm kind of having writer's block or something.",
                     "Kylie",
-                    "Oh no! That's not good. Well, maybe being back home will give you a chance to do some soul searching.",
-                    "Simon",
-                    "Hey, let's check out the Changing Heads. Maybe you can write a news story, and I can get inspired.",
-                    "Kylie",
-                    "Yeah, sounds good. I'll meet you there."
+                    "I'm good. Hey, tell me about being an animator!"
                 ],
                 "next": "talkingToSimonInTeaShopAboutAnimation"
             }
@@ -210,6 +204,14 @@ adventure.getConversations = function () {
             {
                 "description": "Hey, so what's it like being an animator?",
                 "dialog": [
+                    "Kylie", "Hey, so what's it like being an animator?"
+                ],
+                "next": "talkingToSimonInTeaShopAboutAnimation"
+            }
+        ]
+    },
+	"talkingToSimonInTeaShopAboutAnimation": {
+		"dialog": [
                     "Simon",
                     "Oh, I'm not an animator; I'm a storyboard artist. It's going pretty good. I don't know; I'm kind of having writer's block or something.",
                     "Kylie",
@@ -218,11 +220,15 @@ adventure.getConversations = function () {
                     "Hey, let's check out the Changing Heads. Maybe you can write a news story, and I can get inspired.",
                     "Kylie",
                     "Yeah, sounds good. I'll meet you there."
-                ],
-                "next": "talkingToSimonInTeaShopAboutAnimation"
-            }
-        ]
-    },
+		],
+		"onEnter": "onTalkingToSimonAboutAnimation",
+		"options": [
+			{
+				"description": "Finish talking",
+				"next": "end"
+			}
+		]
+	},
     "preEnd": {
         "dialog": [
             ""

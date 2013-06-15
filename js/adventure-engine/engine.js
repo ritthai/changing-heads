@@ -160,7 +160,7 @@ adventure.getEngine = function () {
 
 		currentScene = scenes[startSceneName];
 
-		conversationManager = adventure.getConversationManager(conversations);
+		conversationManager = adventure.getConversationManager(conversations, sceneFunctions);
 		adventureProviderForUIManager.startConversation = conversationManager.startConversation;
 		adventureProviderForSceneFunctions.startConversation = conversationManager.startConversation;
 
