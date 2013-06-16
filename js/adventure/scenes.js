@@ -132,11 +132,6 @@ adventure.getScenes = function () {
 					destinationPosition: {x: 751, y: 432}
 				}
 				, {
-					description: "Tea shop owner",
-					shape: { type: "rectangle", topLeftCorner: {x: 419, y: 122}, bottomRightCorner: {x: 519, y: 224} },
-					isSolid: true
-				}
-				, {
 					id: 'talkToSimon',
 					description: "Talk to Simon",
 					shape: { type: "rectangle", topLeftCorner: {x: 549, y: 219}, bottomRightCorner: {x: 647, y: 445} },

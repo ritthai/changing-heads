@@ -92,7 +92,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 
 	var proceedConversation = function (shouldPreventSound) {
 		if (!shouldPreventSound) {
-			(new buzz.sound( "audio/sounds/higher-mmm", {
+			(new buzz.sound( "audio/sounds/click", {
 				formats: [ "wav" ]
 			})).play();
 		}
@@ -110,15 +110,12 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 	};
 
 	var startConversation = function (conversationName) {
-		(new buzz.sound( "audio/sounds/click", {
-			formats: [ "wav" ]
-		})).play();
 		isInConversation = true;
 		currentConversation = conversations[conversationName];
 		clearDialog();
 		$("#dialog-box").show();
 		$("#action-description-box").hide();
-		proceedConversation(true);
+		proceedConversation();
 	};
 
 	return {
