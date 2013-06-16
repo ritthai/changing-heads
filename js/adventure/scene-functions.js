@@ -7,7 +7,17 @@ See the file license.txt for copying permission.
 adventure.getSceneFunctions = function (adventureProvider) {
 	var worldState = adventureProvider.worldState;
 
+	var playLittleDitty = function () {
+		var littleDitty = new buzz.sound( "audio/music/little-vocal-ditty", {
+			formats: [ "ogg", "wav" ]
+		});
+		littleDitty.fadeIn().play();
+	};
+
 	var sceneFunctions = {
+		'playLittleDitty': function () {
+			playLittleDitty();
+		},
 		'enterTeaShopAndSeeSimon': function () {
 			if (!worldState['hasSeenSimonInTeaShop']) {
 				worldState['hasSeenSimonInTeaShop'] = true;

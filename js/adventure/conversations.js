@@ -8,15 +8,6 @@ adventure.getConversations = function () {
 	var conversations = 
 
 {
-    "introduceTheChangingHeads": {
-        "dialog": "Kylie: Alright, Simon should be here any minute. I guess I'll just look around while I'm waiting.",
-        "options": [
-            {
-                "description": "Continue",
-                "next": "end"
-            }
-        ]
-    },
 	"startMenu": {
         "dialog": "Changing Heads by Ritchie Thai",
         "options": [
@@ -27,7 +18,81 @@ adventure.getConversations = function () {
         ]
 	},
     "wonderWhereSimonIsAtTeaShop": {
-        "dialog": "Kylie: Huh, Simon should be... Ah! Hey, Simon!",
+        "dialog": "Kylie: Alright, Simon better be here... Ah! Hey, Simon!",
+        "options": [
+            {
+                "description": "Continue",
+                "next": "end"
+            }
+        ],
+		"onEnter": "playLittleDitty"
+    },
+    "talkingToSimonInTeaShop": {
+        "dialog": [
+            "Kylie",
+            "Simon, buddy, what gives? I could've succesfully given a porcupine a backrub in the time I waited for you. Are you big shot animators too important to visit old highschool friends?",
+            "Simon",
+            "Sorry, the flight got delayed! I think a bird flew into that rocket tube thing under the wing with nail clippers or some jazz like that. But whatever, right? How've you been?"
+        ],
+        "options": [
+            {
+                "description": "Awesome! I got into the journalism school I wanted.",
+                "dialog": [
+                ],
+                "next": "talkingToSimonInTeaShopAboutJournalismSchool"
+            },
+            {
+                "description": "I'm good. Hey, so tell me about being an animator!",
+                "dialog": [
+                    "Kylie",
+                    "I'm good. Hey, so tell me about being an animator!"
+                ],
+                "next": "talkingToSimonInTeaShopAboutAnimation"
+            }
+        ]
+    },
+    "talkingToSimonInTeaShopAboutJournalismSchool": {
+        "dialog": [
+					"Kylie",
+					"Awesome! I got into the journalism school I wanted.",
+                    "Simon",
+                    "Hey, that's awesome! So what are you gonna journalate about?",
+                    "Kylie",
+                    "I don't know. I can't figure out where to get a good story. Hmm... I wanna do new media.",
+                    "Simon",
+                    "Like a video blog? A crackdown on the shady world of cats and catnip?",
+                    "Kylie",
+                    "Eh, something like that."
+        ],
+        "options": [
+            {
+                "description": "Hey, so what's it like being an animator?",
+                "dialog": [
+                    "Kylie", "Hey, so what's it like being an animator?"
+                ],
+                "next": "talkingToSimonInTeaShopAboutAnimation"
+            }
+        ]
+    },
+	"talkingToSimonInTeaShopAboutAnimation": {
+		"dialog": [
+                    "Simon",
+                    "Ok, well, I'm a storyboard artist not an animator. There's a difference. It's pretty good. I don't know; I'm kind of having writer's block or something.",
+                    "Kylie",
+                    "Aw, that sucks. Well, maybe being back home will get you reinvigorated!",
+                    "Simon",
+                    "Hey, I know! You know the weird head things growing out of the ground nearby past the pond? Let's check it. Maybe we can get some inspiration.",
+		],
+		"onEnter": "onTalkingToSimonAboutAnimation",
+		"options": [
+			{
+				"description": "I like that idea! You're taking your bike, right? I'll meet you there.",
+				"next": "end"
+			}
+		]
+	},
+    "introduceTheChangingHeads": {
+        "dialog": "Kylie: Alright, Simon should be here any minute. I guess I'll just look around while I'm waiting.",
         "options": [
             {
                 "description": "Continue",
@@ -85,13 +150,17 @@ adventure.getConversations = function () {
     "talkToSimonWheresMyBody": {
         "dialog": [
             "Simon",
-            "Oh hell! Where's my body?!? It must've happend while I was asleep.",
+            "Aw nuggets! Where's my totally hot body?!? Something must've happend while I was asleep.",
             "Kylie",
-            "Was anybody else around?",
+			"Holy crap, this is bonkers!",
+			"Simon",
+			"Hey hey hey. Kylie. Don't lose your *head* over this! We'll have to think calmly if we want to make any *headway* in this matter. :D... I saw a smile!",
+			"Kylie",
+            "...Yeah, that was good. But seriously, was anybody else around?",
             "Simon",
-            "No! Well, those giant heads, but no-one else.",
+            "I don't think so. Well, those giant heads were there of course...",
             "Kylie",
-            "Ugh. Maybe they'll know something. Do they even talk?"
+            "The heads? Maybe they saw something! Wait, can they even talk?"
         ],
         "options": [
             {
@@ -125,7 +194,7 @@ adventure.getConversations = function () {
 		        "Heads",
 		        "The human from the cave by the pond. It warned us.",
 				"Kylie",
-				"Cassandra?!? That scary lady? Ugh. I guess I need to talk to her."
+				"Cassandra?!? That scary tea lady? Didn't she burn a man to death? Ugh. But I guess I should to talk to her..."
 		    ],
 		    "options": [
 		        {
@@ -190,82 +259,6 @@ adventure.getConversations = function () {
             }
         ]
     },
-    "talkingToSimonInTeaShop": {
-        "dialog": [
-            "Kylie",
-            "Yo, Simon! How're you doing? Good flight?",
-            "Simon",
-            "Eh, alright. The flight got delayed so that was annoying, but yeah. How about you?"
-        ],
-        "options": [
-            {
-                "description": "Awesome! I got into the journalism school I wanted.",
-                "dialog": [
-                    "Simon",
-                    "Hey, congratulations! So, what, are you going to write for a newspaper, or be on TV, or what?",
-                    "Kylie",
-                    "No, newspapers are kind of dying out right? And television too. I wanna do new media.",
-                    "Simon",
-                    "So internet stuff.",
-                    "Kylie",
-                    "Yeah, basically."
-                ],
-                "next": "talkingToSimonInTeaShopAboutJournalismSchool"
-            },
-            {
-                "description": "I'm good. Hey, tell me about being an animator!",
-                "dialog": [
-                    "Kylie",
-                    "I'm good. Hey, tell me about being an animator!"
-                ],
-                "next": "talkingToSimonInTeaShopAboutAnimation"
-            }
-        ]
-    },
-    "talkingToSimonInTeaShopAboutAnimation": {
-        "dialog": [
-            ""
-        ],
-        "options": [
-            {
-                "description": "Finish talking",
-                "next": "end"
-            }
-        ]
-    },
-    "talkingToSimonInTeaShopAboutJournalismSchool": {
-        "dialog": [
-            ""
-        ],
-        "options": [
-            {
-                "description": "Hey, so what's it like being an animator?",
-                "dialog": [
-                    "Kylie", "Hey, so what's it like being an animator?"
-                ],
-                "next": "talkingToSimonInTeaShopAboutAnimation"
-            }
-        ]
-    },
-	"talkingToSimonInTeaShopAboutAnimation": {
-		"dialog": [
-                    "Simon",
-                    "Oh, I'm not an animator; I'm a storyboard artist. It's going pretty good. I don't know; I'm kind of having writer's block or something.",
-                    "Kylie",
-                    "Oh no! That's not good. Well, maybe being back home will give you a chance to do some soul searching.",
-                    "Simon",
-                    "Hey, let's check out the Changing Heads. Maybe you can write a news story, and I can get inspired.",
-                    "Kylie",
-                    "Yeah, sounds good. I'll meet you there."
-		],
-		"onEnter": "onTalkingToSimonAboutAnimation",
-		"options": [
-			{
-				"description": "Finish talking",
-				"next": "end"
-			}
-		]
-	},
     "preEnd": {
         "dialog": [
             ""
