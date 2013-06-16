@@ -8,8 +8,8 @@ adventure.getSceneFunctions = function (adventureProvider) {
 	var worldState = adventureProvider.worldState;
 
 	var playLittleDitty = function () {
-		var littleDitty = new buzz.sound( "audio/music/little-vocal-ditty", {
-			formats: [ "ogg", "wav" ]
+		var littleDitty = new buzz.sound( "audio/music/vocal-messing-around", {
+			formats: [ "wav" ]
 		});
 		littleDitty.fadeIn().play();
 	};

@@ -150,11 +150,11 @@ adventure.getConversations = function () {
     "talkToSimonWheresMyBody": {
         "dialog": [
             "Simon",
-            "Aw nuggets! Where's my totally hot body?!? Something must've happend while I was asleep.",
+            "Aw fish nuggets! Where's my totally hot body?!? Something must've happend while I was asleep.",
             "Kylie",
 			"Holy crap, this is bonkers!",
 			"Simon",
-			"Hey hey hey. Kylie. Don't lose your *head* over this! We'll have to think calmly if we want to make any *headway* in this matter. :D... I saw a smile!",
+			"Heyheyhey. Kylie. Don't lose your *head* over this! We must use our *heads* to make *headway* in this matter. :D",
 			"Kylie",
             "...Yeah, that was good. But seriously, was anybody else around?",
             "Simon",
