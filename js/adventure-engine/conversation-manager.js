@@ -90,7 +90,12 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 		}
 	};
 
-	var proceedConversation = function () {
+	var proceedConversation = function (shouldPreventSound) {
+		if (!shouldPreventSound) {
+			(new buzz.sound( "audio/sounds/higher-mmm", {
+				formats: [ "wav" ]
+			})).play();
+		}
 		var overridingDialog;
 		if (currentConversation.onEnter) {
 			overridingDialog = sceneFunctions[currentConversation.onEnter]();
@@ -105,12 +110,15 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 	};
 
 	var startConversation = function (conversationName) {
+		(new buzz.sound( "audio/sounds/click", {
+			formats: [ "wav" ]
+		})).play();
 		isInConversation = true;
 		currentConversation = conversations[conversationName];
 		clearDialog();
 		$("#dialog-box").show();
 		$("#action-description-box").hide();
-		proceedConversation();
+		proceedConversation(true);
 	};
 
 	return {
