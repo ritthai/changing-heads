@@ -261,7 +261,7 @@ adventure.getConversations = function () {
     },
     "preEnd": {
         "dialog": [
-            ""
+            "", ""
         ],
         "options": [
             {

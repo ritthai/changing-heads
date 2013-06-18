@@ -8,8 +8,10 @@ See the file license.txt for copying permission.
 
 adventure.getConversationManager = function (conversations, sceneFunctions) {
 
-	var currentConversation = {};
 	var isInConversation = false;
+	var currentConversation = {};
+	var currentLine = 0;
+	var overridingDialog;
 
 	var getIsInConversation = function () {
 		return isInConversation;
@@ -17,6 +19,10 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 	
 	var writeDialogLn = function (text) {
 		$("#dialog").append(text + "<br />");
+	};
+
+	var writeOptionLn = function (text) {
+		$("#options").append(text + "<br />");
 	};
 
 	var writeAlternatingArrayDialog = function (dialog) {
@@ -32,17 +38,22 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 		}
 	};
 
-	var writeDialog = function (dialog) {
+	var writeDialog = function (dialog, isOptionDialog) {
 		if (!dialog) { return; }
 		if (typeof dialog === 'string') {
 			writeDialogLn(dialog);
 		} else if (typeof dialog[0] === 'string') {
-			writeAlternatingArrayDialog(dialog);
+			if (isOptionDialog) {
+				writeAlternatingArrayDialog(dialog);
+			} else {
+				writeDialogLn(dialog[currentLine * 2] + ': ' + dialog[currentLine * 2 + 1]);
+			}
 		}
 	};
 
 	var clearDialog = function () {
 		$('#dialog').html('');
+		$("#options").html('');
 	};
 
 	var endConversation = function () {
@@ -59,18 +70,33 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 			endConversation();
 			return;
 		}
-		if (option.dialog) { writeDialog(option.dialog); }
+		if (option.dialog) { writeDialog(option.dialog, true); }
 		currentConversation = conversations[option.next];
+		resetVariablesForPartialConverstion();
 		proceedConversation();
 	};
 	
+	var showProceedConversationLink = function () {
+		var link;
+		var id = 'proceed-conversation-link';
+		var description = 'Next';
+		writeOptionLn('<a id="' + id + '">' + description + '</a>');
+		link = document.getElementById(id);
+		link.onclick = function (event) {
+			event.preventDefault();
+			currentLine += 1;
+			clearDialog();
+			proceedConversation();
+		};
+	};
+
 	var printOptionLink = function (option, description, i) {
 		var link;
 		var id = 'option-' + i;
-		writeDialogLn('<a id="' + id + '">' + description + '</a>');
+		writeOptionLn('<a id="' + id + '">' + description + '</a>');
 		link = document.getElementById(id);
 		link.onclick = function (event) {
-			event.preventDefault;
+			event.preventDefault();
 			chooseOption(option);
 		};
 	};
@@ -88,6 +114,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 		for (i = 0; i < options.length; i++) {
 			showOption(options[i], i);
 		}
+		writeOptionLn('');
 	};
 
 	var proceedConversation = function (shouldPreventSound) {
@@ -96,22 +123,44 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 				formats: [ "wav" ]
 			})).play();
 		}
-		var overridingDialog;
-		if (currentConversation.onEnter) {
+		if (currentLine === 0 && currentConversation.onEnter) {
 			overridingDialog = sceneFunctions[currentConversation.onEnter]();
 		}
-		if (typeof overrideDialog !== 'undefined') {
+		if (typeof overridingDialog !== 'undefined') {
 			writeDialog(overridingDialog);
 		} else {
 			writeDialog(currentConversation.dialog);
 		}
 		writeDialogLn('');
-		showOptions();
+		var dialog = currentConversation.dialog;
+		if (typeof dialog !== 'string' && typeof dialog[0] === 'string') {
+			if (currentLine + 1 === dialog.length / 2) {
+				showOptions();
+			} else {
+				showProceedConversationLink();
+			}
+		} else {
+			showOptions();
+		}
+	};
+
+	// TODO: Conversation is an overloaded term.
+	// It's being used to refer to every line from when the dialog box
+	// appears to when it diappears, but it also refers to only
+	// the lines since the last dialog choice.
+	// Using the term "partial conversation" is evidence that
+	// this needs to be clarified.
+	// This is also a very poorly named method.
+	// This whole area needs a refactor, soon.
+	var resetVariablesForPartialConverstion = function () {
+		currentLine = 0;
+		overridingDialog = undefined;
 	};
 
 	var startConversation = function (conversationName) {
 		isInConversation = true;
 		currentConversation = conversations[conversationName];
+		resetVariablesForPartialConverstion();
 		clearDialog();
 		$("#dialog-box").show();
 		$("#action-description-box").hide();

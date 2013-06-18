@@ -38,19 +38,25 @@ body {
 
 /* Dialog */
 
-.dialog-box {
+.message-box {
 	position: absolute;
-	bottom: 0px;
-	width: 100%;
-	height: 11em;
 	display: none;
 }
 
-.dialog-box.dialog-box_height_short {
-	height: 3em;
+.message-box.message-box_dialog-box {
+	top: 350px;
+	left: 110px;
+	width: 600px;
+	height: 150px;
 }
 
-.dialog {
+.message-box.message-box_action-description-box {
+	bottom: 0;
+	height: 3em;
+	width: 100%;
+}
+
+.message {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -58,29 +64,35 @@ body {
 	padding: 5px;
 }
 
-.dialog.dialog_text-alignment_center {
+.message_option {
+	height: auto;
+	bottom: 0;
+}
+
+.message.dialog_text-alignment_center {
 	text-align: center;
 }
 
-.dialog a {
+.message a {
 	color: #cff;
 	width: 100%;
 	display: inline-block;
 	cursor: pointer;
 }
 
-.dialog a:hover {
+.message a:hover {
 	background-color: #666;
 }
 
-.dialog a:active {
+.message a:active {
 	background-color: #999;
 }
 
-.dialog-background {
+.message-box__background {
 	position: absolute;
 	width: 100%;
 	height: 100%;
+	padding: 5px;
 	background-color: black;
 	opacity: 0.7;
 	filter: alpha(opacity=70); /* For IE8 and earlier */
