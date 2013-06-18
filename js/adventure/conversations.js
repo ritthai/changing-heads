@@ -149,22 +149,35 @@ adventure.getConversations = function () {
     },
     "talkToTheChangingHeads": {
         "dialog": [
-            "Kylie",
-            "Hey! Can you guys hear me?",
-            "Heads",
-            "We hear you fellow creature. We hear you brother. We hear you sister.",
-            "Heads",
-            "We are sorry. Please forgive us. Our brother is foolish, but he means no harm.",
-			"Kylie",
-			"Brother?",
-	        "Heads",
-	        "The body thief. Our brother. A traitor to our cause",
-	        "Heads",
-	        "He lacks patience. Unwilling to wait to grow a body, he turned into a petty criminal.",
-	        "Heads",
-	        "The human from the cave by the pond. It warned us.",
-			"Kylie",
-			"Cassandra?!? That scary tea lady? Didn't she burn a man to death? Ugh. But I guess I should to talk to her..."
+"Kylie", "Hey! Can you folks hear me?",
+
+"Heads", "We hear you, brother! I mean, sister. Fellow creature!",
+
+"Kylie", "I’m a girl.",
+
+"Heads", "Of course you are! We are not strange and totally just like you. We are sorry. Please forgive us. Our brother is foolish, but he means no harm.",
+
+"Kylie", "What brother?",
+
+"Head A", "The body thief! Our brother, but a traitor to our cause.",
+
+"Head B", "The guy lacks patience.",
+
+"Head C", "What a sellout!",
+
+"Head D", "We’re supposed to be *growing* our bodies, not just grabbing the first one that walks by. Where’s the creativity in that? The heart?",
+
+"Head B", "You know, the human living in that cave by the pond told us this would happen. I believed it! Would y’all listen? Noooooo.",
+
+"Kylie", "Wait, the cave by the pond? You mean Cassandra?!? The scary tea lady that can burn stuff with her mind!?! Didn't she burn a dude and his house down for no reason?",
+
+"Head B", "Yeah yeah, *she* burned a *dude*. I definitely knew that. I’m just being inclusive with my pronouns.",
+
+"Head D", "We know stuff! Don’t think you’re better than us just ‘cause you just get *handed* a body for being born. Entitled brat.",
+
+"Head B", "Hey, don’t take your personal failures out on her!",
+
+"Kylie", "Ugh. I usually *avoid* Cassandra’s cave when I go by the pond. Maybe I can convince Simon that he doesn’t need a body.",
 		    ],
 		    "options": [
 		        {
@@ -188,58 +201,105 @@ adventure.getConversations = function () {
     "talkToCassandra": {
         "dialog": [
             "Kylie",
-            "Um. Excuse me. Hello Miss Cassandra, I'm Kylie and-",
+            "Excuse me, Miss Cassandra. I’m Kylie, and-",
             "Cassandra",
-            "Nice to meet you, Kylie. Have a seat. Drink some tea with me."
+            "Come in, Kylie. Have some tea with me."
         ],
         "options": [
             {
-                "description": "No thanks. The caffeine keeps me up at night.",
-                "dialog": [
-                    "Kylie",
-                    "Oh... Thank you. Um. Sorry, I'd rather not; the caffeine keeps me up at night.",
-                    "Cassandra",
-                    "That's perfect then. This is chamomile. It relaxes the mind.",
-                ],
-                "next": "preEnd"
-            },
-            {
-                "description": "Tea?",
-                "dialog": [
-                    "Kylie",
-                    "Tea?",
-                    "Cassandra",
-                    "Yes. It's delicious, and helps relax the mind.",
-                ],
-                "next": "preEnd"
-            },
-            {
-                "description": "My friend's body was stolen.",
-                "dialog": [
-                    "Kylie",
-                    "Thank you, but there's something I wanted to ask you.",
-                    "Cassandra",
-                    "Go right ahead.",
-                    "Kylie",
-                    "My friend... His body was stolen. One of the Changing Heads took it.",
-                    "Developer Commentator",
-                    "The rest of this isn't written yet."
-                ],
-                "next": "preEnd"
+                "description": "Continue",
+                "next": "beatAroundTheBushWithCassandra"
             }
         ]
     },
-    "preEnd": {
+	"beatAroundTheBushWithCassandra": {
         "dialog": [
-            "", ""
+            "",
+            ""
         ],
         "options": [
             {
-                "description": "Finish talking",
+                "description": "Oh, uh, thanks, but I just had some.",
+                "dialog": [
+                    "Kylie",
+                    "Oh, uh, thanks, but I just had some.",
+                    "Cassandra",
+                    "That’s fine; there’s always room for tea. I only brew the best.",
+                ],
+                "next": "beatAroundTheBushWithCassandra"
+            },
+            {
+                "description": "I’d love to, but the caffeine keeps me up all night.",
+                "dialog": [
+                    "Kylie",
+                    "I’d love to, but the caffeine keeps me up all night.",
+                    "Cassandra",
+                    "That’s perfect. I’m having chamomile. It soothes the mind.",
+                ],
+                "next": "beatAroundTheBushWithCassandra"
+            },
+            {
+                "description": "Speaking of tea, I brought you some as a... cave warming gift. It’s... green?",
+                "next": "giveCassandraTheGiftTea"
+            },
+            {
+                "description": "It’s... safe, right?",
+                "next": "drinkTeaFromCassandra"
+            }
+        ]
+	},
+	"giveCassandraTheGiftTea" : {
+        "dialog": [
+            "Kylie",
+            "Speaking of tea, I brought you some as a... cave warming gift. It’s... green?",
+            "Cassandra",
+            "Why, thank you! The fire over there already keeps the place plenty warm.",
+			"Kylie (under her breath)",
+			"That’s what I’m afraid of.",
+"Cassandra", "Pardon?",
+"Kylie", "Nothing!",
+
+"Cassandra", "Mmm? Anyway, though, I never say no to tea leaves from Tea Song. I’ve already got a pot brewed, so I’ll save this for later. Shall I pour you a cup?"
+        ],
+        "options": [
+            {
+                "description": "Continue",
+                "next": "beatAroundTheBushWithCassandra"
+            }
+        ]
+	},
+	"drinkTeaFromCassandra" : {
+        "dialog": [
+            "Kylie",
+            "It’s... safe, right?",
+
+"Cassandra", "I promise you. Look-",
+
+"", "Cassandra refills her cup and sips, then fills Kylie’s cup and stares expectantly.",
+
+"", "Hesitantly, Kylie takes a drink.",
+
+"Kylie", "Mmm, this is good.",
+
+"Cassandra", "Yes, that’s because of the poison I put in.",
+
+"Kylie", "WHAT?!?",
+
+"Cassandra", "Calm down, I’m joking!",
+
+"Kylie", "Oh, for crying out loud!",
+
+"Cassandra", "Sorry, you seemed tense! I had to lighten the mood somehow.",
+
+"Developer's Note", "That's as far as it currently goes; this game is still in development."
+        ],
+        "options": [
+            {
+                "description": "End of development demo",
                 "next": "end"
             }
         ]
-    }
+	}
 };
 
 	return conversations;
