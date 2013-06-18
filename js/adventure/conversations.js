@@ -289,16 +289,64 @@ adventure.getConversations = function () {
 
 "Kylie", "Oh, for crying out loud!",
 
-"Cassandra", "Sorry, you seemed tense! I had to lighten the mood somehow.",
-
-"Developer's Note", "That's as far as it currently goes; this game is still in development."
+"Cassandra", "Sorry, you seemed tense! I had to lighten the mood somehow."
         ],
         "options": [
             {
-                "description": "End of development demo",
-                "next": "end"
+                "description": "Continue",
+                "next": "respondingToTrickFromCassandra"
             }
         ]
+	},
+	"respondingToTrickFromCassandra": {
+		"dialog": ["", ""],
+		"options": [
+			{
+				"description": "What was up with forcing me to drink?!?",
+				"next": "askCassandraWhatWasUp"
+			},
+			{
+				"description": "Didn’t you, like, burn a dude and his house?",
+				"next": "askCassandraAboutBurningADude"
+			},
+			{
+				"description": "Finish talking (end of development demo)",
+				"next": "end"
+			}
+		]
+	},
+	"askCassandraWhatWasUp": {
+		"dialog": [
+"Kylie", "What was up with all that, I don’t know, pleasantries and- and- and pointing a gun to my head until I drank your tea? Which is very good by the way.",
+
+"Cassandra", "By gun you mean a honed mind that can set things aflame at will, I suppose? Don’t worry. I don’t bite. My parents taught me to be polite to my guests is all. And thank you; I fancy myself a bit of a tea connoisseur."
+			],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "respondingToTrickFromCassandra"
+			}
+		]
+	},
+	"askCassandraAboutBurningADude": {
+		"dialog": [
+"Kylie", "But... Didn’t you, like, burn a dude and his house?",
+
+"Cassandra", "...",
+
+"Kylie", "Oh gosh, sorry! Please don’t burn me!",
+
+"Cassandra", "No no no, it’s fine. It’s just... I don’t talk about that, okay?",
+
+"Kylie", "Okay."
+
+			],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "respondingToTrickFromCassandra"
+			}
+		]
 	}
 };
 
