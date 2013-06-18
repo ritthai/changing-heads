@@ -136,19 +136,7 @@ adventure.getConversations = function () {
             "Simon",
             "Yeah, I guess all those late nights take their toll. But I'm still-",
             "",
-            "",
-            "",
             "Simon looks down."
-        ],
-        "options": [
-            {
-                "description": "Continue",
-                "next": "talkToSimonWheresMyBody"
-            }
-        ]
-    },
-    "talkToSimonWheresMyBody": {
-        "dialog": [
             "Simon",
             "Aw fish nuggets! Where's my totally hot body?!? Something must've happend while I was asleep.",
             "Kylie",
@@ -177,24 +165,16 @@ adventure.getConversations = function () {
             "We hear you fellow creature. We hear you brother. We hear you sister.",
             "Heads",
             "We are sorry. Please forgive us. Our brother is foolish, but he means no harm.",
-        ],
-        "options": [
-            {
-                "description": "Brother?",
-                "next": "headsDescribeTheThievingHead"
-            }
-        ]
-    },
-	"headsDescribeTheThievingHead": {
-		    "dialog": [
-		        "Heads",
-		        "The body thief. Our brother. A traitor to our cause",
-		        "Heads",
-		        "He lacks patience. Unwilling to wait to grow a body, he turned into a petty criminal.",
-		        "Heads",
-		        "The human from the cave by the pond. It warned us.",
-				"Kylie",
-				"Cassandra?!? That scary tea lady? Didn't she burn a man to death? Ugh. But I guess I should to talk to her..."
+			"Kylie",
+			"Brother?",
+	        "Heads",
+	        "The body thief. Our brother. A traitor to our cause",
+	        "Heads",
+	        "He lacks patience. Unwilling to wait to grow a body, he turned into a petty criminal.",
+	        "Heads",
+	        "The human from the cave by the pond. It warned us.",
+			"Kylie",
+			"Cassandra?!? That scary tea lady? Didn't she burn a man to death? Ugh. But I guess I should to talk to her..."
 		    ],
 		    "options": [
 		        {
