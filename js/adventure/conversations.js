@@ -18,7 +18,7 @@ adventure.getConversations = function () {
         ]
 	},
     "wonderWhereSimonIsAtTeaShop": {
-        "dialog": "Kylie: Alright, Simon better be here... Ah! Hey, Simon!",
+        "dialog": ["Kylie", "Alright, Simon better be here... Ah! Hey, Simon!"],
         "options": [
             {
                 "description": "Continue",
@@ -53,16 +53,16 @@ adventure.getConversations = function () {
     },
     "talkingToSimonInTeaShopAboutJournalismSchool": {
         "dialog": [
-					"Kylie",
-					"Awesome! I got into the journalism school I wanted.",
-                    "Simon",
-                    "Hey, that's awesome! So what are you gonna journalate about?",
-                    "Kylie",
-                    "I don't know. I can't figure out where to get a good story. Hmm... I wanna do new media.",
-                    "Simon",
-                    "Like a video blog? A crackdown on the shady world of cats and catnip?",
-                    "Kylie",
-                    "Eh, something like that."
+			"Kylie",
+			"Awesome! I got into the journalism school I wanted.",
+            "Simon",
+            "Hey, that's awesome! So what are you gonna journalate about?",
+            "Kylie",
+            "I don't know. I can't figure out where to get a good story. Hmm... I wanna do new media.",
+            "Simon",
+            "Like a video blog? A crackdown on the shady world of cats and catnip?",
+            "Kylie",
+            "Eh, something like that."
         ],
         "options": [
             {
@@ -76,12 +76,12 @@ adventure.getConversations = function () {
     },
 	"talkingToSimonInTeaShopAboutAnimation": {
 		"dialog": [
-                    "Simon",
-                    "Ok, well, I'm a storyboard artist not an animator. There's a difference. It's pretty good. I don't know; I'm kind of having writer's block or something.",
-                    "Kylie",
-                    "Aw, that sucks. Well, maybe being back home will get you reinvigorated!",
-                    "Simon",
-                    "Hey, I know! You know the weird head things growing out of the ground nearby past the pond? Let's check it. Maybe we can get some inspiration.",
+            "Simon",
+            "Well, I'm a storyboard artist not an animator. There's a difference. It's pretty good. I don't know; I'm kind of having writer's block or something.",
+            "Kylie",
+            "Aw, that sucks. Well, maybe being back home will get you reinvigorated!",
+            "Simon",
+            "Hey, I know! You know the weird head things growing out of the ground nearby past the pond? Let's check it out. Maybe we can get some inspiration."
 		],
 		"onEnter": "onTalkingToSimonAboutAnimation",
 		"options": [
@@ -92,7 +92,7 @@ adventure.getConversations = function () {
 		]
 	},
     "introduceTheChangingHeads": {
-        "dialog": "Kylie: Alright, Simon should be here any minute. I guess I'll just look around while I'm waiting.",
+        "dialog": ["Kylie", "Alright, Simon should be here any minute. I guess I'll just look around while I'm waiting."],
         "options": [
             {
                 "description": "Continue",
@@ -101,7 +101,7 @@ adventure.getConversations = function () {
         ]
     },
     "examineTheChangingHeads": {
-        "dialog": "Kylie: These things just grow out of the ground. Every once in a while a new one pops up to the right, and each new one looks more and more like an actual person. It looks like they're just starting work on growing a body.",
+        "dialog": ["Kylie", "They just keep growing out of the ground. Each time a new one pops up it looks more and more like an actual person."],
         "options": [
             {
                 "description": "Finish examining",
@@ -112,43 +112,33 @@ adventure.getConversations = function () {
     "examineNormalSizedHead": {
         "dialog": [
             "Kylie",
-            "Why is this one so much smaller? Wait... Oh my! Simon!",
+            "Huh. Why is this one so much smaller? Wait... Oh my! Simon! Are you okay?",
             "Simon",
-            "Huh? ...Oh, Kylie. I must've dozed off."
-        ],
-        "options": [
-            {
-                "description": "",
-                "dialog": [
-                    "Kylie",
-                    "Simon! Are you okay?"
-                ],
-                "next": "talkToSimonAreYouOkay"
-            }
-        ]
-    },
-    "talkToSimonAreYouOkay": {
-        "dialog": [
-            "Simon",
-            "Hey, it's fine. I've just been staying up late working on the new storyboards.",
+            "Huh? ...Oh, Kylie. Sorry, I dozed off. Late nights drawing storyboards, you know?",
             "Kylie",
-            "What about your body?",
+            "Yeah, but I mean... How do your... legs feel?",
             "Simon",
-            "Yeah, I guess all those late nights take their toll. But I'm still-",
-            "",
-            "Simon looks down."
-            "Simon",
-            "Aw fish nuggets! Where's my totally hot body?!? Something must've happend while I was asleep.",
+            "Kind of cramped from sitting in that plane so long. Though they’re feeling better now. A lot better, actually. It’s like they’re not even the- OH DANG!",
             "Kylie",
-			"Holy crap, this is bonkers!",
+            "Oh dang is right. Is it all the coffee? That stuff stunts your growth, pal.",
+            "Simon",
+            "Aw, my totally hot body! I’ve been working out too.",
+            "Kylie",
+			"Yeah, this is bonkers.",
 			"Simon",
-			"Heyheyhey. Kylie. Don't lose your *head* over this! We must use our *heads* to make *headway* in this matter. :D",
+			"Heyheyhey. Kylie. Just don't lose your *head* over this. We must use our *heads* to make *headway* in this matter.",
 			"Kylie",
-            "...Yeah, that was good. But seriously, was anybody else around?",
-            "Simon",
-            "I don't think so. Well, those giant heads were there of course...",
-            "Kylie",
-            "The heads? Maybe they saw something! Wait, can they even talk?"
+			"...",
+			"Simon",
+			"...",
+			"Simon and Kylie",
+            "...Bahahahahahaha!",
+			"Kylie",
+			"Ok, but seriously, was anybody around before you fell asleep?",
+			"Simon",
+			"I don't think so. Well, those giant heads were there of course.",
+			"Kylie",
+			"The heads? Hey, maybe they saw something! Wait, can they even talk?"
         ],
         "options": [
             {
