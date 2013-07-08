@@ -308,14 +308,11 @@ adventure.getConversations = function () {
 			{
 				"description": "Didn’t you, like, burn a dude and his house?",
 				"next": "askCassandraAboutBurningADude"
-			},
-			{
-				"description": "Finish talking (end of development demo)",
-				"next": "end"
 			}
 		]
 	},
 	"askCassandraWhatWasUp": {
+		"onEnter": "askCassandraWhatWasUp",
 		"dialog": [
 "Kylie", "What was up with all that, I don’t know, pleasantries and- and- and pointing a gun to my head until I drank your tea? Which is very good by the way.",
 
@@ -329,6 +326,7 @@ adventure.getConversations = function () {
 		]
 	},
 	"askCassandraAboutBurningADude": {
+		"onEnter": "askCassandraAboutBurningADude",
 		"dialog": [
 "Kylie", "But... Didn’t you, like, burn a dude and his house?",
 
@@ -347,6 +345,23 @@ adventure.getConversations = function () {
 				"next": "respondingToTrickFromCassandra"
 			}
 		]
+	},
+	"interviewCassandra" : {
+        "dialog": [
+"Cassandra", "So I assume, especially seeing how scared you seem, that you didn’t just come here to offer me tea and exchange \"pleasantries\"?",
+
+"Kylie", "Well... yeah. I’m kind of a journalist. I mean, there are all these rumours about you, but I was hoping to get a better idea of who \"The Tea Lady\" really is.",
+
+"Cassandra", "Haha, \"Tea Lady\"? Well, thank you kindly for being such an intrepid young journalist willing to get my story. What would you like to know?",
+
+"Kylie", "Except the off limit thing, right? Um..."
+        ],
+        "options": [
+			{
+				"description": "Finish talking (the rest isn't programmed yet)",
+				"next": "end"
+			}
+        ]
 	}
 };
 

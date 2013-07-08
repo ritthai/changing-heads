@@ -7,17 +7,7 @@ See the file license.txt for copying permission.
 adventure.getSceneFunctions = function (adventureProvider) {
 	var worldState = adventureProvider.worldState;
 
-	var playLittleDitty = function () {
-		var littleDitty = new buzz.sound( "audio/music/mellow-introduction", {
-			formats: [ "wav" ]
-		});
-		littleDitty.fadeIn().play();
-	};
-
 	var sceneFunctions = {
-		'playLittleDitty': function () {
-			playLittleDitty();
-		},
 		'enterTeaShopAndSeeSimon': function () {
 			if (!worldState['hasSeenSimonInTeaShop']) {
 				worldState['hasSeenSimonInTeaShop'] = true;
@@ -61,5 +51,35 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			}
 		}
 	};
+
+	sceneFunctions['playLittleDitty'] = function () {
+		var littleDitty = new buzz.sound( "audio/music/mellow-introduction", {
+			formats: [ "wav" ]
+		});
+		littleDitty.fadeIn().play();
+	};
+
+	var addInterviewCassandraOptionIfDoneAskingWhatWasIf = function (currentConversation) {
+		if (worldState['hasAskedCassandraWhatWasUp'] &&
+				worldState['hasAskedCassandraAboutBurningADude']) {
+			currentConversation.options = [{
+				"description": "Continue",
+				"next": "interviewCassandra"
+			}];
+		}
+	};
+
+	sceneFunctions['askCassandraWhatWasUp'] = function (currentConversation) {
+		worldState['hasAskedCassandraWhatWasUp'] = true;
+		addInterviewCassandraOptionIfDoneAskingWhatWasIf(currentConversation);
+		return currentConversation;
+	};
+
+	sceneFunctions['askCassandraAboutBurningADude'] = function (currentConversation) {
+		worldState['hasAskedCassandraAboutBurningADude'] = true;
+		addInterviewCassandraOptionIfDoneAskingWhatWasIf(currentConversation);
+		return currentConversation;
+	};
+
 	return sceneFunctions;
 };

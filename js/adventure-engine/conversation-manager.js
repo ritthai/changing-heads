@@ -124,13 +124,12 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 			})).play();
 		}
 		if (currentLine === 0 && currentConversation.onEnter) {
-			overridingDialog = sceneFunctions[currentConversation.onEnter]();
+			overridingConversation = sceneFunctions[currentConversation.onEnter](currentConversation);
+			if (overridingConversation) {
+				currentConversation = overridingConversation;
+			}
 		}
-		if (typeof overridingDialog !== 'undefined') {
-			writeDialog(overridingDialog);
-		} else {
-			writeDialog(currentConversation.dialog);
-		}
+		writeDialog(currentConversation.dialog);
 		writeDialogLn('');
 		var dialog = currentConversation.dialog;
 		if (typeof dialog !== 'string' && typeof dialog[0] === 'string') {
@@ -159,12 +158,18 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 
 	var startConversation = function (conversationName) {
 		isInConversation = true;
-		currentConversation = conversations[conversationName];
+		currentConversation = clone(conversations[conversationName]);
 		resetVariablesForPartialConverstion();
 		clearDialog();
 		$("#dialog-box").show();
 		$("#action-description-box").hide();
 		proceedConversation();
+	};
+
+	// TODO: This was copied this from engine.js instead of being DRY.
+	// Make it DRY
+	var clone = function (objectToClone) {
+		return $.extend(true, {}, objectToClone);
 	};
 
 	return {
