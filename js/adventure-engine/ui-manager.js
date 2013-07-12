@@ -14,6 +14,94 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 	var firstCoordinateIsRecorded;
 	var firstCoordinate;
 
+	var sceneToPageCoordinates = function (coordinates) {
+		var screen = $("#screen"),
+			offset = screen.offset(),
+			resultX = coordinates.x + offset.left,
+			resultY = coordinates.y + offset.top;
+		return {x: resultX, y: resultY};
+	};
+
+	var putPlayerAt = function (destination) {
+		var player = $("#player");
+		var destinationOnPage = sceneToPageCoordinates(destination);
+		var playerTopLeftPoint = playerGroundToTopLeftPoint(player, destinationOnPage);
+		player.offset({
+				left: playerTopLeftPoint.x,
+				top: playerTopLeftPoint.y
+		});
+	};
+
+	var playerGroundToTopLeftPoint = function (player, groundPoint) {
+		var topLeftPoint = {
+			x: groundPoint.x - player.width() / 2,
+			y: groundPoint.y - player.height()
+		};
+		return topLeftPoint;
+	};
+
+	var animatePlayerMove = function (player, destination, callback) {
+		var playerTopLeftPoint = playerGroundToTopLeftPoint(player, destination);
+		player.animate({
+				left: playerTopLeftPoint.x,
+				top: playerTopLeftPoint.y
+			}, callback);
+	};
+
+	var makePlayerFaceRightWayForMove = function (player, destination) {
+		if (destination.x < player.position().left + player.width()/2) {
+			player.addClass('is-flipped-horizontally');
+		} else {
+			player.removeClass('is-flipped-horizontally');
+		}
+	};
+
+	var movePlayer = function (destination, callback) {
+		var player = $("#player");
+		makePlayerFaceRightWayForMove(player, destination);
+		animatePlayerMove(player, destination, callback);
+	};
+
+	var setBackgroundImageOfJqueryElement = function ($element, url) {
+		$element.css('background-image', 'url(' + url + ')');
+	};
+
+	var addSceneImage = function (image) {
+		var id = 'scene-image_' + image.id;
+		var x = image.shape.topLeftCorner.x;
+		var y = image.shape.topLeftCorner.y;
+		var width = image.shape.bottomRightCorner.x - x;
+		var height = image.shape.bottomRightCorner.y - y;
+
+		$('#scene').append('<div id="' + id + '" class="scene-entity scene-entity_image"></div>');
+		var $sceneImage = $('#' + id);
+		$sceneImage.css('background-image', 'url(' + image.url + ')').
+			css('left', x + 'px').
+			css('top', y + 'px');
+		$sceneImage.width(width).
+			height(height);
+	};
+
+	var addSceneImages = function (images) {
+		var i, image;
+		if (!images) { return; }
+		for (i = 0; i < images.length; i++) {
+			image = images[i];
+			if (!image.hidden) {
+				addSceneImage(images[i]);
+			}
+		}
+	};
+
+	var setBackgroundImageOfScene = function (url) {
+		var $scene = $('#scene');
+		setBackgroundImageOfJqueryElement($scene, url);
+	};
+
+	var removeScene = function () {
+		$('#scene .scene-entity').remove();
+	};
+
 	var pageToSceneCoordinates = function (coordinates) {
 		var screen = $("#screen"),
 			offset = screen.offset(),
@@ -129,6 +217,13 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 		document.addEventListener('touchmove', onTouchMove, false);
 	};
 
+	var drawScene = function (scene, backgroundDirectory) {
+		removeScene();
+		setBackgroundImageOfScene(backgroundDirectory + scene.background);
+		addSceneImages(scene.images);
+		showActionDescription();
+	};
+
 	var init = function () {
 		mousePosition = {x: -1, y: -1};
 		buildModeManager = adventure.getBuildModeManager();
@@ -138,6 +233,8 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 
 	return {
 		bindHandlers: bindHandlers,
-		showActionDescription: showActionDescription
+		drawScene: drawScene,
+		movePlayer: movePlayer,
+		putPlayerAt: putPlayerAt
 	};
 };
