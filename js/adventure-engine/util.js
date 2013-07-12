@@ -9,7 +9,12 @@ adventure.util = (function () {
 		$element.css('background-image', 'url(' + url + ')');
 	};
 
+	var clone = function (objectToClone) {
+		return $.extend(true, {}, objectToClone);
+	};
+
 	return {
-		setBackgroundImageOfJqueryElement: setBackgroundImageOfJqueryElement
+		setBackgroundImageOfJqueryElement: setBackgroundImageOfJqueryElement,
+		clone: clone
 	};
 }());
