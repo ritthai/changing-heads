@@ -9,64 +9,56 @@ var currentAdventure = {};
 var adventure = {};
 
 adventure.getEngine = function () {
-	var util = adventure.util;
-
 	var 	backgroundDirectory,
-		startSceneName,
-		scenes,
-		worldState,
-		mousePosition,
-		currentScene,
-		uiManager,
-		conversationManager,
-		sceneFunctions,
-		conversations;
+		startSceneName;
+
+	var getConversationManager = function (sceneFunctions) {
+		var conversations = adventure.getConversations();
+		var conversationManager = adventure.getConversationManager(conversations, sceneFunctions);
+		return conversationManager;
+	};
 
 	var startAssumingConfigurationDone = function () {
 		var sceneManager = adventure.getSceneManager();
-		
-		var getHotspotAt = sceneManager.getHotspotAt,
-			putPlayerAt = sceneManager.putPlayerAt,
-			movePlayer = sceneManager.movePlayer,
-			loadScene = sceneManager.loadScene,
-			hideSceneImageById = sceneManager.hideSceneImageById,
-			hideHotspotById = sceneManager.hideHotspotById,
-			isInConversation = sceneManager.isInConversation;
 
-		var adventureProviderForUIManager = {
-			getHotspotAt: getHotspotAt,
-			putPlayerAt: putPlayerAt,
-			movePlayer: movePlayer,
-			loadScene: loadScene,
+		var providerForSceneFunctions = {
+			loadScene: sceneManager.loadScene,
+			putPlayerAt: sceneManager.putPlayerAt,
+			movePlayer: sceneManager.movePlayer,
+			hideSceneImageById: sceneManager.hideSceneImageById,
+			hideHotspotById: sceneManager.hideHotspotById,
 			startConversation: function () {}
 		};
+		var sceneFunctions = adventure.getSceneFunctions(providerForSceneFunctions);
 
-		var adventureProviderForSceneFunctions = {
-			putPlayerAt: putPlayerAt,
-			movePlayer: movePlayer,
-			loadScene: loadScene,
-			hideSceneImageById: hideSceneImageById,
-			hideHotspotById: hideHotspotById,
-			startConversation: function () {},
+		var conversationManager = getConversationManager(sceneFunctions);
 
-			worldState: {}
+		providerForSceneFunctions.startConversation = conversationManager.startConversation;
+
+		var providerForUIManager = {
+			loadScene: sceneManager.loadScene,
+			putPlayerAt: sceneManager.putPlayerAt,
+			movePlayer: sceneManager.movePlayer,
+			getHotspotAt: sceneManager.getHotspotAt,
+			startConversation: conversationManager.startConversation
 		};
 
-		scenes = adventure.getScenes();
-		conversations = adventure.getConversations();
-		sceneFunctions = adventure.getSceneFunctions(
-			adventureProviderForSceneFunctions);
+		var scenes = adventure.getScenes();
 
-		currentScene = scenes[startSceneName];
+		// TODO: UI Manager and Scene Functions shouldn't really need the scenes.
+		// loadScene should be modified to also work with just a scene name
 
-		conversationManager = adventure.getConversationManager(conversations, sceneFunctions);
-		adventureProviderForUIManager.startConversation = conversationManager.startConversation;
-		adventureProviderForSceneFunctions.startConversation = conversationManager.startConversation;
+		var uiManager = adventure.getUIManager(
+				providerForUIManager,
+				sceneManager.isInConversation,
+				scenes,
+				sceneFunctions);
 
-		uiManager = adventure.getUIManager(adventureProviderForUIManager,
-				isInConversation, scenes, sceneFunctions);
-		uiManager.bindHandlers();
 
+		var currentScene = scenes[startSceneName];
+
+		// TODO: Scene Manager doesn't have scenes, but UI Manager and Scene Functions do.
+		// Clearly the logic was divided up incorrectly here.
 		sceneManager.configure({
 			currentScene: currentScene,
 			backgroundDirectory: backgroundDirectory,
@@ -75,17 +67,18 @@ adventure.getEngine = function () {
 			sceneFunctions: sceneFunctions
 		});
 
-		loadScene(currentScene);
-	},
+		sceneManager.loadScene(currentScene);
+		uiManager.bindHandlers();
+	};
 
-	configure = function (configuration) {
-		backgroundDirectory = configuration.backgroundDirectory;
+	var configure = function () {
+		var configuration = adventure.getConfiguration();
 		startSceneName = configuration.startSceneName;
+		backgroundDirectory = configuration.backgroundDirectory;
 	};
 
 	var start = function () {
-		var configuration = adventure.getConfiguration();
-		configure(configuration);
+		configure();
 		startAssumingConfigurationDone();
 	};
 

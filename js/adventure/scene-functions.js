@@ -5,7 +5,7 @@ See the file license.txt for copying permission.
 */
 
 adventure.getSceneFunctions = function (adventureProvider) {
-	var worldState = adventureProvider.worldState;
+	var worldState = {};
 
 	var sceneFunctions = {
 		'enterTeaShopAndSeeSimon': function () {

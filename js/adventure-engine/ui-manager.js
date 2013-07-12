@@ -184,6 +184,7 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 			return;
 		}
 		if (isInConversation()) return;
+		// TODO: The logic after this goes beyond just UI. Should move elsewhere.
 		if (hotspot.onHit) { 
 			var onHitResult = sceneFunctions[hotspot.onHit]();
 			var shouldPreventDefault = onHitResult === false;
