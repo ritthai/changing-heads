@@ -154,19 +154,31 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 		}
 	};
 
-	var onClickWhereActionIsNotPrevented = function (coordinates, hotspot) {
-		var shouldPreventDefault = false;
+	var onHitHotspotWhereOnHitAllowsDefault = function (clickedPoint, hotspot) {
+		var shouldPreventMoveToClickedPoint = hotspot.shouldPreventDefault || hotspot.isSolid;
 		if (hotspot.positionToMovePlayerTo) {
 			adventureProvider.movePlayer(hotspot.positionToMovePlayerTo);
-			shouldPreventDefault = true;
+			shouldPreventMoveToClickedPoint = true;
 		}
 		if (hotspot.conversationToStart) {
 			adventureProvider.startConversation(hotspot.conversationToStart);
-			shouldPreventDefault = true;
+			shouldPreventMoveToClickedPoint = true;
 		}
-		if (!(shouldPreventDefault || hotspot.shouldPreventDefault || hotspot.isSolid)) {
-			adventureProvider.movePlayer(coordinates, function () { onArrive(coordinates); });
+		if (!(shouldPreventMoveToClickedPoint)) {
+			adventureProvider.movePlayer(clickedPoint, function () { onArrive(clickedPoint); });
 		}
+	};
+
+	var hitHotspot = function (coordinates) {
+		// TODO: The this logic should go in scene manager
+		var hotspot = adventureProvider.getHotspotAt(coordinates);
+		if (hotspot.onHit) { 
+			var onHitResult = sceneFunctions[hotspot.onHit]();
+			var shouldPreventDefault = onHitResult === false;
+			if (shouldPreventDefault) { return; }
+		}
+		if (isInConversation()) return;
+		onHitHotspotWhereOnHitAllowsDefault(coordinates, hotspot);
 	};
 
 	var eventIsOnScreen = function (event) {
@@ -175,23 +187,15 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 	};
 
 	var onClick = function (event) {
-		var coordinates = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
-		var hotspot = adventureProvider.getHotspotAt(coordinates);
 		onMouseMove(event);
 		if (!eventIsOnScreen(event)) { return; }
+		var coordinates = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
 		if (buildModeManager.isInBuildMode) {
 			buildModeManager.onClickWhenInBuildMode(coordinates);
 			return;
 		}
 		if (isInConversation()) return;
-		// TODO: The logic after this goes beyond just UI. Should move elsewhere.
-		if (hotspot.onHit) { 
-			var onHitResult = sceneFunctions[hotspot.onHit]();
-			var shouldPreventDefault = onHitResult === false;
-			if (shouldPreventDefault) { return; }
-		}
-		if (isInConversation()) return;
-		onClickWhereActionIsNotPrevented(coordinates, hotspot);
+		hitHotspot(coordinates);
 	};
 
 	var getTouchEventFromTouchesEvent = function (event) {

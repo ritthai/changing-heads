@@ -119,6 +119,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 
 	var proceedConversation = function (shouldPreventSound) {
 		if (!shouldPreventSound) {
+			// TODO: This belongs in an audio manager or something
 			(new buzz.sound( "audio/sounds/click", {
 				formats: [ "wav" ]
 			})).play();
