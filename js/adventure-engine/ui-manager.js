@@ -157,7 +157,9 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 	var onHitHotspotWhereOnHitAllowsDefault = function (clickedPoint, hotspot) {
 		var shouldPreventMoveToClickedPoint = hotspot.shouldPreventDefault || hotspot.isSolid;
 		if (hotspot.positionToMovePlayerTo) {
-			adventureProvider.movePlayer(hotspot.positionToMovePlayerTo);
+			adventureProvider.movePlayer(hotspot.positionToMovePlayerTo, function () {
+				makePlayerFaceRightWayForMove($('#player'), hotspot.shape.bottomRightCorner);
+			});
 			shouldPreventMoveToClickedPoint = true;
 		}
 		if (hotspot.conversationToStart) {
