@@ -7,6 +7,7 @@ See the file license.txt for copying permission.
 // TODO: This is not decoupled from the HTML yet
 
 adventure.getConversationManager = function (conversations, sceneFunctions) {
+	var $ = jQuery;
 
 	var isInConversation = false;
 	var currentConversation = {};
@@ -15,7 +16,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 
 	var getIsInConversation = function () {
 		return isInConversation;
-	}
+	};
 	
 	var writeDialogLn = function (text) {
 		$("#dialog").append(text + "<br />");
@@ -30,7 +31,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 		for (i = 0; i < dialog.length; i += 2) {
 			if (i + 1 < dialog.length) {
 				if (dialog[i] === '') {
-					writeDialogLn(dialog[i + 1])
+					writeDialogLn(dialog[i + 1]);
 				} else {
 					writeDialogLn(dialog[i] + ': ' + dialog[i + 1]);
 				}
@@ -131,7 +132,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 			})).play();
 		}
 		if (currentLine === 0 && currentConversation.onEnter) {
-			overridingConversation = sceneFunctions[currentConversation.onEnter](currentConversation);
+			var overridingConversation = sceneFunctions[currentConversation.onEnter](currentConversation);
 			if (overridingConversation) {
 				currentConversation = overridingConversation;
 			}
@@ -182,5 +183,5 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 	return {
 		startConversation: startConversation,
 		isInConversation: getIsInConversation
-	}
+	};
 };
