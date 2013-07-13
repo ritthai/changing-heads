@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Script to Code Dialog</title>
+	</head>
+	<body>
+		Input: <br />
+		<textarea id="input" cols="80" rows="10"></textarea> <br />
+		<input id="button" type="button" value="Convert" /> <br />
+		<br />
+		Output: <br />
+		<textarea id="output" cols="80" rows="10"></textarea>
+		
+		<script>
+
+	var getSpeech = function (line) {
+		var colonIndex = line.indexOf(':');
+		return line.substring(colonIndex + 1);
+	};
+
+	var getName = function (line) {
+		var colonIndex = line.indexOf(':');
+		return line.substring(0, colonIndex);
+	};
+
+	var removeEmptyLines = function (lines) {
+		for (var i = 0; i < lines.length; i++) {
+			var line = lines[i];
+			if (line.length < 1) {
+				lines.splice(i, 1);
+			}
+		};
+	};
+
+	var splitByLine = function (input) {
+		return input.split('\n');
+	};
+
+	var convert = function () {
+		var input = document.getElementById('input').value;
+
+		var lines = splitByLine(input);
+		removeEmptyLines(lines);
+
+		var dialog = [];
+		for (var i = 0; i < lines.length; i++) 	{
+			var line = lines[i];
+			var name = getName(line);
+			dialog.push(name);
+			var speech = getSpeech(line);
+			dialog.push(speech);
+		}
+
+		var output = JSON.stringify(dialog, null, '\t');
+
+		document.getElementById('output').value = output;
+	};
+
+
+
+	var button = document.getElementById('button');
+	button.onclick = convert;
+
+		</script>
+	</body>
+</html>
