@@ -109,9 +109,15 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 	};
 
 	var showOptions = function () {
-		var options = currentConversation.options,
-			i;
-		for (i = 0; i < options.length; i++) {
+		var options = currentConversation.options;
+		if (!options) { options = [
+				{
+					"description": "Continue",
+					"next": "end"
+				}
+			];
+		}
+		for (var i = 0; i < options.length; i++) {
 			showOption(options[i], i);
 		}
 		writeOptionLn('');

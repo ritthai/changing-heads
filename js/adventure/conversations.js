@@ -22,12 +22,6 @@ adventure.getConversations = function () {
 			"Kylie",
 			"Alright, Simon better be here... Ah! Hey, Simon!"
 		],
-		"options": [
-			{
-				"description": "Continue",
-				"next": "end"
-			}
-		],
 		"onEnter": "playLittleDitty"
 	},
 	"talkingToSimonInTeaShop": {
@@ -84,38 +78,22 @@ adventure.getConversations = function () {
 			"Kylie",
 			"Aw, that sucks. Well, maybe being back home will get you reinvigorated!",
 			"Simon",
-			"Hey, I know! You know the weird head things growing out of the ground nearby past the pond? Let's check it out. Maybe we can get some inspiration."
+			"Hey, I know! You know the weird head things growing out of the ground nearby past the pond? Let's check it out. Maybe we can get some inspiration.",
+			"Kylie",
+			"I like that idea! You're taking your bike, right? I'll meet you there."
 		],
-		"onEnter": "onTalkingToSimonAboutAnimation",
-		"options": [
-			{
-				"description": "I like that idea! You're taking your bike, right? I'll meet you there.",
-				"next": "end"
-			}
-		]
+		"onEnter": "onTalkingToSimonAboutAnimation"
 	},
 	"introduceTheChangingHeads": {
 		"dialog": [
 			"Kylie",
 			"Alright, Simon should be here any minute. I guess I'll just look around while I'm waiting."
-		],
-		"options": [
-			{
-				"description": "Continue",
-				"next": "end"
-			}
 		]
 	},
 	"examineTheChangingHeads": {
 		"dialog": [
 			"Kylie",
 			"They just keep growing out of the ground. Each time a new one pops up it looks more and more like an actual person."
-		],
-		"options": [
-			{
-				"description": "Finish examining",
-				"next": "end"
-			}
 		]
 	},
 	"examineNormalSizedHead": {
@@ -148,12 +126,6 @@ adventure.getConversations = function () {
 			"I don't think so. Well, those giant heads were there of course.",
 			"Kylie",
 			"The heads? Hey, maybe they saw something! Wait, can they even talk?"
-		],
-		"options": [
-			{
-				"description": "Finish talking",
-				"next": "end"
-			}
 		]
 	},
 	"talkToTheChangingHeads": {
@@ -188,24 +160,12 @@ adventure.getConversations = function () {
 			"Hey, don’t take your personal failures out on her!",
 			"Kylie",
 			"Ugh. I usually *avoid* Cassandra’s cave when I go by the pond. Maybe I can convince Simon that he doesn’t need a body."
-		],
-		"options": [
-			{
-				"description": "Finish talking",
-				"next": "end"
-			}
 		]
 	},
 	"mentionFearOfCassandra": {
 		"dialog": [
 			"Kylie (in her head)",
 			"That's where Cassandra lives... I heard that she lives out here because she burned a man to death one day. Better move along before she fries me for loitering."
-		],
-		"options": [
-			{
-				"description": "Continue",
-				"next": "end"
-			}
 		]
 	},
 	"talkToCassandra": {
@@ -381,6 +341,7 @@ adventure.getConversations = function () {
 		]
 	},
 	"interviewCassandraAboutThings": {
+		"onEnter": "interviewCassandraAboutThings",
 		"dialog": [
 			"Kylie",
 			" So tell me about your fire powers.",
@@ -450,13 +411,11 @@ adventure.getConversations = function () {
 			" Sweet! Thanks, Cassandra. You’ve been so nice!",
 			"Cassandra",
 			" Any time. Please come by anytime you’re in the mood to have tea."
-		],
-		"options": [
-			{
-				"description": "Finish the development demo (there's nothing else programmed yet)",
-				"next": "end"
-			}
 		]
+	},
+	"examineSalamander": {
+		"onEnter": "examineSalamander",
+		"dialog": ["Kylie", "Hey there, cutie! Enjoying the water?"]
 	}
 };
 
