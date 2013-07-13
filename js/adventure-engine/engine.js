@@ -12,14 +12,10 @@ adventure.getEngine = function () {
 	var 	backgroundDirectory,
 		startSceneName;
 
-	var getConversationManager = function (sceneFunctions) {
-		var conversations = adventure.getConversations();
-		var conversationManager = adventure.getConversationManager(conversations, sceneFunctions);
-		return conversationManager;
-	};
-
 	var startAssumingConfigurationDone = function () {
 		var sceneManager = adventure.getSceneManager();
+
+		var conversations = adventure.getConversations();
 
 		var providerForSceneFunctions = {
 			loadScene: sceneManager.loadScene,
@@ -31,7 +27,7 @@ adventure.getEngine = function () {
 		};
 		var sceneFunctions = adventure.getSceneFunctions(providerForSceneFunctions);
 
-		var conversationManager = getConversationManager(sceneFunctions);
+		var conversationManager = adventure.getConversationManager(conversations, sceneFunctions);
 
 		providerForSceneFunctions.startConversation = conversationManager.startConversation;
 

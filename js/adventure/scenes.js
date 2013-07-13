@@ -64,7 +64,7 @@ adventure.getScenes = function () {
 					destinationPosition: {x: 135, y: 374},
 					onHit: 'onHittingCaveOfCassandra'
 				}, {
-					description: "Pond",
+					id: "pond",
 					shape: { type: "rectangle", topLeftCorner: {x: 116, y: 5}, bottomRightCorner: {x: 797, y: 442} },
 					isSolid: true
 				}, {
@@ -90,7 +90,7 @@ adventure.getScenes = function () {
 		'caveOfCassandra': {
 			background: "cave-of-cassandra.jpg",
 			hotspots: [ {
-					description: "Wall",
+					id: "wall",
 					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 0}, bottomRightCorner: {x: 800, y: 160} },
 					isSolid: true
 				}, {
@@ -102,21 +102,22 @@ adventure.getScenes = function () {
 					description: 'Talk to Cassandra',
 					shape: { type: "rectangle", topLeftCorner: {x: 428, y: 221}, bottomRightCorner: {x: 545, y: 403} },
 					positionToMovePlayerTo: {x: 300, y: 400},
+					onHit: 'talkToCassandra',
 					conversationToStart: 'talkToCassandra'
 				}, {
-					description: "Fire",
+					id: "fire",
 					shape: { type: "rectangle", topLeftCorner: {x: 563, y: 230}, bottomRightCorner: {x: 797, y: 591} },
 					isSolid: true
 				}, {
-					description: "Tea",
+					id: "tea",
 					shape: { type: "rectangle", topLeftCorner: {x: 360, y: 274}, bottomRightCorner: {x: 419, y: 316} },
 					isSolid: true
 				}, {
-					description: "Table",
+					id: "table",
 					shape: { type: "rectangle", topLeftCorner: {x: 316, y: 298}, bottomRightCorner: {x: 457, y: 412} },
 					isSolid: true
 				}, {
-					description: "Wall",
+					id: "wall",
 					shape: { type: "rectangle", topLeftCorner: {x: 5, y: 5}, bottomRightCorner: {x: 799, y: 326} },
 					isSolid: true
 				}
@@ -139,13 +140,22 @@ adventure.getScenes = function () {
 					positionToMovePlayerTo: {x: 473, y: 436},
 					conversationToStart: 'talkingToSimonInTeaShop',
 					isSolid: true
+				}, {
+					description: "Talk to Shop Owner",
+					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} },
+					conversationToStart: 'talkToShopOwner',
+					isSolid: true
 				}
+
 			],
 			images: [
 				{
 					id: "simon",
 					url: "img/characters/simon.png",
 					shape: { type: "rectangle", topLeftCorner: {x: 570, y: 224}, bottomRightCorner: {x: 787, y: 433} }
+				}, {
+					url: "img/characters/tom.png",
+					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} }
 				}
 			]
 		}

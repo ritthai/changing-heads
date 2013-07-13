@@ -90,6 +90,16 @@ adventure.getConversations = function () {
 			"Alright, Simon should be here any minute. I guess I'll just look around while I'm waiting."
 		]
 	},
+	"talkToShopOwner": {
+		"dialog": [
+			"Kylie",
+			"Hi.",
+			"Tea Shop Owner",
+			"Good afternoon.",
+			"Game Developer",
+			"Yeah, this is sort of temporary."
+		]
+	},
 	"examineTheChangingHeads": {
 		"dialog": [
 			"Kylie",
@@ -416,6 +426,41 @@ adventure.getConversations = function () {
 	"examineSalamander": {
 		"onEnter": "examineSalamander",
 		"dialog": ["Kylie", "Hey there, cutie! Enjoying the water?"]
+	},
+	"askCassandraForAnotherFish": {
+		"dialog": [
+			"Kylie",
+			" Hey, Cassie! I think Cone’s still hungry. She just threw me off her back!",
+			"Cassandra",
+			" Oh my! I hope she did not hurt you.",
+			"Kylie",
+			" Nah, I’m a bit wet, but fine otherwise.",
+			"",
+			"Kylie starts to feel a heat surrounding her body.",
+			"Kylie",
+			" Woah! Are you doing this?",
+			"Cassandra",
+			" Just trying to help. There. All dry?",
+			"Kylie",
+			" Oh, cool! Thanks. But yeah, could I get another fish please?",
+			"Cassandra",
+			" Actually, now that I think of it, I believe Cone has a sunburn. I’ve seen her flying closer to the sun that is healthy for an amphibian lately. Poor baby.",
+			"Kylie",
+			" But you’re a vet, right? You can fix her?",
+			"Cassandra",
+			" Yes, of course. Though I am missing missing an ingredient I need for the ointment. While I prepare using the ingredients I do have, would you be so kind as to fetch some “special salamander tea” from Tea Song? Tom will know the one. Just tell him you’re picking it up for me.",
+			"Kylie",
+			" And Tom’s the owner, right?",
+			"Cassandra",
+			" Yes. He’s a virtuoso at tea making.",
+			"Kylie",
+			" I’ve heard. He told me you’re pretty good yourself.",
+			"Cassandra",
+			" Oh, what a sweetheart. He flatters me.",
+
+			"Game Developer",
+			"Hi! It's the developer speaking. I haven't added Tom to the tea shop yet, so that's all for now."
+		]
 	}
 };
 

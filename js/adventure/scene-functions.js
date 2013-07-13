@@ -32,6 +32,13 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			}
 		},
 
+		'playLittleDitty': function () {
+			var littleDitty = new buzz.sound( "audio/music/mellow-introduction", {
+				formats: [ "wav" ]
+			});
+			littleDitty.fadeIn().play();
+		},
+
 		'onTalkingToSimonAboutAnimation': function () {
 			worldState['hasDecidedToGoToChangingHeads'] = true;
 		},
@@ -67,11 +74,11 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			}
 		},
 
-		'playLittleDitty': function () {
-			var littleDitty = new buzz.sound( "audio/music/mellow-introduction", {
-				formats: [ "wav" ]
-			});
-			littleDitty.fadeIn().play();
+		'talkToCassandra': function () {
+			if (worldState['hasFedSalamander']) {
+				adventureProvider.startConversation('askCassandraForAnotherFish');
+				return false;
+			}
 		},
 
 		'askCassandraWhatWasUp': function (currentConversation) {
