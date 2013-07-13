@@ -166,7 +166,7 @@ adventure.getScenes = function () {
 				{
 					description: "Talk to Medicine Man",
 					shape: { type: "rectangle", topLeftCorner: {x: 385, y: 76}, bottomRightCorner: {x: 468, y: 306} },
-					conversationToStart: "talkToMedicineMan"
+					onHit: "onHittingMedicineMan"
 				}, {
 					description: "Leave",
 					shape: { type: "rectangle", topLeftCorner: {x: 2, y: 3}, bottomRightCorner: {x: 117, y: 595} },
@@ -186,10 +186,31 @@ adventure.getScenes = function () {
 			background: "sky.jpg",
 			hotspots: [
 				{
+					description: "Land",
+					shape: { type: "rectangle", topLeftCorner: {x: 2, y: 3}, bottomRightCorner: {x: 117, y: 595} },
+					destinationScene: 'beach',
+					destinationPosition: {x: 751, y: 432}
+				}
+			]
+		},
+		'beach': {
+			background: "beach.jpg",
+			hotspots: [
+				{
+					description: "Talk to Thief Head",
+					shape: { type: "rectangle", topLeftCorner: {x: 385, y: 76}, bottomRightCorner: {x: 468, y: 306} },
+					conversationToStart: "talkToThiefHead"
+				}, {
 					description: "Leave",
 					shape: { type: "rectangle", topLeftCorner: {x: 2, y: 3}, bottomRightCorner: {x: 117, y: 595} },
 					destinationScene: 'pond',
 					destinationPosition: {x: 751, y: 432}
+				}
+			],
+			images: [
+				{
+					url: "img/characters/simon.png",
+					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} }
 				}
 			]
 		}

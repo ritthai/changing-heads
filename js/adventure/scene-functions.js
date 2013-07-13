@@ -75,6 +75,10 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'talkToCassandra': function () {
+			if (worldState['isLookingForSomethingThatHurts']) {
+				adventureProvider.startConversation('fixSimon');
+				return false;
+			}
 			if (worldState['hasSalamanderTea']) {
 				adventureProvider.startConversation('giveCassandraSalamanderTea');
 				return false;
@@ -133,8 +137,18 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			}
 		},
 
-		'talkToMedicineMan': function () {
-			worldState['hasSalamanderTea'] = true;
+		'onHittingMedicineMan': function () {
+			conversationToStart: "talkToMedicineMan"
+			if (worldState['isLookingForSomethingThatHurts']) {
+				worldState['hasSomethingThatHurts'] = true;
+				adventureProvider.startConversation('askForSomethingThatHurts');
+				return false;
+			}
+			if (!worldState['hasSalamanderTea']) {
+				worldState['hasSalamanderTea'] = true;
+				adventureProvider.startConversation('talkToMedicineMan');
+				return false;
+			}
 		},
 
 		'giveCassandraSalamanderTea': function () {
@@ -143,6 +157,10 @@ adventure.getSceneFunctions = function (adventureProvider) {
 
 		'enterSky': function () {
 			adventureProvider.startConversation('talkAboutPastOfCassandra');
+		},
+
+		'talkToThiefHead': function () {
+			worldState['isLookingForSomethingThatHurts'] = true;
 		}
 	};
 
