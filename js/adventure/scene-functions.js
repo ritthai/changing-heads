@@ -102,52 +102,23 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			worldState['hasFish'] = true;
 		},
 
-		'examineSalamander': function (conversation) {
+		'onHittingSalamander': function () {
 			if (worldState['hasTreatedSalamander']) {
-				conversation.dialog = ["", ""];
 				adventureProvider.loadScene('sky');
-				return conversation;
+				return false;
 			}
 			if (worldState['hasGivenCassandraSalamanderTea']) {
 				worldState['hasTreatedSalamander'] = true;
-				conversation.dialog = [
-						"Cassandra",
-						" Cone, darling, how are you feeling? Kylie, would you mind applying some to her tail?",
-						"Kylie",
-						" Yes, ma’am!",
-						"",
-						"Kylie rubs the ointment over Cone the sky salamander’s long slick tail. It feels smooth and wet, and a bit like rubber, occasionally pulsating with a playful twitch.",
-						"Cassandra",
-						" There we are. She should be ready to fly now.",
-						"Kylie",
-						" Already?",
-						"Cassandra",
-						" Haha. It’s a very effective remedy. She’ll need some time to fully recover, but there’s some sunblock mixed in, and she is no longer in pain.",
-						"Kylie",
-						" That’s fantastic! So how do I actually ride this thing?",
-						"Cassandra",
-						" Ah, good point. I’ll join you! A ride through the clouds is always refreshing.",
-						"Kylie",
-						" Alright, let’s go!"
-					];
-				return conversation;
+				adventureProvider.startConversation('treatSalamander');
+				return false;
 			}
 			if (worldState['hasFish']) {
 				worldState['hasFedSalamander'] = true;
-				conversation.dialog = [
-					"Kylie",
-					" Here, girl. Chow time.",
-					"",
-					"Cone voraciously gobbles down the fish in one gulp.",
-					"Kylie",
-					" Woah, Cone, that’s a real appetite you got there. I’m coming on board now, alright?",
-					"",
-					"Cone turbulently tosses Kylie off as she tries to get on.",
-					"Kylie",
-					" Hey, what gives?!? Ugh, maybe Cassandra will give me another fish."
-				];
-				return conversation;
+				adventureProvider.startConversation('feedSalamander');
+				return false;
 			}
+			adventureProvider.startConversation('examineSalamander');
+			return false;
 		},
 
 		'onHittingTeaShopOwner': function () {

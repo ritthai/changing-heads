@@ -56,7 +56,7 @@ adventure.getScenes = function () {
 					description: "Salamander",
 					shape: { type: "rectangle", topLeftCorner: {x: 247, y: 395}, bottomRightCorner: {x: 485, y: 519} },
 					isSolid: true,
-					conversationToStart: 'examineSalamander',
+					onHit: 'onHittingSalamander'
 				}, {
 					description: "Enter Cassandra's Cave",
 					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 0}, bottomRightCorner: {x: 350, y: 199} },
