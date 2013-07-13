@@ -6,40 +6,40 @@ See the file license.txt for copying permission.
 
 adventure.getScenes = function () {
 	var scenes = {
-		"theChangingHeads": {
-			background: "changing-heads.jpg",
-			playerPositionOnEnter: {x: 415, y: 535},
-			onEnter: "enterChangingHeads",
-			hotspots: [ 
+		'teaShop': {
+			background: "tea-shop.jpg",
+			onEnter: 'enterTeaShopAndSeeSimon',
+			hotspots: [
 				{
-					id: "examineNormalSizedHead",
-					description: "Examine normal sized head",
-					shape: { type: "rectangle", topLeftCorner: {x: 526, y: 381}, bottomRightCorner: {x: 594, y: 450} },
-					positionToMovePlayerTo: {x: 471, y: 455},
-					conversationToStart: 'examineNormalSizedHead',
-					onHit: 'onHittingNormalSizedHead'
-				}, {
-					description: "Examine the Changing Heads",
-					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 115}, bottomRightCorner: {x: 800, y: 400} },
-					conversationToStart: 'examineTheChangingHeads',
-					onHit: 'onHittingTheChangingHeads'
-				}, {
-					description: "Go to the pond",
-					shape: { type: "rectangle", topLeftCorner: {x: 700, y: 0}, bottomRightCorner: {x: 800, y: 600} },
+					description: "Leave",
+					shape: { type: "rectangle", topLeftCorner: {x: 40, y: 57}, bottomRightCorner: {x: 189, y: 315} },
 					destinationScene: 'pond',
-					destinationPosition: {x: 135, y: 374}
+					destinationPosition: {x: 751, y: 432}
 				}
+				, {
+					id: 'talkToSimon',
+					description: "Talk to Simon",
+					shape: { type: "rectangle", topLeftCorner: {x: 549, y: 219}, bottomRightCorner: {x: 647, y: 445} },
+					positionToMovePlayerTo: {x: 473, y: 436},
+					conversationToStart: 'talkingToSimonInTeaShop',
+					isSolid: true
+				}, {
+					description: "Talk to Shop Owner",
+					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} },
+					conversationToStart: 'talkToShopOwner',
+					onHit: 'onHittingTeaShopOwner',
+					isSolid: true
+				}
+
 			],
 			images: [
 				{
-					id: 'simon-head',
-					url: 'img/characters/simon-head.png',
-					shape: { type: "rectangle", topLeftCorner: {x: 544, y: 401}, bottomRightCorner: {x: 580, y: 450} }
-				},
-				{
-					id: 'exitIndicator',
-					url: 'img/icons/right-arrow.png',
-					shape: { type: "rectangle", topLeftCorner: {x: 722, y: 461}, bottomRightCorner: {x: 760, y: 493} }
+					id: "simon",
+					url: "img/characters/simon.png",
+					shape: { type: "rectangle", topLeftCorner: {x: 570, y: 224}, bottomRightCorner: {x: 787, y: 433} }
+				}, {
+					url: "img/characters/tom.png",
+					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} }
 				}
 			]
 		},
@@ -87,6 +87,43 @@ adventure.getScenes = function () {
 				}
 			]
 		},
+		"theChangingHeads": {
+			background: "changing-heads.jpg",
+			playerPositionOnEnter: {x: 415, y: 535},
+			onEnter: "enterChangingHeads",
+			hotspots: [ 
+				{
+					id: "examineNormalSizedHead",
+					description: "Examine normal sized head",
+					shape: { type: "rectangle", topLeftCorner: {x: 526, y: 381}, bottomRightCorner: {x: 594, y: 450} },
+					positionToMovePlayerTo: {x: 471, y: 455},
+					conversationToStart: 'examineNormalSizedHead',
+					onHit: 'onHittingNormalSizedHead'
+				}, {
+					description: "Examine the Changing Heads",
+					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 115}, bottomRightCorner: {x: 800, y: 400} },
+					conversationToStart: 'examineTheChangingHeads',
+					onHit: 'onHittingTheChangingHeads'
+				}, {
+					description: "Go to the pond",
+					shape: { type: "rectangle", topLeftCorner: {x: 700, y: 0}, bottomRightCorner: {x: 800, y: 600} },
+					destinationScene: 'pond',
+					destinationPosition: {x: 135, y: 374}
+				}
+			],
+			images: [
+				{
+					id: 'simon-head',
+					url: 'img/characters/simon-head.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 544, y: 401}, bottomRightCorner: {x: 580, y: 450} }
+				},
+				{
+					id: 'exitIndicator',
+					url: 'img/icons/right-arrow.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 722, y: 461}, bottomRightCorner: {x: 760, y: 493} }
+				}
+			]
+		},
 		'caveOfCassandra': {
 			background: "cave-of-cassandra.jpg",
 			hotspots: [ {
@@ -123,39 +160,36 @@ adventure.getScenes = function () {
 				}
 			]
 		},
-		'teaShop': {
-			background: "tea-shop.jpg",
-			onEnter: 'enterTeaShopAndSeeSimon',
+		'pharmacy': {
+			background: "pharmacy.jpg",
 			hotspots: [
 				{
+					description: "Talk to Medicine Man",
+					shape: { type: "rectangle", topLeftCorner: {x: 385, y: 76}, bottomRightCorner: {x: 468, y: 306} },
+					conversationToStart: "talkToMedicineMan"
+				}, {
 					description: "Leave",
-					shape: { type: "rectangle", topLeftCorner: {x: 40, y: 57}, bottomRightCorner: {x: 189, y: 315} },
+					shape: { type: "rectangle", topLeftCorner: {x: 2, y: 3}, bottomRightCorner: {x: 117, y: 595} },
 					destinationScene: 'pond',
 					destinationPosition: {x: 751, y: 432}
 				}
-				, {
-					id: 'talkToSimon',
-					description: "Talk to Simon",
-					shape: { type: "rectangle", topLeftCorner: {x: 549, y: 219}, bottomRightCorner: {x: 647, y: 445} },
-					positionToMovePlayerTo: {x: 473, y: 436},
-					conversationToStart: 'talkingToSimonInTeaShop',
-					isSolid: true
-				}, {
-					description: "Talk to Shop Owner",
-					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} },
-					conversationToStart: 'talkToShopOwner',
-					isSolid: true
-				}
-
 			],
 			images: [
 				{
-					id: "simon",
-					url: "img/characters/simon.png",
-					shape: { type: "rectangle", topLeftCorner: {x: 570, y: 224}, bottomRightCorner: {x: 787, y: 433} }
-				}, {
-					url: "img/characters/tom.png",
+					url: "img/characters/doctor.png",
 					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} }
+				}
+			]
+		},
+		'sky': {
+			onEnter: 'enterSky',
+			background: "sky.jpg",
+			hotspots: [
+				{
+					description: "Leave",
+					shape: { type: "rectangle", topLeftCorner: {x: 2, y: 3}, bottomRightCorner: {x: 117, y: 595} },
+					destinationScene: 'pond',
+					destinationPosition: {x: 751, y: 432}
 				}
 			]
 		}

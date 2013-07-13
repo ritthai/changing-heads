@@ -75,7 +75,12 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'talkToCassandra': function () {
+			if (worldState['hasSalamanderTea']) {
+				adventureProvider.startConversation('giveCassandraSalamanderTea');
+				return false;
+			}
 			if (worldState['hasFedSalamander']) {
+				worldState['isPlanningToAskTomForSpecialTea'] = true;
 				adventureProvider.startConversation('askCassandraForAnotherFish');
 				return false;
 			}
@@ -98,6 +103,35 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'examineSalamander': function (conversation) {
+			if (worldState['hasTreatedSalamander']) {
+				conversation.dialog = ["", ""];
+				adventureProvider.loadScene('sky');
+				return conversation;
+			}
+			if (worldState['hasGivenCassandraSalamanderTea']) {
+				worldState['hasTreatedSalamander'] = true;
+				conversation.dialog = [
+						"Cassandra",
+						" Cone, darling, how are you feeling? Kylie, would you mind applying some to her tail?",
+						"Kylie",
+						" Yes, ma’am!",
+						"",
+						"Kylie rubs the ointment over Cone the sky salamander’s long slick tail. It feels smooth and wet, and a bit like rubber, occasionally pulsating with a playful twitch.",
+						"Cassandra",
+						" There we are. She should be ready to fly now.",
+						"Kylie",
+						" Already?",
+						"Cassandra",
+						" Haha. It’s a very effective remedy. She’ll need some time to fully recover, but there’s some sunblock mixed in, and she is no longer in pain.",
+						"Kylie",
+						" That’s fantastic! So how do I actually ride this thing?",
+						"Cassandra",
+						" Ah, good point. I’ll join you! A ride through the clouds is always refreshing.",
+						"Kylie",
+						" Alright, let’s go!"
+					];
+				return conversation;
+			}
 			if (worldState['hasFish']) {
 				worldState['hasFedSalamander'] = true;
 				conversation.dialog = [
@@ -114,6 +148,30 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				];
 				return conversation;
 			}
+		},
+
+		'onHittingTeaShopOwner': function () {
+			if (worldState['isPlanningToGoToDoctor']) {
+				adventureProvider.loadScene('pharmacy');
+				return false;
+			}
+			if (worldState['isPlanningToAskTomForSpecialTea']) {
+				worldState['isPlanningToGoToDoctor'] = true; // TODO: This is temporary.
+				adventureProvider.startConversation('askTomForSpecialTea');
+				return false;
+			}
+		},
+
+		'talkToMedicineMan': function () {
+			worldState['hasSalamanderTea'] = true;
+		},
+
+		'giveCassandraSalamanderTea': function () {
+			worldState['hasGivenCassandraSalamanderTea'] = true;
+		},
+
+		'enterSky': function () {
+			adventureProvider.startConversation('talkAboutPastOfCassandra');
 		}
 	};
 

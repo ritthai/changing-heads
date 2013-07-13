@@ -13,7 +13,8 @@ adventure.getSceneManager = function () {
 		backgroundDirectory,
 		uiManager,
 		conversationManager,
-		sceneFunctions;
+		sceneFunctions,
+		scenes;
 
 	var configure = function (configuration) {
 		currentScene = configuration.currentScene;
@@ -21,6 +22,7 @@ adventure.getSceneManager = function () {
 		uiManager = configuration.uiManager;
 		conversationManager = configuration.conversationManager;
 		sceneFunctions = configuration.sceneFunctions;
+		scenes = configuration.scenes;
 	};
 	
 	var putPlayerAt = function (x, y)  {
@@ -109,11 +111,18 @@ adventure.getSceneManager = function () {
 		uiManager.drawScene(currentScene, backgroundDirectory);
 	};
 
+	var loadSceneByName = function (name) {
+		currentScene = util.clone(scenes[name]);
+		performSceneActions();
+		uiManager.drawScene(currentScene, backgroundDirectory);
+	};
+
 	var sceneManagerToReturn = {
 		getHotspotAt: getHotspotAt,
 		putPlayerAt: putPlayerAt,
 		movePlayer: movePlayer,
 		loadScene: loadScene,
+		loadSceneByName: loadSceneByName,
 		hideSceneImageById: hideSceneImageById,
 		hideHotspotById: hideHotspotById,
 		isInConversation: isInConversation,

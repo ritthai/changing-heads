@@ -18,7 +18,7 @@ adventure.getEngine = function () {
 		var conversations = adventure.getConversations();
 
 		var providerForSceneFunctions = {
-			loadScene: sceneManager.loadScene,
+			loadScene: sceneManager.loadSceneByName,
 			putPlayerAt: sceneManager.putPlayerAt,
 			movePlayer: sceneManager.movePlayer,
 			hideSceneImageById: sceneManager.hideSceneImageById,
@@ -60,7 +60,8 @@ adventure.getEngine = function () {
 			backgroundDirectory: backgroundDirectory,
 			uiManager: uiManager,
 			conversationManager: conversationManager,
-			sceneFunctions: sceneFunctions
+			sceneFunctions: sceneFunctions,
+			scenes: scenes
 		});
 
 		sceneManager.loadScene(currentScene);
