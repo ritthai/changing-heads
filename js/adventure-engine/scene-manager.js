@@ -112,9 +112,7 @@ adventure.getSceneManager = function () {
 	};
 
 	var loadSceneByName = function (name) {
-		currentScene = util.clone(scenes[name]);
-		performSceneActions();
-		uiManager.drawScene(currentScene, backgroundDirectory);
+		loadScene(scenes[name]);
 	};
 
 	var sceneManagerToReturn = {

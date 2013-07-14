@@ -7,13 +7,14 @@ See the file license.txt for copying permission.
 adventure.getSceneFunctions = function (adventureProvider) {
 	var worldState = {};
 
-	var addInterviewCassandraOptionIfDoneAskingWhatWasIf = function (currentConversation) {
+	var addInterviewCassandraOptionIfDoneAskingWhatWasIf = function () {
 		if (worldState['hasAskedCassandraWhatWasUp'] &&
 				worldState['hasAskedCassandraAboutBurningADude']) {
-			currentConversation.options = [{
+			var options = [{
 				"description": "Continue",
 				"next": "interviewCassandra"
 			}];
+			return options;
 		}
 	};
 
@@ -90,16 +91,14 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			}
 		},
 
-		'askCassandraWhatWasUp': function (currentConversation) {
+		'askCassandraWhatWasUp': function () {
 			worldState['hasAskedCassandraWhatWasUp'] = true;
-			addInterviewCassandraOptionIfDoneAskingWhatWasIf(currentConversation);
-			return currentConversation;
+			return addInterviewCassandraOptionIfDoneAskingWhatWasIf();
 		},
 
-		'askCassandraAboutBurningADude': function (currentConversation) {
+		'askCassandraAboutBurningADude': function () {
 			worldState['hasAskedCassandraAboutBurningADude'] = true;
-			addInterviewCassandraOptionIfDoneAskingWhatWasIf(currentConversation);
-			return currentConversation;
+			return addInterviewCassandraOptionIfDoneAskingWhatWasIf();
 		},
 
 		'interviewCassandraAboutThings': function () {

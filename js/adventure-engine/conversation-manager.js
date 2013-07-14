@@ -124,16 +124,20 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 		writeOptionLn('');
 	};
 
+	var clickSound = (new buzz.sound( "audio/sounds/click", {
+				formats: [ "wav" ]
+			}));
+
 	var proceedConversation = function (shouldPreventSound) {
 		if (!shouldPreventSound) {
 			// TODO: This belongs in an audio manager or something
-			(new buzz.sound( "audio/sounds/click", {
-				formats: [ "wav" ]
-			})).play();
+			clickSound.play();
 		}
 		if (currentLine === 0 && currentConversation.onEnter) {
-			var overridingConversation = sceneFunctions[currentConversation.onEnter](currentConversation);
-			if (overridingConversation) {
+			var overridingOptions = sceneFunctions[currentConversation.onEnter](currentConversation);
+			if (overridingOptions) {
+				var overridingConversation = clone(currentConversation);
+				overridingConversation.options = overridingOptions;
 				currentConversation = overridingConversation;
 			}
 		}
@@ -166,7 +170,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 
 	var startConversation = function (conversationName) {
 		isInConversation = true;
-		currentConversation = clone(conversations[conversationName]);
+		currentConversation = conversations[conversationName];
 		resetVariablesForPartialConverstion();
 		clearDialog();
 		$("#dialog-box").show();
