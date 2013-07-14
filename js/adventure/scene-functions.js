@@ -27,9 +27,17 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				adventureProvider.startConversation('startMenu');
 				return false;
 			}
-			if (worldState['hasWaitedForSimonAtChangingHeads']) {
+			if (worldState['hasWaitedForSimonAtChangingHeads'] && !worldState['hasSeenApologyOfCassandra']) {
 				adventureProvider.hideSceneImageById('simon');
 				adventureProvider.hideHotspotById('talkToSimon');
+			}
+		},
+
+		'onHittingSimon': function () {
+			if (worldState['hasSeenApologyOfCassandra']) {
+				worldState['isPlanningToSeeChangingHeadsAgain'] = true;
+				adventureProvider.startConversation('debriefWithSimon');
+				return false;
 			}
 		},
 
@@ -58,10 +66,18 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'onHittingNormalSizedHead': function () {
+			if (worldState['isPlanningToSeeChangingHeadsAgain']) {
+				adventureProvider.startConversation('askSimonAboutWritersBlock');
+				return false;
+			}
 			worldState['hasFoundSimon'] = true;
 		},
 
 		'onHittingTheChangingHeads': function () {
+			if (worldState['isPlanningToSeeChangingHeadsAgain']) {
+				adventureProvider.startConversation('debriefWithChangingHeads');
+				return false;
+			}
 			if (!worldState['hasFoundSimon']) { return; }
 			adventureProvider.startConversation('talkToTheChangingHeads');
 			worldState['hasDecidedToSeeCassandra'] = true;
@@ -69,6 +85,10 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'onHittingCaveOfCassandra': function () {
+			if (worldState['isPlanningToSeeChangingHeadsAgain']) {
+				adventureProvider.startConversation('debriefWithChangingHeads');
+				return false;
+			}
 			if (!worldState['hasDecidedToSeeCassandra']) {
 				adventureProvider.startConversation('mentionFearOfCassandra');
 				return false;
@@ -76,7 +96,8 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'talkToCassandra': function () {
-			if (worldState['isLookingForSomethingThatHurts']) {
+			if (worldState['hasSomethingThatHurts']) {
+				worldState['isPlanningToSaveMalcom'] = true;
 				adventureProvider.startConversation('fixSimon');
 				return false;
 			}
@@ -137,7 +158,11 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'onHittingMedicineMan': function () {
-			conversationToStart: "talkToMedicineMan"
+			if (worldState['isPlanningToSaveMalcom']) {
+				worldState['hasSeenApologyOfCassandra'] = true;
+				adventureProvider.startConversation('seeApologyOfCassandra');
+				return false;				
+			}
 			if (worldState['isLookingForSomethingThatHurts']) {
 				worldState['hasSomethingThatHurts'] = true;
 				adventureProvider.startConversation('askForSomethingThatHurts');

@@ -22,6 +22,7 @@ adventure.getScenes = function () {
 					shape: { type: "rectangle", topLeftCorner: {x: 549, y: 219}, bottomRightCorner: {x: 647, y: 445} },
 					positionToMovePlayerTo: {x: 473, y: 436},
 					conversationToStart: 'talkingToSimonInTeaShop',
+					onHit: 'onHittingSimon',
 					isSolid: true
 				}, {
 					description: "Talk to Shop Owner",
