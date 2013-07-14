@@ -42,10 +42,20 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'playLittleDitty': function () {
-			var littleDitty = new buzz.sound( "audio/music/mellow-introduction", {
-				formats: [ "wav" ]
+			var littleDitty = new buzz.sound( "audio/music/starting-the-brew", {
+				formats: [ "ogg", "wav" ]
 			});
-			littleDitty.fadeIn().play();
+			littleDitty.play();
+		},
+
+		'onEnteringCaveOfCassandra': function () {
+			if (!worldState['hasEnteredCaveOfCassandra']) {
+				worldState['hasEnteredCaveOfCassandra'] = true;
+				var music = new buzz.sound( "audio/music/cassandras-intro", {
+					formats: [ "ogg", "wav" ]
+				});
+				music.play();
+			}
 		},
 
 		'onTalkingToSimonAboutAnimation': function () {

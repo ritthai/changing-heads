@@ -126,6 +126,7 @@ adventure.getScenes = function () {
 			]
 		},
 		'caveOfCassandra': {
+			onEnter: "onEnteringCaveOfCassandra",
 			background: "cave-of-cassandra.jpg",
 			hotspots: [ {
 					id: "wall",

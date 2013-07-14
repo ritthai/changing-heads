@@ -9,7 +9,7 @@ adventure.getConversations = function () {
 
 {
 	"startMenu": {
-		"dialog": "Changing Heads by Ritchie Thai",
+		"dialog": ["", "Changing Heads <br /> By Ritchie Thai <br /> <br /> Turning on your audio (headphones, speakers) is recommended."],
 		"options": [
 			{
 				"description": "Start playing",
