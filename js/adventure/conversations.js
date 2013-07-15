@@ -92,12 +92,8 @@ adventure.getConversations = function () {
 	},
 	"talkToShopOwner": {
 		"dialog": [
-			"Kylie",
-			"Hi.",
-			"Tea Shop Owner",
-			"Good afternoon.",
-			"Game Developer",
-			"Yeah, this is sort of temporary."
+			"Kylie (thinking)",
+			"I guess that's the owner. I like the bowtie! Bowties are cool."
 		]
 	},
 	"examineTheChangingHeads": {
@@ -461,8 +457,14 @@ adventure.getConversations = function () {
 				"Cassandra",
 				" Ah, good point. I’ll join you! A ride through the clouds is always refreshing.",
 				"Kylie",
-				" Alright, let’s go!"
-			]
+				" Alright, let's go!"
+			],
+		"options": [
+			{
+				"description": "Fly into the skies",
+				"next": "flyIntoTheSkies"
+			}
+		]
 	},
 	"askCassandraForAnotherFish": {
 		"dialog": [
@@ -493,10 +495,7 @@ adventure.getConversations = function () {
 			"Kylie",
 			" I’ve heard. He told me you’re pretty good yourself.",
 			"Cassandra",
-			" Oh, what a sweetheart. He flatters me.",
-
-			"Game Developer",
-			"Hi! It's the developer speaking. I haven't added Tom to the tea shop yet, so that's all for now."
+			" Oh, what a sweetheart. He flatters me."
 		]
 	},
 	"askTomForSpecialTea": {
@@ -515,12 +514,29 @@ adventure.getConversations = function () {
 				"Kylie",
 				" Let alone people with fire powers! But anyway, Cassandra asked me to pick up “special salamander tea”.",
 				"Tom",
-				" Oh, I’m afraid the medicine man from the pharmacy bought all of the latest batch. But hey, I’m sure he’ll give you some if you really need it though! He’s a great charitable man. Saved my life when I was a kid. I’m actually about to head there myself; wanna come along?",
-				"Kylie",
-				" Oh. Yeah, sure."
-			]
+				" Oh, I’m afraid the medicine man from the pharmacy bought all of the latest batch. But hey, I’m sure he’ll give you some if you really need it though! He’s a great charitable man. Saved my life when I was a kid. I’m actually about to head there myself; wanna come along?"
+			],
+		"options": [
+			{
+				"description": "Oh. Yeah, sure.",
+				"next": "goToMedicineManWithTom"
+			}
+		]
 	},
-	"talkToMedicineMan": {
+	"goToMedicineManWithTom": {
+		"dialog": [
+			"Tom",
+			"Here we are."
+		],
+		"onEnter": "goToMedicineMan",
+		"options": [
+			{
+				"description": "Continue",
+				"next": "talkToMedicineManWithTom"
+			}
+		]
+	},
+	"talkToMedicineManWithTom": {
 		"dialog":
 			[
 				"Man in the Gas Mask",
@@ -548,7 +564,19 @@ adventure.getConversations = function () {
 				"Kylie",
 				" Bye.",
 				"",
-				"Tom leaves",
+				"Tom leaves"
+			],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "talkToMedicineMan"
+			}
+		]
+	},
+	"talkToMedicineMan": {
+		"onEnter": "onGettingSpecialSalamanderTea",
+		"dialog":
+			[
 				"Malcolm",
 				" Alright, 6 bags. Here you go. Yeah, sorry for hoarding it all. I’ve just been testing a super effective ointment for skin problems, but the way it burns your skin is intolerable. The tea seems to really make a difference.",
 				"Kylie",
@@ -578,6 +606,20 @@ adventure.getConversations = function () {
 				"Cassandra",
 				" Excellent. Let’s go get Cone fixed up."
 			]
+	},
+	"flyIntoTheSkies": {
+		"dialog":
+			[
+				"Kylie",
+				"This is amazing!"
+			],
+		"onEnter":	"flyIntoTheSkies",
+		"options": [
+			{
+				"description": "Continue",
+				"next": "talkAboutPastOfCassandra"
+			}
+		]
 	},
 	"talkAboutPastOfCassandra": {
 		"dialog":
@@ -622,7 +664,17 @@ adventure.getConversations = function () {
 				" No, it’s fine- Hey! Look at that giant head! It’s Simon’s body!",
 				"Cassandra",
 				" Well, he certainly seems to be enjoying himself."
-			]
+			],
+		"options": [
+			{
+				"description": "Land",
+				"next": "landAtBeachParty"
+			}
+		]
+	},
+	"landAtBeachParty": {
+		"dialog": ["Kylie", "So this guy game to dance at a beach party?"],
+		"onEnter": "landAtBeachParty"
 	},
 	"talkToThiefHead": {
 		"onEnter": "talkToThiefHead",

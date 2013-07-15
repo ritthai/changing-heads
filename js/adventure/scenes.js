@@ -13,7 +13,7 @@ adventure.getScenes = function () {
 				{
 					description: "Leave",
 					shape: { type: "rectangle", topLeftCorner: {x: 40, y: 57}, bottomRightCorner: {x: 189, y: 315} },
-					destinationScene: 'pond',
+					destinationScene: 'hub',
 					destinationPosition: {x: 751, y: 432}
 				}
 				, {
@@ -25,8 +25,8 @@ adventure.getScenes = function () {
 					onHit: 'onHittingSimon',
 					isSolid: true
 				}, {
-					description: "Talk to Shop Owner",
-					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} },
+					description: "Shop Owner",
+					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 110}, bottomRightCorner: {x: 479, y: 330} },
 					conversationToStart: 'talkToShopOwner',
 					onHit: 'onHittingTeaShopOwner',
 					isSolid: true
@@ -40,7 +40,46 @@ adventure.getScenes = function () {
 					shape: { type: "rectangle", topLeftCorner: {x: 570, y: 224}, bottomRightCorner: {x: 787, y: 433} }
 				}, {
 					url: "img/characters/tom.png",
-					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} }
+					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 110}, bottomRightCorner: {x: 479, y: 330} }
+				}
+			]
+		},
+		"hub": {
+			background: "hub.jpg",
+			playerPositionOnEnter: {x: 400, y: 500},
+			hotspots: [
+				{
+					description: "Go to the pond",
+					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 300}, bottomRightCorner: {x: 100, y: 600} },
+					destinationScene: 'pond',
+					destinationPosition: {x: 751, y: 432}
+				}, {
+					description: "Go to the Tea Shop",
+					shape: { type: "rectangle", topLeftCorner: {x: 700, y: 300}, bottomRightCorner: {x: 800, y: 600} },
+					destinationScene: 'teaShop',
+					destinationPosition: {x: 135, y: 374}
+				}, {
+					description: "Go to the Medicine Shop",
+					shape: { type: "rectangle", topLeftCorner: {x: 700, y: 0}, bottomRightCorner: {x: 800, y: 300} },
+					destinationScene: 'pharmacy',
+					destinationPosition: {x: 135, y: 374}
+				}
+			],
+			images: [
+				{
+					id: 'exitToPondIndicator',
+					url: 'img/icons/left-arrow.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 23, y: 467}, bottomRightCorner: {x: 62, y: 508} }
+				}
+				, {
+					id: 'exitToTeaShopIndicator',
+					url: 'img/icons/right-arrow.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 714, y: 501}, bottomRightCorner: {x: 750, y: 539} }
+				}
+				, {
+					id: 'exitToPharmacyIndicator',
+					url: 'img/icons/right-arrow.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 714, y: 200}, bottomRightCorner: {x: 750, y: 240} }
 				}
 			]
 		},
@@ -69,9 +108,9 @@ adventure.getScenes = function () {
 					shape: { type: "rectangle", topLeftCorner: {x: 116, y: 5}, bottomRightCorner: {x: 797, y: 442} },
 					isSolid: true
 				}, {
-					description: "Go to the Tea Shop",
+					description: "Enter the town",
 					shape: { type: "rectangle", topLeftCorner: {x: 700, y: 0}, bottomRightCorner: {x: 800, y: 600} },
-					destinationScene: 'teaShop',
+					destinationScene: 'hub',
 					destinationPosition: {x: 135, y: 374}
 				}
 			],
@@ -166,13 +205,13 @@ adventure.getScenes = function () {
 			background: "pharmacy.jpg",
 			hotspots: [
 				{
-					description: "Talk to Medicine Man",
+					description: "Medicine Man",
 					shape: { type: "rectangle", topLeftCorner: {x: 385, y: 76}, bottomRightCorner: {x: 468, y: 306} },
 					onHit: "onHittingMedicineMan"
 				}, {
 					description: "Leave",
 					shape: { type: "rectangle", topLeftCorner: {x: 2, y: 3}, bottomRightCorner: {x: 117, y: 595} },
-					destinationScene: 'pond',
+					destinationScene: 'hub',
 					destinationPosition: {x: 751, y: 432}
 				}
 			],
@@ -180,11 +219,15 @@ adventure.getScenes = function () {
 				{
 					url: "img/characters/doctor.png",
 					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} }
+				},
+				{
+					id: 'exitIndicator',
+					url: 'img/icons/left-arrow.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 23, y: 467}, bottomRightCorner: {x: 62, y: 508} }
 				}
 			]
 		},
 		'sky': {
-			onEnter: 'enterSky',
 			background: "sky.jpg",
 			hotspots: [
 				{
@@ -203,8 +246,8 @@ adventure.getScenes = function () {
 					shape: { type: "rectangle", topLeftCorner: {x: 385, y: 76}, bottomRightCorner: {x: 468, y: 306} },
 					conversationToStart: "talkToThiefHead"
 				}, {
-					description: "Leave",
-					shape: { type: "rectangle", topLeftCorner: {x: 2, y: 3}, bottomRightCorner: {x: 117, y: 595} },
+					description: "Fly back to the pond",
+					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 300}, bottomRightCorner: {x: 100, y: 600} },
 					destinationScene: 'pond',
 					destinationPosition: {x: 751, y: 432}
 				}
@@ -213,6 +256,11 @@ adventure.getScenes = function () {
 				{
 					url: "img/characters/simon.png",
 					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} }
+				},
+				{
+					id: 'exitToPondIndicator',
+					url: 'img/icons/left-arrow.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 23, y: 467}, bottomRightCorner: {x: 62, y: 508} }
 				}
 			]
 		}

@@ -155,14 +155,29 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			return false;
 		},
 
+		'flyIntoTheSkies': function () {
+			adventureProvider.loadScene('sky');
+		},
+
+		'landAtBeachParty': function () {
+			adventureProvider.loadScene('beach');
+		},
+
 		'onHittingTeaShopOwner': function () {
-			if (worldState['isPlanningToGoToDoctor']) {
-				adventureProvider.loadScene('pharmacy');
+			if (worldState['isPlanningToAskTomForSpecialTea']) {
+				worldState['isPlanningToGoToDoctor'] = true;
+				adventureProvider.startConversation('askTomForSpecialTea');
 				return false;
 			}
-			if (worldState['isPlanningToAskTomForSpecialTea']) {
-				worldState['isPlanningToGoToDoctor'] = true; // TODO: This is temporary.
-				adventureProvider.startConversation('askTomForSpecialTea');
+		},
+
+		'goToMedicineMan': function () {
+			adventureProvider.loadScene('pharmacy');
+		},
+
+		'onGettingSpecialSalamanderTea': function () {
+			if (worldState['isPlanningToGoToDoctor'] && !worldState['hasSalamanderTea']) {
+				worldState['hasSalamanderTea'] = true;
 				return false;
 			}
 		},
@@ -178,19 +193,10 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				adventureProvider.startConversation('askForSomethingThatHurts');
 				return false;
 			}
-			if (!worldState['hasSalamanderTea']) {
-				worldState['hasSalamanderTea'] = true;
-				adventureProvider.startConversation('talkToMedicineMan');
-				return false;
-			}
 		},
 
 		'giveCassandraSalamanderTea': function () {
 			worldState['hasGivenCassandraSalamanderTea'] = true;
-		},
-
-		'enterSky': function () {
-			adventureProvider.startConversation('talkAboutPastOfCassandra');
 		},
 
 		'talkToThiefHead': function () {

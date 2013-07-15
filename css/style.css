@@ -142,6 +142,8 @@ body {
 	}
 
 	.message-box.message-box_dialog-box .message {
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
 		color: black;
 	}
 
