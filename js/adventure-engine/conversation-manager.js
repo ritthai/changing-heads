@@ -47,7 +47,9 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 			if (isOptionDialog) {
 				writeAlternatingArrayDialog(dialog);
 			} else {
-				writeDialogLn(dialog[currentLine * 2] + ': ' + dialog[currentLine * 2 + 1]);
+				var speaker = dialog[currentLine * 2];
+				var speech = dialog[currentLine * 2 + 1];
+				writeDialogLn((speaker ? speaker + ': ' : '') + speech);
 			}
 		}
 	};
@@ -67,7 +69,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 	var chooseOption = function (option) {
 		clearDialog();
 		if (option.onEnter) { option.onEnter(); }
-		if (option.next === "end") {
+		if (!option.next) {
 			endConversation();
 			return;
 		}
@@ -114,7 +116,6 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 		if (!options) { options = [
 				{
 					"description": "Continue",
-					"next": "end"
 				}
 			];
 		}

@@ -35,7 +35,7 @@ adventure.getConversations = function () {
 			{
 				"description": "Awesome! I got into the journalism school I wanted.",
 				"dialog": [],
-				"next": "talkingToSimonInTeaShopAboutJournalismSchool"
+				"next": "talkToSimonInTeaShopAboutJournalismSchool"
 			},
 			{
 				"description": "I'm good. Hey, so tell me about being an animator!",
@@ -47,10 +47,11 @@ adventure.getConversations = function () {
 			}
 		]
 	},
-	"talkingToSimonInTeaShopAboutJournalismSchool": {
+	"talkToSimonInTeaShopAboutJournalismSchool": {
+		"onEnter": "talkToSimonInTeaShopAboutJournalismSchool",
 		"dialog": [
 			"Kylie",
-			"Awesome! I got into the journalism school I wanted.",
+			"I got into the journalism school I wanted.",
 			"Simon",
 			"Hey, that's awesome! So what are you gonna journalate about?",
 			"Kylie",
@@ -72,17 +73,44 @@ adventure.getConversations = function () {
 		]
 	},
 	"talkingToSimonInTeaShopAboutAnimation": {
+		"onEnter": "onTalkingToSimonAboutAnimation",
 		"dialog": [
 			"Simon",
 			"Well, I'm a storyboard artist not an animator. There's a difference. It's pretty good. I don't know; I'm kind of having writer's block or something.",
 			"Kylie",
 			"Aw, that sucks. Well, maybe being back home will get you reinvigorated!",
 			"Simon",
+			"That's the plan. Hey, what about you? What are you up to these days?"
+		],
+		"options": [
+			{
+				"description": "Oh, I got into that journalism school I wanted!",
+				"next": "talkToSimonInTeaShopAboutJournalismSchool"
+			}
+		]
+	},
+	"hearSimonSuggestSeeingTheHeads": {
+		"onEnter": "hearSimonSuggestSeeingTheHeads",
+		"dialog": [
+			"Simon",
 			"Hey, I know! You know the weird head things growing out of the ground nearby past the pond? Let's check it out. Maybe we can get some inspiration.",
 			"Kylie",
 			"I like that idea! You're taking your bike, right? I'll meet you there."
-		],
-		"onEnter": "onTalkingToSimonAboutAnimation"
+		]
+	},
+	"tellSimonToMeetAtHeads": {
+		"dialog": [
+			"Kylie", "You're okay getting there on your bike?",
+			"Simon", "Hey, I used to ride up there all the time!",
+			"Kylie", "Ok. See ya!"
+		]
+	},
+	"tellMalcomYouAreJustBrowsing": {
+		"dialog": [
+			"Store Owner", "May I help you with anything, ma'am?",
+			"Kylie", "Oh, thanks, I'm just browsing.",
+			"Store Owner", "Sure, take your time. I'm here if you need anything."
+		]
 	},
 	"introduceTheChangingHeads": {
 		"dialog": [
@@ -132,6 +160,18 @@ adventure.getConversations = function () {
 			"I don't think so. Well, those giant heads were there of course.",
 			"Kylie",
 			"The heads? Hey, maybe they saw something! Wait, can they even talk?"
+		]
+	},
+	"reassureHeadOfSimon": {
+		"dialog": [
+			"Kylie",
+			"Don't worry, Simon. We'll figure... Well, don't worry.",
+			"Simon",
+			"Well, I guess I have been trying to lose some weight.",
+			"Kylie",
+			"I think this counts as losing mostly muscle mass though.",
+			"Simon",
+			"Heck yeah, it does!"
 		]
 	},
 	"talkToTheChangingHeads": {
@@ -289,6 +329,10 @@ adventure.getConversations = function () {
 			{
 				"description": "Didn’t you, like, burn a dude and his house?",
 				"next": "askCassandraAboutBurningADude"
+			},
+			{
+				"description": "Calm down and let Cassandra speak",
+				"next": "interviewCassandra"
 			}
 		]
 	},
@@ -329,6 +373,7 @@ adventure.getConversations = function () {
 		]
 	},
 	"interviewCassandra": {
+		"onEnter": "interviewCassandra",
 		"dialog": [
 			"Cassandra",
 			"So I assume, especially seeing how scared you seem, that you didn’t just come here to offer me tea and exchange \"pleasantries\"?",
@@ -341,13 +386,28 @@ adventure.getConversations = function () {
 		],
 		"options": [
 			{
-				"description": "Ask Cassandra stuff (this is temporary)",
+				"description": "Ask Cassandra something",
 				"next": "interviewCassandraAboutThings"
 			}
 		]
 	},
 	"interviewCassandraAboutThings": {
-		"onEnter": "interviewCassandraAboutThings",
+		"dialog": ["", ""],
+		"options": [
+			{
+				"description": "Ask about fire powers",
+				"next": "askCassandraAboutFirePowers"
+			},
+			{
+				"description": "Ask about giant heads",
+				"next": "askCassandraAboutGiantHeads"
+			},
+			{
+				"description": "Thanks. Nothing else to ask for now."
+			}
+		]
+	},
+	"askCassandraAboutFirePowers": {
 		"dialog": [
 			"Kylie",
 			" So tell me about your fire powers.",
@@ -360,7 +420,18 @@ adventure.getConversations = function () {
 			"Kylie",
 			" Oh, sorry! Um. Next question?",
 			"Cassandra",
-			" Yes, I think that’s for the best.",
+			" Yes, I think that’s for the best."
+		],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "interviewCassandraAboutThings"
+			}
+		]
+	},
+	"askCassandraAboutGiantHeads": {
+		"onEnter": "askCassandraAboutHeads",
+		"dialog": [
 			"Kylie",
 			" I hear you talk to those giant head things that grow out of the ground.",
 			"Cassandra",

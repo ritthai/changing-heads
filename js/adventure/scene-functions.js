@@ -7,6 +7,17 @@ See the file license.txt for copying permission.
 adventure.getSceneFunctions = function (adventureProvider) {
 	var worldState = {};
 
+	// TODO: This is hacky, and for debugging
+	window.worldState = worldState;
+
+	var cassandraIntroMusic = new buzz.sound( "audio/music/cassandras-intro", {
+		formats: [ "ogg", "wav" ]
+	});
+
+	var startMusic = new buzz.sound( "audio/music/starting-the-brew", {
+		formats: [ "ogg", "wav" ]
+	});
+
 	var addInterviewCassandraOptionIfDoneAskingWhatWasIf = function () {
 		if (worldState['hasAskedCassandraWhatWasUp'] &&
 				worldState['hasAskedCassandraAboutBurningADude']) {
@@ -14,6 +25,18 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				"description": "Continue",
 				"next": "interviewCassandra"
 			}];
+			return options;
+		}
+	};
+
+	var addHearSuggestionFromSimonOptionIfDoneCatchingUp = function () {
+		if (worldState['hasTalkedAboutAnimation'] && worldState['hasTalkedAboutJournalismSchool']) {
+			var options = [
+				{
+					"description": "Continue",
+					"next": "hearSimonSuggestSeeingTheHeads"
+				}
+			];
 			return options;
 		}
 	};
@@ -39,26 +62,33 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				adventureProvider.startConversation('debriefWithSimon');
 				return false;
 			}
+			if (worldState['hasDecidedToGoToChangingHeads']) {
+				adventureProvider.startConversation('tellSimonToMeetAtHeads');
+			}
 		},
 
 		'playLittleDitty': function () {
-			var littleDitty = new buzz.sound( "audio/music/starting-the-brew", {
-				formats: [ "ogg", "wav" ]
-			});
-			littleDitty.play();
+			startMusic.play();
 		},
 
 		'onEnteringCaveOfCassandra': function () {
 			if (!worldState['hasEnteredCaveOfCassandra']) {
 				worldState['hasEnteredCaveOfCassandra'] = true;
-				var music = new buzz.sound( "audio/music/cassandras-intro", {
-					formats: [ "ogg", "wav" ]
-				});
-				music.play();
+				cassandraIntroMusic.play();
 			}
 		},
 
 		'onTalkingToSimonAboutAnimation': function () {
+			worldState['hasTalkedAboutAnimation'] = true;
+			return addHearSuggestionFromSimonOptionIfDoneCatchingUp();
+		},
+
+		'talkToSimonInTeaShopAboutJournalismSchool': function () {
+			worldState['hasTalkedAboutJournalismSchool'] = true;
+			return addHearSuggestionFromSimonOptionIfDoneCatchingUp();
+		},
+
+		'hearSimonSuggestSeeingTheHeads': function () {
 			worldState['hasDecidedToGoToChangingHeads'] = true;
 		},
 
@@ -80,6 +110,9 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				adventureProvider.startConversation('askSimonAboutWritersBlock');
 				return false;
 			}
+			if (worldState['hasFoundSimon']) {
+				adventureProvider.startConversation('reassureHeadOfSimon');
+			}
 			worldState['hasFoundSimon'] = true;
 		},
 
@@ -95,10 +128,6 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'onHittingCaveOfCassandra': function () {
-			if (worldState['isPlanningToSeeChangingHeadsAgain']) {
-				adventureProvider.startConversation('debriefWithChangingHeads');
-				return false;
-			}
 			if (!worldState['hasDecidedToSeeCassandra']) {
 				adventureProvider.startConversation('mentionFearOfCassandra');
 				return false;
@@ -120,6 +149,10 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				adventureProvider.startConversation('askCassandraForAnotherFish');
 				return false;
 			}
+			if (worldState['hasStartedInterviewingCassandra']) {
+				adventureProvider.startConversation('interviewCassandraAboutThings');
+				return false;
+			};
 		},
 
 		'askCassandraWhatWasUp': function () {
@@ -132,7 +165,11 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			return addInterviewCassandraOptionIfDoneAskingWhatWasIf();
 		},
 
-		'interviewCassandraAboutThings': function () {
+		'interviewCassandra': function () {
+			worldState['hasStartedInterviewingCassandra'] = true;
+		},
+
+		'askCassandraAboutHeads': function () {
 			worldState['hasFish'] = true;
 		},
 
@@ -193,6 +230,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				adventureProvider.startConversation('askForSomethingThatHurts');
 				return false;
 			}
+			adventureProvider.startConversation('tellMalcomYouAreJustBrowsing');
 		},
 
 		'giveCassandraSalamanderTea': function () {
