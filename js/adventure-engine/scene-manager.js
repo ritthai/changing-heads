@@ -33,6 +33,14 @@ adventure.getSceneManager = function () {
 		putPlayerAt(point.x, point.y);
 	};
 
+	var facePlayerLeft = function () {
+		uiManager.facePlayerLeft();
+	};
+
+	var facePlayerRight = function () {
+		uiManager.facePlayerRight();
+	};
+
 	var movePlayer = function (destination, callback) {
 		uiManager.movePlayer(destination, callback)
 	};
@@ -119,6 +127,8 @@ adventure.getSceneManager = function () {
 		getHotspotAt: getHotspotAt,
 		putPlayerAt: putPlayerAt,
 		movePlayer: movePlayer,
+		facePlayerLeft: facePlayerLeft,
+		facePlayerRight: facePlayerRight,
 		loadScene: loadScene,
 		loadSceneByName: loadSceneByName,
 		hideSceneImageById: hideSceneImageById,

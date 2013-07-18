@@ -50,7 +50,8 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				adventureProvider.startConversation('startMenu');
 				return false;
 			}
-			if (worldState['hasWaitedForSimonAtChangingHeads'] && !worldState['hasSeenApologyOfCassandra']) {
+			if (worldState['hasWaitedForSimonAtChangingHeads'] && !worldState['hasSeenApologyOfCassandra']
+					|| 	worldState['hasSeemSimonAtHeadsAfterFixingHim']) {
 				adventureProvider.hideSceneImageById('simon');
 				adventureProvider.hideHotspotById('talkToSimon');
 			}
@@ -93,6 +94,9 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'enterChangingHeads': function () {
+			if (worldState['isPlanningToSeeChangingHeadsAgain']) {
+				worldState['hasSeemSimonAtHeadsAfterFixingHim'] = true;
+			}
 			if (!worldState['hasDecidedToGoToChangingHeads']) {
 				adventureProvider.hideSceneImageById('simon-head');
 				adventureProvider.hideHotspotById('examineNormalSizedHead');
@@ -117,6 +121,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'onHittingTheChangingHeads': function () {
+			adventureProvider.facePlayerLeft();
 			if (worldState['isPlanningToSeeChangingHeadsAgain']) {
 				adventureProvider.startConversation('debriefWithChangingHeads');
 				return false;
@@ -135,6 +140,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'talkToCassandra': function () {
+			adventureProvider.movePlayer({x: 300, y: 400}, adventureProvider.facePlayerRight);
 			if (worldState['hasSomethingThatHurts']) {
 				worldState['isPlanningToSaveMalcom'] = true;
 				adventureProvider.startConversation('fixSimon');
@@ -174,8 +180,9 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'onHittingSalamander': function () {
+			adventureProvider.movePlayer({x: 194, y: 500}, adventureProvider.facePlayerRight);
 			if (worldState['hasTreatedSalamander']) {
-				adventureProvider.loadScene('sky');
+				adventureProvider.loadScene('beach');
 				return false;
 			}
 			if (worldState['hasGivenCassandraSalamanderTea']) {
@@ -184,6 +191,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				return false;
 			}
 			if (worldState['hasFish']) {
+				worldState['hasFish'] = false;
 				worldState['hasFedSalamander'] = true;
 				adventureProvider.startConversation('feedSalamander');
 				return false;
@@ -202,6 +210,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 
 		'onHittingTeaShopOwner': function () {
 			if (worldState['isPlanningToAskTomForSpecialTea']) {
+				adventureProvider.movePlayer({x: 323, y: 326}, adventureProvider.facePlayerRight);
 				worldState['isPlanningToGoToDoctor'] = true;
 				adventureProvider.startConversation('askTomForSpecialTea');
 				return false;

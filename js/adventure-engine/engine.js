@@ -21,6 +21,8 @@ adventure.getEngine = function () {
 			loadScene: sceneManager.loadSceneByName,
 			putPlayerAt: sceneManager.putPlayerAt,
 			movePlayer: sceneManager.movePlayer,
+			facePlayerLeft: sceneManager.facePlayerLeft,
+			facePlayerRight: sceneManager.facePlayerRight,
 			hideSceneImageById: sceneManager.hideSceneImageById,
 			hideHotspotById: sceneManager.hideHotspotById,
 			startConversation: function () {}

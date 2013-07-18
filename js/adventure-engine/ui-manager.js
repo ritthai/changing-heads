@@ -48,11 +48,21 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 			}, callback);
 	};
 
+	var facePlayerLeft = function () {
+		var player = $("#player");
+		player.addClass('is-flipped-horizontally');
+	};
+
+	var facePlayerRight = function () {
+		var player = $("#player");
+		player.removeClass('is-flipped-horizontally');
+	};
+
 	var makePlayerFaceRightWayForMove = function (player, destination) {
 		if (destination.x < player.position().left + player.width()/2) {
-			player.addClass('is-flipped-horizontally');
+			facePlayerLeft();
 		} else {
-			player.removeClass('is-flipped-horizontally');
+			facePlayerRight();
 		}
 	};
 
@@ -242,6 +252,8 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 		bindHandlers: bindHandlers,
 		drawScene: drawScene,
 		movePlayer: movePlayer,
-		putPlayerAt: putPlayerAt
+		putPlayerAt: putPlayerAt,
+		facePlayerLeft: facePlayerLeft,
+		facePlayerRight: facePlayerRight
 	};
 };
