@@ -283,11 +283,13 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		'onGettingSpecialSalamanderTea': function () {
 			worldState['tomIsInPharmacy'] = false;
 			adventureProvider.hideSceneImageById('tom');
+			worldState['hasSpokenToMalWithTom'] = true;
 			worldState['hasSalamanderTea'] = true;
 			return false;
 		},
 
 		'onHittingMedicineMan': function () {
+			adventureProvider.movePlayer({x: 318, y: 305}, adventureProvider.facePlayerRight);
 			if (worldState['isPlanningToSaveMalcom']) {
 				worldState['hasSeenApologyOfCassandra'] = true;
 				adventureProvider.startConversation('seeApologyOfCassandra');
@@ -296,6 +298,10 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			if (worldState['isLookingForSomethingThatHurts']) {
 				worldState['hasSomethingThatHurts'] = true;
 				adventureProvider.startConversation('askForSomethingThatHurts');
+				return false;
+			}
+			if (	worldState['hasSpokenToMalWithTom']) {
+				adventureProvider.startConversation("talkToMedicineManAfterGettingTea");
 				return false;
 			}
 			adventureProvider.startConversation('tellMalcomYouAreJustBrowsing');

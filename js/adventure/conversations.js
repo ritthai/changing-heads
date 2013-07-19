@@ -739,33 +739,85 @@ adventure.getConversations = function () {
 		"dialog":
 			[
 				"Malcolm",
-				" Alright, 6 bags. Here you go. Yeah, sorry for hoarding it all. I’ve just been testing a super effective ointment for skin problems, but the way it burns your skin is intolerable. The tea seems to really make a difference.",
+				"Alright, 6 bags. Here ya go. Yeah, sorry for hoarding it all. I’ve just been testin' a real effective ointment for bad skin. Real effective, but the stuff burns, and this tea numbs the pain. The burn's pretty much intolerable otherwise.",
 				"Kylie",
-				" That sounds pretty cool. I hope you’ve still got enough for yourself, and thanks so much for sparing some.",
+				" That sounds pretty cool. I hope you’ve still got enough tea for yourself then, and thanks so much for sparing some.",
 				"Malcolm",
-				" Oh, don’t mention it. Tom’s a good kid. If he wants you to have it, I’m down with that.",
-				"Kylie",
-				" So what’s the gask mask for?",
-				"Medicine Man",
-				" Oh, the things I mix back there create some pretty bad fumes if you’re not suited up. It’s not just the mask, right? I’m bundled up like a caterpillar here.",
-				"Kylie",
-				" Alright, thanks again.",
-				"Malcolm",
-				" No problem."
-			]
+				" Oh, don’t mention it. Tom’s a good kid. If he wants you to have it, I’m down with that."
+			],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "talkToMedicineManAfterGettingTea"
+			}
+		]
+	},
+	"talkToMedicineManAfterGettingTea": {
+		"dialog": ["", ""],
+		"options": [
+			{
+				"description": "So what's the gas mask for?",
+				"next": "askMedicineManAboutGasMask"
+			},
+			{
+				"description": "Tell me about that cream again?",
+				"next": "askMedicineManAboutCream"
+			},
+			{
+				"description": "Finish talking"
+			}
+		]
+	},
+	"askMedicineManAboutGasMask": {
+		"dialog": [
+			"Kylie",
+			" So what’s the gask mask for?",
+			"Medicine Man",
+			" Oh, the things I mix back there create some pretty bad fumes if you’re not suited up. It’s not just the mask, right? I’m bundled up like a caterpillar here."
+		],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "talkToMedicineManAfterGettingTea"
+			}
+		]
+	},
+	"askMedicineManAboutCream": {
+		"dialog": [
+			"Kylie",
+			"Could you tell me about that cream again?",
+			"Medicine Man",
+			"Hah, the stuff's great for the skin, but it burns like mad. I wouldn't recommend it for acne. More like if you spilled acid on your face.",
+			"Kylie",
+			"Or if you got burned by a fire?",
+			"Medicine Man",
+			"Well, sure, that too."
+		],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "talkToMedicineManAfterGettingTea"
+			}
+		]
 	},
 	"giveCassandraSalamanderTea": {
 		"onEnter": "giveCassandraSalamanderTea",
 		"dialog":
 			[
 				"Kylie",
-				" Hey, Cassandra!",
+				"Hey, Cassandra! I got the tea for Cone's sunburn.",
 				"Cassandra",
-				"Hello there. You have the salamander tea?",
+				"Ah, thank you, Kylie.",
 				"Kylie",
-				" Yeah, right here.",
+				"No prob. So, did you all learn about flying salamanders in vet school?",
 				"Cassandra",
-				" Excellent. Let’s go get Cone fixed up."
+				"Oh, not sky salamanders. I had one named Sally as a child. She scampered out of a log I was burning with matches one day, as if birthed by the flames. I didn’t understand fire then as I do now, but even then I found it beautiful. Warmth. Light. Comfort. I fell in love, and decided to bring her home and raise her.",
+				"Cassandra",
+				"Sally's passed on now, but Cone here is her child.",
+				"Kylie",
+				"Aw, that's sweet!",
+				"Cassandra",
+				"Yes, and a bit bitter. Anyhow, let's go fix Cone."
 			]
 	},
 	"flyIntoTheSkies": {
@@ -786,33 +838,27 @@ adventure.getConversations = function () {
 		"dialog":
 			[
 				"Cassandra",
-				" Kylie, you seem like a nice understanding person. Would you- Would you like to hear about what really happened those years ago, when I burned that man and his house down? For your journalism.",
+				" Kylie, you seem like a nice understanding person. Would you... Would you like to hear about what happened those years ago, when I burned that man and his house down? For your journalism.",
 				"Kylie",
 				" Oh, right! I nearly forgot about that! Yes, please.",
 				"Cassandra",
-				" Alright. Please just hear me out, and don’t twist things around. If you do, I promise not to hurt you, but I would really appreciate if you did not.",
+				" Alright. Just please hear me out, and don’t twist my words. Even if you do, I promise not to harm you, but I would appreciate it.",
 				"Kylie",
-				" I promise not to twist things around!",
+				"I promise not to twist things around!",
 				"Cassandra",
 				" Alright then.",
 				"Cassandra",
-				"When I was a kid I had another sky salamander, Sally. Cone here who we’re riding is her child. I didn’t understand it as I do now, but even as a child I found fire beautiful. Warmth. Light. Comfort. I found Sally scampering out of a log I was burning using matches one day, as if birthed by the flames. I fell in love, and decided to bring her home and raise her.",
+				"I told you about my first salamander, Sally. She was just a few inches long when I found her, but grew near the size of Cone here. She was already a handful, so when we left town for my father's work, my parents insisted on giving her away. But despite plenty of interest, nobody seemed suitably knowledgable of how to care for her.",
 				"Cassandra",
-				"She was only a few inches long then, she eventually grew to the size of a large dog. It was also around then that she started flying and I learned that she was a sky salamander.",
+				"Around then, a young medicine maker arrived in town with strange and exotic animals, including another sky salamander. He seemed kind, so I entrusted him with Sally's care until I was older.",
 				"Cassandra",
-				"One day, we all had to move for my father’s work. Except Sally. She was already a handful, and with the move, my parents said we absolutely had to give her away. We searched for a suitable owner, but despite plenty of interest, nobody seemed to know how to take care of her.",
+				"And then around... it must’ve been 7 years ago now, I returned to visit Sally, only to find the man's store selling charred sky salamander skin, salamander eyes, salamander tail. He did not even recognize me at first, but froze when I said I was there to see Sally.",
 				"Cassandra",
-				"Around then, a man moved town with strange and exotic animals. Even another sky salamander. He seemed nice, and seemed to know what he was doing, so we chose to give Sally to him until I was older.",
+				"That’s when I felt my blood get hot. And then my skin got hot, and the air, and the room. And I knew what could be done. It was my will that he and his store feel the heat of the flames as Sally did. And as I willed it, the place was engulfed in flames.",
 				"Cassandra",
-				"And then around... I guess it must’ve been 7 years ago now, I came back to visit Sally. I learned that he was actually some sort of medicine maker, but I didn’t suspect anything yet. It wasn’t until I got to his store that I saw him selling roasted sky salamander flesh, salamander eyes, salamander tail.",
+				"As I walked among the building's smoldering remains, I found a box of the five salamander eggs. Four were empty, used in his medicine, I presume. The remaining egg was Cone here.",
 				"Cassandra",
-				"He didn’t recognize me as I approached him, and asked how he could help. Well, I told him I was there to see Sally, the friend I entrusted to him as a child, and he froze.",
-				"Cassandra",
-				"That’s when I felt my blood get hot. And then my skin got hot, and the air, and the whole room. And then I knew what could be done. It was my will that he and his store feel the heat of the flames as Sally did. And as I willed it, the place was engulfed in flames.",
-				"Cassandra",
-				"And you know what? I know it was wrong. I don’t believe in revenge, or torture, or hurting people. But let me tell you: it felt good. And though I know that should, I don’t regret it.",
-				"Cassandra",
-				"Well, as I walked among the smoldering remains if his store, I found a box labelled, “Sky Salamander Eggs.” There were five, but four were already cracked open. Used in his medicine, I presume. I raised the last, and that’s where Cone here came from.",
+				"And you know what? I know it was wrong. I don’t believe in revenge, or hurting people. But let me tell you: it felt good. And though I know I should, I don’t regret it.",
 				"Kylie",
 				" ...",
 				"Cassandra",
@@ -820,7 +866,7 @@ adventure.getConversations = function () {
 				"Kylie",
 				" ...It’s just... I’m a bit scared of you again.",
 				"Cassandra",
-				" Sorry. Perhaps I should not have brought it up.",
+				" Sorry. Perhaps I should have remained silent.",
 				"Kylie",
 				" No, it’s fine- Hey! Look at that giant head! It’s Simon’s body!",
 				"Cassandra",
