@@ -25,6 +25,7 @@ adventure.getEngine = function () {
 			facePlayerRight: sceneManager.facePlayerRight,
 			hideSceneImageById: sceneManager.hideSceneImageById,
 			hideHotspotById: sceneManager.hideHotspotById,
+			flipSceneImageById: sceneManager.flipSceneImageById,
 			startConversation: function () {}
 		};
 		var sceneFunctions = adventure.getSceneFunctions(providerForSceneFunctions);

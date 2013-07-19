@@ -611,11 +611,11 @@ adventure.getConversations = function () {
 		]
 	},
 	"goToMedicineManWithTom": {
+		"onEnter": "goToMedicineMan",
 		"dialog": [
 			"Tom",
 			"Here we are."
 		],
-		"onEnter": "goToMedicineMan",
 		"options": [
 			{
 				"description": "Continue",
@@ -649,9 +649,7 @@ adventure.getConversations = function () {
 				"Malcolm",
 				" See you.",
 				"Kylie",
-				" Bye.",
-				"",
-				"Tom leaves"
+				" Bye."
 			],
 		"options": [
 			{

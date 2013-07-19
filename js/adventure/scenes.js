@@ -213,6 +213,7 @@ adventure.getScenes = function () {
 			]
 		},
 		'pharmacy': {
+			onEnter: "onEnterPharmacy",
 			background: "pharmacy.jpg",
 			hotspots: [
 				{
@@ -235,6 +236,11 @@ adventure.getScenes = function () {
 					id: 'exitIndicator',
 					url: 'img/icons/left-arrow.png',
 					shape: { type: "rectangle", topLeftCorner: {x: 23, y: 467}, bottomRightCorner: {x: 62, y: 508} }
+				},
+				{
+					id: 'tom',
+					url: 'img/characters/tom.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 269, y: 87}, bottomRightCorner: {x: 344, y: 307} }
 				}
 			]
 		},

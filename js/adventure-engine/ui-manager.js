@@ -90,6 +90,9 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 			css('top', y + 'px');
 		$sceneImage.width(width).
 			height(height);
+		if (image.isFlipped) {
+			$sceneImage.addClass('is-flipped-horizontally');
+		}
 	};
 
 	var addSceneImages = function (images) {
@@ -101,6 +104,16 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 				addSceneImage(images[i]);
 			}
 		}
+	};
+
+	var hideSceneImageById = function (id) {
+		var htmlId = 'scene-image_' + id;
+		$('#' + htmlId).hide();
+	};
+
+	var flipSceneImageById = function (id) {
+		var htmlId = 'scene-image_' + id;
+		$('#' + htmlId).addClass('is-flipped-horizontally');		
 	};
 
 	var setBackgroundImageOfScene = function (url) {
@@ -254,6 +267,8 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 		movePlayer: movePlayer,
 		putPlayerAt: putPlayerAt,
 		facePlayerLeft: facePlayerLeft,
-		facePlayerRight: facePlayerRight
+		facePlayerRight: facePlayerRight,
+		hideSceneImageById: hideSceneImageById,
+		flipSceneImageById: flipSceneImageById
 	};
 };

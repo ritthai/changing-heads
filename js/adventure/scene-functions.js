@@ -261,14 +261,24 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'goToMedicineMan': function () {
+			worldState['tomIsInPharmacy'] = true;
 			adventureProvider.loadScene('pharmacy');
 		},
 
 		'onGettingSpecialSalamanderTea': function () {
+			worldState['tomIsInPharmacy'] = false;
+			adventureProvider.hideSceneImageById('tom');
 			if (worldState['isPlanningToGoToDoctor'] && !worldState['hasSalamanderTea']) {
 				worldState['hasSalamanderTea'] = true;
 				return false;
 			}
+		},
+
+		'onEnterPharmacy': function () {
+			if (!worldState['tomIsInPharmacy']) {
+				adventureProvider.hideSceneImageById('tom');
+			}
+			adventureProvider.flipSceneImageById('tom');
 		},
 
 		'onHittingMedicineMan': function () {

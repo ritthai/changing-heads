@@ -80,6 +80,18 @@ adventure.getSceneManager = function () {
 				image.hidden = true;
 			}
 		}
+		uiManager.hideSceneImageById(id);
+	};
+
+	var flipSceneImageById = function (id) {
+		var images = currentScene.images;
+		for (var i = 0; i < images.length; i++) {
+			var image = images[i];
+			if (image.id === id) {
+				image.isFlipped = true;
+			}
+		}
+		uiManager.flipSceneImageById(id);
 	};
 
 	var hideHotspotById = function (id) {
@@ -132,6 +144,7 @@ adventure.getSceneManager = function () {
 		loadScene: loadScene,
 		loadSceneByName: loadSceneByName,
 		hideSceneImageById: hideSceneImageById,
+		flipSceneImageById: flipSceneImageById,
 		hideHotspotById: hideHotspotById,
 		isInConversation: isInConversation,
 		configure: configure
