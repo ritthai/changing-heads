@@ -133,10 +133,16 @@ adventure.getScenes = function () {
 			onEnter: "enterChangingHeads",
 			hotspots: [ 
 				{
+					id: "talkToSimon",
+					description: "Talk to Simon",
+					shape: { type: "rectangle", topLeftCorner: {x: 570, y: 224}, bottomRightCorner: {x: 787, y: 433} },
+					conversationToStart: 'examineNormalSizedHead',
+					onHit: 'onHittingNormalSizedHead'
+				},
+				{
 					id: "examineNormalSizedHead",
 					description: "Examine normal sized head",
 					shape: { type: "rectangle", topLeftCorner: {x: 526, y: 381}, bottomRightCorner: {x: 594, y: 450} },
-					positionToMovePlayerTo: {x: 471, y: 455},
 					conversationToStart: 'examineNormalSizedHead',
 					onHit: 'onHittingNormalSizedHead'
 				}, {
@@ -161,6 +167,11 @@ adventure.getScenes = function () {
 					id: 'exitIndicator',
 					url: 'img/icons/right-arrow.png',
 					shape: { type: "rectangle", topLeftCorner: {x: 722, y: 461}, bottomRightCorner: {x: 760, y: 493} }
+				},
+				{
+					id: "simon",
+					url: "img/characters/simon.png",
+					shape: { type: "rectangle", topLeftCorner: {x: 570, y: 224}, bottomRightCorner: {x: 787, y: 433} }
 				}
 			]
 		},
@@ -244,7 +255,8 @@ adventure.getScenes = function () {
 				{
 					description: "Talk to Thief Head",
 					shape: { type: "rectangle", topLeftCorner: {x: 385, y: 76}, bottomRightCorner: {x: 468, y: 306} },
-					conversationToStart: "talkToThiefHead"
+					conversationToStart: "talkToThiefHead",
+					positionToMovePlayerTo: {x: 280, y: 312},
 				}, {
 					description: "Fly back to the pond",
 					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 300}, bottomRightCorner: {x: 100, y: 600} },

@@ -229,6 +229,7 @@ adventure.getConversations = function () {
 		]
 	},
 	"beatAroundTheBushWithCassandra": {
+		"onEnter": "beatAroundTheBushWithCassandra",
 		"dialog": [
 			"",
 			""
@@ -236,35 +237,50 @@ adventure.getConversations = function () {
 		"options": [
 			{
 				"description": "Oh, uh, thanks, but I just had some.",
-				"dialog": [
-					"Kylie",
-					"Oh, uh, thanks, but I just had some.",
-					"Cassandra",
-					"That’s fine; there’s always room for tea. I only brew the best."
-				],
-				"next": "beatAroundTheBushWithCassandra"
+				"next": "tellCassandraYouHadTeaAlready"
 			},
 			{
 				"description": "I’d love to, but the caffeine keeps me up all night.",
-				"dialog": [
-					"Kylie",
-					"I’d love to, but the caffeine keeps me up all night.",
-					"Cassandra",
-					"That’s perfect. I’m having chamomile. It soothes the mind."
-				],
-				"next": "beatAroundTheBushWithCassandra"
+				"next": "tellCassandraTeaKeepsYouUp"
 			},
 			{
 				"description": "Speaking of tea, I brought you some as a... cave warming gift. It’s... green?",
 				"next": "giveCassandraTheGiftTea"
-			},
+			}
+		]
+	},
+	"tellCassandraYouHadTeaAlready": {
+		"onEnter": "tellCassandraAnExcuse",
+		"dialog": [
+			"Kylie",
+			"Oh, uh, thanks, but I just had some.",
+			"Cassandra",
+			"That’s fine; there’s always room for tea. I only brew the best."
+		],
+		"options": [
 			{
-				"description": "It’s... safe, right?",
-				"next": "drinkTeaFromCassandra"
+				"description": "Continue",
+				"next": "beatAroundTheBushWithCassandra"
+			}
+		]
+	},
+	"tellCassandraTeaKeepsYouUp": {
+		"onEnter": "tellCassandraAnExcuse",
+		"dialog": [
+			"Kylie",
+			"I’d love to, but the caffeine keeps me up all night.",
+			"Cassandra",
+			"That’s perfect. I’m having chamomile. It soothes the mind."
+		],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "beatAroundTheBushWithCassandra"
 			}
 		]
 	},
 	"giveCassandraTheGiftTea": {
+		"onEnter": "giveCassandraTheGiftTea",
 		"dialog": [
 			"Kylie",
 			"Speaking of tea, I brought you some as a... cave warming gift. It’s... green?",
@@ -669,9 +685,9 @@ adventure.getConversations = function () {
 		"dialog":
 			[
 				"Kylie",
-				" Hey, that’s a cool dress! How did you get the flames like that?",
+				" Hey, Cassandra!",
 				"Cassandra",
-				" Oh, just a trick I learned from years of playing around. You have the salamander tea?",
+				"Hello there. You have the salamander tea?",
 				"Kylie",
 				" Yeah, right here.",
 				"Cassandra",

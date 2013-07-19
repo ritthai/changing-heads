@@ -11,14 +11,14 @@ adventure.getSceneFunctions = function (adventureProvider) {
 	window.worldState = worldState;
 
 	var cassandraIntroMusic = new buzz.sound( "audio/music/cassandras-intro", {
-		formats: [ "ogg", "wav" ]
+		formats: [ "ogg", "mp3" ]
 	});
 
-	var startMusic = new buzz.sound( "audio/music/starting-the-brew", {
-		formats: [ "ogg", "wav" ]
+	var startMusic = new buzz.sound( "audio/music/starting-the-brew-short", {
+		formats: [ "ogg", "mp3" ]
 	});
 
-	var addInterviewCassandraOptionIfDoneAskingWhatWasIf = function () {
+	var addInterviewCassandraOptionIfDoneAskingWhatWasUp = function () {
 		if (worldState['hasAskedCassandraWhatWasUp'] &&
 				worldState['hasAskedCassandraAboutBurningADude']) {
 			var options = [{
@@ -58,6 +58,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'onHittingSimon': function () {
+			adventureProvider.movePlayer({x: 473, y: 436}, adventureProvider.facePlayerRight);
 			if (worldState['hasSeenApologyOfCassandra']) {
 				worldState['isPlanningToSeeChangingHeadsAgain'] = true;
 				adventureProvider.startConversation('debriefWithSimon');
@@ -69,12 +70,15 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'playLittleDitty': function () {
-			startMusic.play();
+			startMusic.play().fadeIn();
 		},
 
 		'onEnteringCaveOfCassandra': function () {
 			if (!worldState['hasEnteredCaveOfCassandra']) {
 				worldState['hasEnteredCaveOfCassandra'] = true;
+				if (!startMusic.isPaused()) {
+					startMusic.fadeOut(1000, function () { this.stop(); });
+				}
 				cassandraIntroMusic.play();
 			}
 		},
@@ -94,10 +98,16 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'enterChangingHeads': function () {
+			if (!startMusic.isPaused()) {
+				startMusic.fadeOut(1000, function () { this.stop(); });
+			}
 			if (worldState['isPlanningToSeeChangingHeadsAgain']) {
 				worldState['hasSeemSimonAtHeadsAfterFixingHim'] = true;
+			} else {
+				adventureProvider.hideSceneImageById('simon');
+				adventureProvider.hideHotspotById('talkToSimon');
 			}
-			if (!worldState['hasDecidedToGoToChangingHeads']) {
+			if (!worldState['hasDecidedToGoToChangingHeads'] || worldState['hasSomethingThatHurts']) {
 				adventureProvider.hideSceneImageById('simon-head');
 				adventureProvider.hideHotspotById('examineNormalSizedHead');
 			}
@@ -110,6 +120,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'onHittingNormalSizedHead': function () {
+			adventureProvider.movePlayer({x: 471, y: 455}, adventureProvider.facePlayerRight);
 			if (worldState['isPlanningToSeeChangingHeadsAgain']) {
 				adventureProvider.startConversation('askSimonAboutWritersBlock');
 				return false;
@@ -161,14 +172,46 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			};
 		},
 
+		'beatAroundTheBushWithCassandra': function () {
+			if (worldState['hasToldCassandraAnExcuse'] && worldState['hasGivenCassandraTheGiftTea']) {
+				var options = [
+					{
+						"description": "Oh, uh, thanks, but I just had some.",
+						"next": "tellCassandraYouHadTeaAlready"
+					},
+					{
+						"description": "I’d love to, but the caffeine keeps me up all night.",
+						"next": "tellCassandraTeaKeepsYouUp"
+					},
+					{
+						"description": "Speaking of tea, I brought you some as a... cave warming gift. It’s... green?",
+						"next": "giveCassandraTheGiftTea"
+					},
+					{
+						"description": "It’s... safe, right?",
+						"next": "drinkTeaFromCassandra"
+					}
+				];
+				return options;
+			}
+		},
+
+		'tellCassandraAnExcuse': function () {
+			worldState['hasToldCassandraAnExcuse'] = true;
+		},
+
+		'giveCassandraTheGiftTea': function () {
+			worldState['hasGivenCassandraTheGiftTea'] = true;
+		},
+
 		'askCassandraWhatWasUp': function () {
 			worldState['hasAskedCassandraWhatWasUp'] = true;
-			return addInterviewCassandraOptionIfDoneAskingWhatWasIf();
+			return addInterviewCassandraOptionIfDoneAskingWhatWasUp();
 		},
 
 		'askCassandraAboutBurningADude': function () {
 			worldState['hasAskedCassandraAboutBurningADude'] = true;
-			return addInterviewCassandraOptionIfDoneAskingWhatWasIf();
+			return addInterviewCassandraOptionIfDoneAskingWhatWasUp();
 		},
 
 		'interviewCassandra': function () {
