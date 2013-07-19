@@ -648,6 +648,7 @@ adventure.getConversations = function () {
 		]
 	},
 	"askTomForSpecialTea": {
+		"onEnter": "askTomForSpecialTea",
 		"dialog":
 			[
 				"Tom",
@@ -663,14 +664,27 @@ adventure.getConversations = function () {
 				"Kylie",
 				" Let alone people with fire powers! But anyway, Cassandra asked me to pick up “special salamander tea”.",
 				"Tom",
-				" Oh, I’m afraid the medicine man from the pharmacy bought all of the latest batch. But hey, I’m sure he’ll give you some if you really need it though! He’s a great charitable man. Saved my life when I was a kid. I’m actually about to head there myself; wanna come along?"
+				" Oh, I’m afraid the medicine man from the pharmacy bought all of the latest batch. But hey, I’m sure he’ll give you some if you really need it though! He’s a great charitable man. Saved my life when I was a kid. I’m need to head there myself; wanna come along?",
+				"Kylie",
+				"Oh. Yeah, sure.",
+				"Tom",
+				"Cool. Just tell me when you're ready to go."
+			]
+	},
+	"talkToTomAboutGoingToMedicineMan": {
+		"dialog":
+			[
+				"Kylie",
+				"Hi Tom. So could we go see this medicine man?",
+				"Tom",
+				"Absolutely. Let's go."
 			],
-		"options": [
-			{
-				"description": "Oh. Yeah, sure.",
-				"next": "goToMedicineManWithTom"
-			}
-		]
+			"options": [
+				{
+					"description": "Go to see the medicine man",
+					"next": "goToMedicineManWithTom"
+				}
+			]
 	},
 	"goToMedicineManWithTom": {
 		"onEnter": "goToMedicineMan",

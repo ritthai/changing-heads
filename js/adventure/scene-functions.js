@@ -252,12 +252,20 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'onHittingTeaShopOwner': function () {
+			if (worldState['isPlanningToSeeMedicineMan']) {
+				adventureProvider.movePlayer({x: 323, y: 326}, adventureProvider.facePlayerRight);
+				adventureProvider.startConversation('talkToTomAboutGoingToMedicineMan');
+				return false;
+			}
 			if (worldState['isPlanningToAskTomForSpecialTea']) {
 				adventureProvider.movePlayer({x: 323, y: 326}, adventureProvider.facePlayerRight);
-				worldState['isPlanningToGoToDoctor'] = true;
 				adventureProvider.startConversation('askTomForSpecialTea');
 				return false;
 			}
+		},
+
+		'askTomForSpecialTea': function () {
+			worldState['isPlanningToSeeMedicineMan'] = true;
 		},
 
 		'goToMedicineMan': function () {
@@ -265,20 +273,18 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			adventureProvider.loadScene('pharmacy');
 		},
 
-		'onGettingSpecialSalamanderTea': function () {
-			worldState['tomIsInPharmacy'] = false;
-			adventureProvider.hideSceneImageById('tom');
-			if (worldState['isPlanningToGoToDoctor'] && !worldState['hasSalamanderTea']) {
-				worldState['hasSalamanderTea'] = true;
-				return false;
-			}
-		},
-
 		'onEnterPharmacy': function () {
 			if (!worldState['tomIsInPharmacy']) {
 				adventureProvider.hideSceneImageById('tom');
 			}
 			adventureProvider.flipSceneImageById('tom');
+		},
+
+		'onGettingSpecialSalamanderTea': function () {
+			worldState['tomIsInPharmacy'] = false;
+			adventureProvider.hideSceneImageById('tom');
+			worldState['hasSalamanderTea'] = true;
+			return false;
 		},
 
 		'onHittingMedicineMan': function () {
