@@ -419,6 +419,10 @@ adventure.getConversations = function () {
 				"next": "askCassandraAboutGiantHeads"
 			},
 			{
+				"description": "My friend. One of those heads growing out of the ground stole his body.",
+				"next": "askCassandraAboutSimon"
+			},
+			{
 				"description": "Thanks. Nothing else to ask for now."
 			}
 		]
@@ -446,7 +450,6 @@ adventure.getConversations = function () {
 		]
 	},
 	"askCassandraAboutGiantHeads": {
-		"onEnter": "askCassandraAboutHeads",
 		"dialog": [
 			"Kylie",
 			" I hear you talk to those giant head things that grow out of the ground.",
@@ -459,15 +462,27 @@ adventure.getConversations = function () {
 			"Kylie",
 			" What do you know about them?",
 			"Cassandra",
-			" They’re a proud group. The land there saw the joy humans had in simply being alive, and through sheer will decided that it wished to join them. It tried over and over again, at times growing simple and cartoonish figures, and at others growing ones that were disfigured and grotesque, but eventually it improved. And they are intent on doing it alone. I once offered to help sculpt them a body, but they refused, and stated that they could do it themselves.",
+			" They’re a proud group. The land there saw the joy humans had in simply being alive, and through sheer will decided that it wished to join them. It tried over and over again, at times growing simple and cartoonish figures, and at others growing ones that were disfigured and grotesque, but eventually it improved.",
+			"Cassandra",
+			"And they are intent on doing it alone. I once offered to help sculpt them a body, but they refused, and stated that they could do it themselves.",
 			"Kylie",
 			" I bet *one* of them would’ve accepted.",
 			"Cassandra",
-			" Yes, you’re quite right. How did you know?",
+			" Yes, you’re quite right. He was ever an impatient one. I was going to try to make him a body, but the others said it was unacceptable."
+			],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "interviewCassandraAboutThings"
+			}
+		]
+	},
+	"askCassandraAboutSimon": {
+		"dialog": [
 			"Kylie",
-			" My friend. One of those heads stole his body.",
+			"My friend. One of those heads growing out of the ground stole his body.",
 			"Cassandra",
-			" Ah, yes, he was ever an impatient one. I was going to try to make him a body, but the others said it was unacceptable. I warned them that something like this would eventually happen if the continued to stick to their ways.",
+			"Ah, yes,  I warned them that their impatient friend would eventually try something like this.",
 			"Kylie",
 			" But... is there anything we can do for him? My friend, I mean.",
 			"Cassandra",
@@ -479,13 +494,54 @@ adventure.getConversations = function () {
 			"Kylie",
 			" How did you end up learning something like that?",
 			"Cassandra",
-			" I studied to be a veterinarian. Certain... difficulties prevented me from completing my education, but I still gained a decent bit of knowledge from my studies.",
+			" I studied to be a veterinarian. Certain... difficulties prevented me from completing my education, but I still gained a decent bit of knowledge from my studies."
+			],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "askCassandraAboutCure"
+			}
+		]
+	},
+	"askCassandraAboutCure": {
+		"onEnter": "askCassandraAboutHeads",
+		"dialog": ["", ""],
+		"options": [
+			{
+				"description": "Veterinarian? Will this work on Simon?",
+				"next": "askCassandraWhetherCureWillWork"
+			},
+			{
+				"description": "Where do you think that head took my friend's body?",
+				"next": "askCassandraAboutBody"
+			},
+			{
+				"description": "Ask other things",
+				"next": "interviewCassandraAboutThings"
+			},
+			{
+				"description": "Thanks. Nothing else to ask for now."
+			}
+		]
+	},
+	"askCassandraWhetherCureWillWork": {
+		"dialog": [
 			"Kylie",
-			" Veterinarian? But... This will work, right? I mean, Simon might be nocturnal, but he’s no cat.",
+			"Veterinarian? But... This will work, right? I mean, Simon might be nocturnal, but he’s no cat.",
 			"Cassandra",
-			" Oh, certainly. I’ve tested it myself. But as I said, you will need the body.",
+			" Oh, certainly. I’ve tested it myself. But as I said, you will need the body."
+		],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "askCassandraAboutCure"
+			}
+		]
+	},
+	"askCassandraAboutBody": {
+		"dialog": [
 			"Kylie",
-			" Aw, that’s right! I don’t know how we’re gonna manage that.",
+			"Any idea where that head ran off to with my friend's body?",
 			"Cassandra",
 			" Perhaps my sky salamander, Cone, could be of help.",
 			"Kylie",
@@ -503,7 +559,13 @@ adventure.getConversations = function () {
 			"Kylie",
 			" Sweet! Thanks, Cassandra. You’ve been so nice!",
 			"Cassandra",
-			" Any time. Please come by anytime you’re in the mood to have tea."
+			" Any time. Please come by whenever you’re in the mood to have tea."
+		],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "askCassandraAboutCure"
+			}
 		]
 	},
 	"examineSalamander": {
