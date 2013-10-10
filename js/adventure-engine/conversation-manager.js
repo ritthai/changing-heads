@@ -59,11 +59,17 @@ adventure.getConversationManager = function (conversations, sceneFunctions) {
 		$("#options").html('');
 	};
 
+	var isEndingConversation = false;
+
 	var endConversation = function () {
-		$('#dialog-box').fadeOut();
 		currentConversation = {};
-		// TODO: This is kind of a hack. Should fix it.
-		setTimeout(function () { isInConversation = false; }, 100);
+		// NOTE: This is tricky. We cannot set isInConversation to false immediately,
+		// because this gets evaluated before the click handler. If the click handler sees
+		// that we are not in a conversation, the character will interact with the clicked
+		// spot, even though the click was actually meant to end the conversation.
+		$('#dialog-box').fadeOut(function () {
+			isInConversation = false;
+		});
 	};
 
 	var chooseOption = function (option) {
