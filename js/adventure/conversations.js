@@ -9,7 +9,7 @@ adventure.getConversations = function () {
 
 {
 	"startMenu": {
-		"dialog": ["", "Changing Heads <br /> By Ritchie Thai <br /> <br /> Turning on your audio (headphones, speakers) is recommended."],
+		"dialog": ["", "<strong>Changing Heads</strong> <br /> By Ritchie Thai <br /> <br /> (The game has music; consider turning on sound.)"],
 		"options": [
 			{
 				"description": "Start playing",
@@ -20,16 +20,18 @@ adventure.getConversations = function () {
 	"wonderWhereSimonIsAtTeaShop": {
 		"dialog": [
 			"Kylie",
-			"Alright, Simon better be here... Ah! Hey, Simon!"
+			"Geez, Simon said he's be here an hour ago. Where are you?",
+			"Kylie",
+            "Oh, there he is! Yo, Simon! I should go talk to him."
 		],
 		"onEnter": "playLittleDitty"
 	},
 	"talkingToSimonInTeaShop": {
 		"dialog": [
 			"Kylie",
-			"Simon, buddy, what gives? I could've succesfully given a porcupine a backrub in the time I waited for you. Are you big shot animators too important to visit old highschool friends?",
+			"Simon, what gives? I waited hours! Or one hour. I don't know. But still, what, are you big shot animators too important for old highschool friends?",
 			"Simon",
-			"Sorry, the flight got delayed! I think a bird flew into that rocket tube thing under the wing with nail clippers or some jazz like that. But whatever, right? How've you been?"
+			"Sorry, the flight got delayed! I think a bird flew into the jet or nail clippers or some jazz. But whatever, right? How've you been?"
 		],
 		"options": [
 			{
@@ -39,10 +41,6 @@ adventure.getConversations = function () {
 			},
 			{
 				"description": "I'm good. Hey, so tell me about being an animator!",
-				"dialog": [
-					"Kylie",
-					"I'm good. Hey, so tell me about being an animator!"
-				],
 				"next": "talkingToSimonInTeaShopAboutAnimation"
 			}
 		]
@@ -53,21 +51,17 @@ adventure.getConversations = function () {
 			"Kylie",
 			"I got into the journalism school I wanted.",
 			"Simon",
-			"Hey, that's awesome! So what are you gonna journalate about?",
+			"Hey, that's awesome! So what are you gonna journalize about?",
 			"Kylie",
-			"I don't know. I can't figure out where to get a good story. Hmm... I wanna do new media.",
+			"I don't know. I can't figure out where to get a good story. I wanna do new media though.",
 			"Simon",
-			"Like a video blog? A crackdown on the shady world of cats and catnip?",
+			"What, like a blog? Online video? Cat videos?",
 			"Kylie",
-			"Eh, something like that."
+			"Hehe, maybe something like that."
 		],
 		"options": [
 			{
 				"description": "Hey, so what's it like being an animator?",
-				"dialog": [
-					"Kylie",
-					"Hey, so what's it like being an animator?"
-				],
 				"next": "talkingToSimonInTeaShopAboutAnimation"
 			}
 		]
@@ -75,8 +69,10 @@ adventure.getConversations = function () {
 	"talkingToSimonInTeaShopAboutAnimation": {
 		"onEnter": "onTalkingToSimonAboutAnimation",
 		"dialog": [
+			"Kylie",
+            "Hey, so what's it like being an animator?",
 			"Simon",
-			"Well, I'm a storyboard artist not an animator. There's a difference. It's pretty good. I don't know; I'm kind of having writer's block or something.",
+			"Oh, no, I'm a storyboard artist / writer not an animator. We outsource that stuff. It's cool. It's alright. I don't know; I've kind of got writer's block or something. In a bit of a slump.",
 			"Kylie",
 			"Aw, that sucks. Well, maybe being back home will get you reinvigorated!",
 			"Simon",
@@ -93,22 +89,27 @@ adventure.getConversations = function () {
 		"onEnter": "hearSimonSuggestSeeingTheHeads",
 		"dialog": [
 			"Simon",
-			"Hey, I know! You know the weird head things growing out of the ground nearby past the pond? Let's check it out. Maybe we can get some inspiration.",
+			"Hey! Weren't you telling me about those weird giant heads growing out of the ground just past the pond? Let's check it out! It might inspire me. And maybe you can write an article on it or something.",
 			"Kylie",
-			"I like that idea! You're taking your bike, right? I'll meet you there."
+			"Oh yeah! Those things are weird. Yeah, let's go!",
+			"Simon",
+			"I'm gonna stay here a minute and catch up with Tom. The owner. You go ahead, I'll catch up on my bike.",
+			"Kylie",
+			"Sure. See you there.",
 		]
 	},
 	"tellSimonToMeetAtHeads": {
 		"dialog": [
 			"Kylie", "You're okay getting there on your bike?",
-			"Simon", "Hey, I used to ride up there all the time!",
-			"Kylie", "Ok. See ya!"
+			"Simon", "Sure am; I'm in the best shape of my life.",
+            "Tom (the owner)", "Lookin' good, Simon!",
+			"Kylie", "Ok then. Well, see ya."
 		]
 	},
 	"tellMalcomYouAreJustBrowsing": {
 		"dialog": [
 			"Store Owner", "May I help you with anything, ma'am?",
-			"Kylie", "Oh, thanks, I'm just browsing.",
+			"Kylie", "Oh, thanks, I'm just browsing. (Why's he wearing that mask?)",
 			"Store Owner", "Sure, take your time. I'm here if you need anything."
 		]
 	},
@@ -139,39 +140,39 @@ adventure.getConversations = function () {
 			"Kylie",
 			"Yeah, but I mean... How do your... legs feel?",
 			"Simon",
-			"Kind of cramped from sitting in that plane so long. Though they’re feeling better now. A lot better, actually. It’s like they’re not even the- OH DANG!",
+			"Kind of cramped from sitting in that plane so long. Though they’re feeling better now. A lot better, actually. It’s like they’re not even the- CRAP!",
 			"Kylie",
-			"Oh dang is right. Is it all the coffee? That stuff stunts your growth, pal.",
+			"Yeah, you've gotten a bit shorter. Think drinking coffee all those late nights stunted your growth.",
 			"Simon",
-			"Aw, my totally hot body! I’ve been working out too.",
+			"Aw, my body! I finally started working out too...",
 			"Kylie",
-			"Yeah, this is bonkers.",
+			"You're taking it better than I expected.",
 			"Simon",
-			"Heyheyhey. Kylie. Just don't lose your *head* over this. We must use our *heads* to make *headway* in this matter.",
+			"Well, Kylie. We can't lose our *heads* over this. Gotta use our *heads* to make *headway* into the matter.",
 			"Kylie",
 			"...",
 			"Simon",
-			"...",
-			"Simon and Kylie",
-			"...Bahahahahahaha!",
+			"(smiles)",
 			"Kylie",
-			"Ok, but seriously, was anybody around before you fell asleep?",
+			"Hahaha, ok, but seriously, was anybody around to see what happened?",
 			"Simon",
-			"I don't think so. Well, those giant heads were there of course.",
+			"Nah, just me and those big ol' giant heads.",
 			"Kylie",
-			"The heads? Hey, maybe they saw something! Wait, can they even talk?"
+			"Hmmm... Wait, the heads? Maybe they saw something! You think they talk?",
+			"Simon",
+			"I dunno...",
 		]
 	},
 	"reassureHeadOfSimon": {
 		"dialog": [
 			"Kylie",
-			"Don't worry, Simon. We'll figure... Well, don't worry.",
+			"Don't worry, Simon, ol' buddy. We work it out... maybe... Well, don't worry.",
 			"Simon",
 			"Well, I guess I have been trying to lose some weight.",
 			"Kylie",
-			"I think this counts as losing mostly muscle mass though.",
+			"Too bad it's mostly muscle mass.",
 			"Simon",
-			"Heck yeah, it does!"
+			"Sigh... it had to happen *after* I got into shape."
 		]
 	},
 	"talkToTheChangingHeads": {
@@ -179,33 +180,35 @@ adventure.getConversations = function () {
 			"Kylie",
 			"Hey! Can you folks hear me?",
 			"Heads",
-			"We hear you, brother! I mean, sister. Fellow creature!",
+			"We hear you, brother!",
 			"Kylie",
 			"I’m a girl.",
 			"Heads",
-			"Of course you are! We are not strange and totally just like you. We are sorry. Please forgive us. Our brother is foolish, but he means no harm.",
+			"Wait, really? I thought girls have long beautiful hair.",
+            "Kylie",
+            "Hey!",
+            "Heads",
+            "No no! We meant your *short* hair is beautiful? Look, kid, we're all just giant heads trying our best.",
+            "Head A",
+            "Well, except the jerk that ran off.",
 			"Kylie",
-			"What brother?",
+			"What jerk?",
 			"Head A",
-			"The body thief! Our brother, but a traitor to our cause.",
+			"The body thief! Our brother. A traitor to our cause.",
 			"Head B",
-			"The guy lacks patience.",
+			"Man, we’re supposed to *grow* our bodies, not grab the first one that walks by. Where’s the creativity? The heart?",
 			"Head C",
-			"What a sellout!",
-			"Head D",
-			"We’re supposed to be *growing* our bodies, not just grabbing the first one that walks by. Where’s the creativity in that? The heart?",
-			"Head B",
-			"You know, the human living in that cave by the pond told us this would happen. I believed it! Would y’all listen? Noooooo.",
+			"Guys, the woman in that cave by the pond said this would happen. *I* believed it! Would y’all listen? Noooooo.",
 			"Kylie",
 			"Wait, the cave by the pond? You mean Cassandra?!? The scary tea lady that can burn stuff with her mind!?! Didn't she burn a dude and his house down for no reason?",
-			"Head B",
-			"Yeah yeah, *she* burned a *dude*. I definitely knew that. I’m just being inclusive with my pronouns.",
-			"Head D",
-			"We know stuff! Don’t think you’re better than us just ‘cause you just get *handed* a body for being born. Entitled brat.",
-			"Head B",
-			"Hey, don’t take your personal failures out on her!",
+			"Head C",
+			"Yeah, she's pretty cool like that. Or hot I guess. Ha, get it?",
 			"Kylie",
-			"Ugh. I usually *avoid* Cassandra’s cave when I go by the pond. Maybe I can convince Simon that he doesn’t need a body."
+			"So... she knew this would happen. She probably knows a thing.",
+			"Head C",
+			"Yeah, yeah. Real smart lady.",
+            "Kylie",
+            "Ugh... I usually *avoid* her cave when walk by the pond. Geez, I don't wanna burn to death. But I guess Simon needs a body..."
 		]
 	},
 	"mentionFearOfCassandra": {
@@ -668,14 +671,23 @@ adventure.getConversations = function () {
 				"Kylie",
 				"Oh. Yeah, sure.",
 				"Tom",
-				"Cool. Just tell me when you're ready to go."
-			]
+				"Cool. Do you wanna go now?"
+			],
+        "options": [
+            {
+                "description": "Yeah, let's go.",
+                "next": "talkToTomAboutGoingToMedicineMan"
+            },
+            {
+                "description": "Uh, just give me a minute."
+            },
+        ]
 	},
 	"talkToTomAboutGoingToMedicineMan": {
 		"dialog":
 			[
 				"Kylie",
-				"Hi Tom. So could we go see this medicine man?",
+				"Let's go see this medicine man, Tom.",
 				"Tom",
 				"Absolutely. Let's go."
 			],
@@ -930,13 +942,37 @@ adventure.getConversations = function () {
 				"Kylie",
 				" So what do we do?",
 				"Cassandra",
-				" He has experienced the joy of having a body, but I believe he has not yet experienced true pain. We need something that will hurt him enough to make him leave the body, but that will not harm it.",
+                "If you don't mind, could we discuss this back home? I could use a cup of tea after all this excitement.",
 				"Kylie",
-				" Hmm. Something that hurts but won’t harm... I think I know just the thing.",
-				"Cassandra",
-				" Well then, let’s retreat back to my place. I’ll get Simon and take care of the body, and you can try this plan of yours."
+				"Of course! Sure. Think it over.",
 			]
 	},
+	"talkToFaintedThiefHead": {
+        dialog:
+            [
+                "Kylie",
+                "Looks like he's out cold. Good riddance!"
+            ]
+    },
+    "askCassandraHowSimonIs": {
+        dialog:
+            [
+				"Kylie",
+				"Hey so how's Simon's body?",
+				"Cassandra",
+                "I have it resting in the back, but we still need to separate the head. I have an idea, but the details remain unclear.",
+				"Cassandra",
+				"He has now experienced the joy of owning a body, but he has not yet experienced true pain. If we sufficiently hurt him, he will leave the body. But we must not harm the body either, or I would use my flames. We need something that will cause sufficient pain without harm.",
+				"Kylie",
+				"Pain without harm... Oh! That guy with the mask has- I mean...",
+				"Cassandra",
+				"Someone with a mask?",
+				"Kylie",
+				"Uh... No! No one. But I have an idea. Pain without harm.",
+				"Cassandra",
+				"Very well. I will watch over the body until you are ready."
+        ]
+    },
 	"askForSomethingThatHurts": {
 		dialog:
 			[
@@ -1192,8 +1228,8 @@ adventure.getConversations = function () {
 				" I think it’s totally gone. How about you? Do you have your journalistic scoop?",
 				"Kylie",
 				" I- I want to say yes, but I still have no idea how I’m gonna put it together. But yeah. This is something I can work with.",
-				"",
-				"The End. This is the end. But feel free to continue exploring to see what everyone is up to now that the whole ordeal is over."
+				"Narrator:",
+				"The end. That's it. You won. Anything you do after this is just epilogue."
 			]
 	}
 };

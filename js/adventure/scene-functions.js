@@ -157,6 +157,10 @@ adventure.getSceneFunctions = function (adventureProvider) {
 				adventureProvider.startConversation('fixSimon');
 				return false;
 			}
+			if (worldState['isLookingForSomethingThatHurts']) {
+				adventureProvider.startConversation('askCassandraHowSimonIs');
+				return false;
+			}
 			if (worldState['hasSalamanderTea']) {
 				adventureProvider.startConversation('giveCassandraSalamanderTea');
 				return false;
@@ -169,7 +173,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 			if (worldState['hasStartedInterviewingCassandra']) {
 				adventureProvider.startConversation('interviewCassandraAboutThings');
 				return false;
-			};
+			}
 		},
 
 		'beatAroundTheBushWithCassandra': function () {
@@ -312,7 +316,12 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'talkToThiefHead': function () {
+            if (worldState['isLookingForSomethingThatHurts']) {
+			adventureProvider.startConversation("talkToFaintedThiefHead");
+                return false;
+            }
 			worldState['isLookingForSomethingThatHurts'] = true;
+			adventureProvider.startConversation("talkToThiefHead");
 		}
 	};
 

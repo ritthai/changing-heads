@@ -246,6 +246,7 @@ adventure.getScenes = function () {
 		},
 		'sky': {
 			background: "sky.jpg",
+			playerPositionOnEnter: {x: -1000, y: -1000},
 			hotspots: [
 				{
 					description: "Land",
@@ -257,15 +258,16 @@ adventure.getScenes = function () {
 		},
 		'beach': {
 			background: "beach.jpg",
+			playerPositionOnEnter: {x: 290, y: 300},
 			hotspots: [
 				{
 					description: "Talk to Thief Head",
 					shape: { type: "rectangle", topLeftCorner: {x: 385, y: 76}, bottomRightCorner: {x: 468, y: 306} },
-					conversationToStart: "talkToThiefHead",
+					onHit: "talkToThiefHead",
 					positionToMovePlayerTo: {x: 280, y: 312},
 				}, {
 					description: "Fly back to the pond",
-					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 300}, bottomRightCorner: {x: 100, y: 600} },
+					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 150}, bottomRightCorner: {x: 800, y: 600} },
 					destinationScene: 'pond',
 					destinationPosition: {x: 751, y: 432}
 				}
