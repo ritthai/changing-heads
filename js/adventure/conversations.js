@@ -896,7 +896,6 @@ adventure.getConversations = function () {
 		"onEnter": "landAtBeachParty"
 	},
 	"talkToThiefHead": {
-		"onEnter": "talkToThiefHead",
 		"dialog":
 			[
 				"Kylie",

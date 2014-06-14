@@ -317,7 +317,7 @@ adventure.getSceneFunctions = function (adventureProvider) {
 
 		'talkToThiefHead': function () {
             if (worldState['isLookingForSomethingThatHurts']) {
-			adventureProvider.startConversation("talkToFaintedThiefHead");
+			    adventureProvider.startConversation("talkToFaintedThiefHead");
                 return false;
             }
 			worldState['isLookingForSomethingThatHurts'] = true;
