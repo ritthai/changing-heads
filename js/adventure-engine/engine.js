@@ -4,13 +4,22 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-var currentAdventure = {};
-
 var adventure = {};
 
 adventure.getEngine = function () {
 	var 	backgroundDirectory,
 		startSceneName;
+
+	var start = function () {
+		configure();
+		startAssumingConfigurationDone();
+	};
+
+	var configure = function () {
+		var configuration = adventure.getConfiguration();
+		startSceneName = configuration.startSceneName;
+		backgroundDirectory = configuration.backgroundDirectory;
+	};
 
 	var startAssumingConfigurationDone = function () {
 		var sceneManager = adventure.getSceneManager();
@@ -47,11 +56,19 @@ adventure.getEngine = function () {
 		// TODO: UI Manager and Scene Functions shouldn't really need the scenes.
 		// loadScene should be modified to also work with just a scene name
 
+        var userInputManager = adventure.getUserInputManager();
+        var buildModeManager = adventure.getBuildModeManager();
+        var graphicsManager = adventure.getGraphicsManager();
+
 		var uiManager = adventure.getUIManager(
 				providerForUIManager,
 				sceneManager.isInConversation,
 				scenes,
-				sceneFunctions);
+				sceneFunctions,
+                userInputManager,
+                graphicsManager,
+                buildModeManager
+            );
 
 
 		var currentScene = scenes[startSceneName];
@@ -71,20 +88,5 @@ adventure.getEngine = function () {
 		uiManager.bindHandlers();
 	};
 
-	var configure = function () {
-		var configuration = adventure.getConfiguration();
-		startSceneName = configuration.startSceneName;
-		backgroundDirectory = configuration.backgroundDirectory;
-	};
-
-	var start = function () {
-		configure();
-		startAssumingConfigurationDone();
-	};
-
-	adventureEngineToReturn = {
-		start: start
-	};
-
-	return adventureEngineToReturn;
+	return { start: start };
 };
