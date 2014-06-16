@@ -14,66 +14,168 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 	var firstCoordinateIsRecorded;
 	var firstCoordinate;
 
-	var sceneToPageCoordinates = function (coordinates) {
-		var screen = $("#screen"),
-			offset = screen.offset(),
-			resultX = coordinates.x + offset.left,
-			resultY = coordinates.y + offset.top;
-		return {x: resultX, y: resultY};
+	var init = function () {
+		mousePosition = {x: -1, y: -1};
+		buildModeManager = adventure.getBuildModeManager();
 	};
 
-	var putPlayerAt = function (destination) {
-		var player = $("#player");
-		var destinationOnPage = sceneToPageCoordinates(destination);
-		var playerTopLeftPoint = playerGroundToTopLeftPoint(player, destinationOnPage);
-		player.offset({
-				left: playerTopLeftPoint.x,
-				top: playerTopLeftPoint.y
-		});
+	var drawScene = function (scene, backgroundDirectory) {
+		removeScene();
+		setBackgroundImageOfScene(backgroundDirectory + scene.background);
+		addSceneImages(scene.images);
+		showActionDescription();
 	};
 
-	var playerGroundToTopLeftPoint = function (player, groundPoint) {
-		var topLeftPoint = {
-			x: groundPoint.x - player.width() / 2,
-			y: groundPoint.y - player.height()
-		};
-		return topLeftPoint;
+	var bindHandlers = function () {
+		$(document).click(onClick);
+		$(document).mousemove(onMouseMove);
+		document.addEventListener('touchend', onTouchEnd, false);
+		document.addEventListener('touchmove', onTouchMove, false);
 	};
 
-	var animatePlayerMove = function (player, destination, callback) {
-		var playerTopLeftPoint = playerGroundToTopLeftPoint(player, destination);
-		player.animate({
-				left: playerTopLeftPoint.x,
-				top: playerTopLeftPoint.y
-			}, callback);
+	var onTouchEnd = function (event) {
+		var touchEvent =  getTouchEventFromTouchesEvent(event);
+		onClick(touchEvent);
 	};
 
-	var facePlayerLeft = function () {
-		var player = $("#player");
-		player.addClass('is-flipped-horizontally');
+	var onTouchMove = function (event) {
+		var touchEvent =  getTouchEventFromTouchesEvent(event);
+		event.preventDefault();
+		onMouseMove(touch);
 	};
 
-	var facePlayerRight = function () {
-		var player = $("#player");
-		player.removeClass('is-flipped-horizontally');
+	var getTouchEventFromTouchesEvent = function (event) {
+		var touches = event.changedTouches || event.targetTouches;
+		var touch = touches[0];
+		return touch;
 	};
 
-	var makePlayerFaceRightWayForMove = function (player, destination) {
-		if (destination.x < player.position().left + player.width()/2) {
-			facePlayerLeft();
-		} else {
-			facePlayerRight();
+	var onClick = function (event) {
+		onMouseMove(event);
+		if (!eventIsOnScreen(event)) { return; }
+		var coordinates = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
+		if (buildModeManager.isInBuildMode) {
+			buildModeManager.onClickWhenInBuildMode(coordinates);
+			return;
+		}
+		if (isInConversation()) return;
+		hitHotspot(coordinates);
+	};
+
+	var eventIsOnScreen = function (event) {
+		var sceneCoordinates = pageToSceneCoordinates({ x: event.pageX, y: event.pageY });
+		return sceneCoordinatesAreOnScreen(sceneCoordinates);
+	};
+
+	var hitHotspot = function (coordinates) {
+		// TODO: The this logic should go in scene manager
+		var hotspot = adventureProvider.getHotspotAt(coordinates);
+		if (hotspot.onHit) { 
+			var onHitResult = sceneFunctions[hotspot.onHit]();
+			var shouldPreventDefault = onHitResult === false;
+			if (shouldPreventDefault) { return; }
+		}
+		if (isInConversation()) return;
+		onHitHotspotWhereOnHitAllowsDefault(coordinates, hotspot);
+	};
+
+	var onHitHotspotWhereOnHitAllowsDefault = function (clickedPoint, hotspot) {
+		var shouldPreventMoveToClickedPoint = hotspot.shouldPreventDefault || hotspot.isSolid;
+		if (hotspot.positionToMovePlayerTo) {
+			adventureProvider.movePlayer(hotspot.positionToMovePlayerTo, function () {
+				makePlayerFaceRightWayForMove($('#player'), hotspot.shape.bottomRightCorner);
+			});
+			shouldPreventMoveToClickedPoint = true;
+		}
+		if (hotspot.conversationToStart) {
+			adventureProvider.startConversation(hotspot.conversationToStart);
+			shouldPreventMoveToClickedPoint = true;
+		}
+		if (!(shouldPreventMoveToClickedPoint)) {
+			adventureProvider.movePlayer(clickedPoint, function () { onArrive(clickedPoint); });
 		}
 	};
 
-	var movePlayer = function (destination, callback) {
-		var player = $("#player");
-		makePlayerFaceRightWayForMove(player, destination);
-		animatePlayerMove(player, destination, callback);
+	var onArrive = function (event) {
+		var hotspot = adventureProvider.getHotspotAt(event);
+		if (hotspot.onArrive) { hotspot.onArrive() };
+		if (hotspot.destinationScene) {
+			adventureProvider.loadScene(scenes[hotspot.destinationScene]);
+		}
+		if (hotspot.destinationPosition) {
+			adventureProvider.putPlayerAt(
+				hotspot.destinationPosition.x, hotspot.destinationPosition.y);
+		}
 	};
 
-	var setBackgroundImageOfJqueryElement = function ($element, url) {
-		$element.css('background-image', 'url(' + url + ')');
+	var onMouseMove = function (event) {
+		mousePosition = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
+		showActionDescription();
+	};
+
+	var showActionDescription = function () {
+		var actionDescription = adventureProvider.getHotspotAt(mousePosition).description,
+			actionDescriptionElement = $("#action-description"),
+			actionDescriptionBox = $("#action-description-box");
+		if (!mouseIsOnScreen() || isInConversation() || !actionDescription) {
+			actionDescriptionBox.hide();
+			$('#screen').removeClass('is-clickable');
+		} else {
+			actionDescriptionElement.html(actionDescription);
+			actionDescriptionBox.show();
+			$('#screen').addClass('is-clickable');
+		}
+	};
+
+	var mouseIsOnScreen = function () {
+		return sceneCoordinatesAreOnScreen(mousePosition);
+	};
+
+	var sceneCoordinatesAreOnScreen = function (sceneCoordinates) {
+		var screen = $("#screen"),
+			isOnScreen =
+				sceneCoordinates.x >= 0 &&
+				sceneCoordinates.y >= 0 &&
+				sceneCoordinates.x <= screen.width() &&
+				sceneCoordinates.y <= screen.height();
+		return isOnScreen;
+	};
+
+	var pageToSceneCoordinates = function (coordinates) {
+		var screen = $("#screen"),
+			offset = screen.offset(),
+			result = {x: coordinates.x - offset.left, y: coordinates.y - offset.top};
+		return result;
+	};
+
+	var removeScene = function () {
+		$('#scene .scene-entity').remove();
+	};
+
+	var setBackgroundImageOfScene = function (url) {
+		var $scene = $('#scene');
+		setBackgroundImageOfJqueryElement($scene, url);
+	};
+
+	var flipSceneImageById = function (id) {
+		var htmlId = 'scene-image_' + id;
+		$('#' + htmlId).addClass('is-flipped-horizontally');		
+	};
+
+	var hideSceneImageById = function (id) {
+		var htmlId = 'scene-image_' + id;
+		$('#' + htmlId).hide();
+	};
+
+	var addSceneImages = function (images) {
+		var i, image;
+		if (!images) { return; }
+		for (i = 0; i < images.length; i++) {
+			image = images[i];
+			if (!image.hidden) {
+				addSceneImage(images[i]);
+			}
+		}
 	};
 
 	var addSceneImage = function (image) {
@@ -95,168 +197,66 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 		}
 	};
 
-	var addSceneImages = function (images) {
-		var i, image;
-		if (!images) { return; }
-		for (i = 0; i < images.length; i++) {
-			image = images[i];
-			if (!image.hidden) {
-				addSceneImage(images[i]);
-			}
+	var setBackgroundImageOfJqueryElement = function ($element, url) {
+		$element.css('background-image', 'url(' + url + ')');
+	};
+
+	var movePlayer = function (destination, callback) {
+		var player = $("#player");
+		makePlayerFaceRightWayForMove(player, destination);
+		animatePlayerMove(player, destination, callback);
+	};
+
+	var makePlayerFaceRightWayForMove = function (player, destination) {
+		if (destination.x < player.position().left + player.width()/2) {
+			facePlayerLeft();
+		} else {
+			facePlayerRight();
 		}
 	};
 
-	var hideSceneImageById = function (id) {
-		var htmlId = 'scene-image_' + id;
-		$('#' + htmlId).hide();
+	var facePlayerRight = function () {
+		var player = $("#player");
+		player.removeClass('is-flipped-horizontally');
 	};
 
-	var flipSceneImageById = function (id) {
-		var htmlId = 'scene-image_' + id;
-		$('#' + htmlId).addClass('is-flipped-horizontally');		
+	var facePlayerLeft = function () {
+		var player = $("#player");
+		player.addClass('is-flipped-horizontally');
 	};
 
-	var setBackgroundImageOfScene = function (url) {
-		var $scene = $('#scene');
-		setBackgroundImageOfJqueryElement($scene, url);
+	var animatePlayerMove = function (player, destination, callback) {
+		var playerTopLeftPoint = playerGroundToTopLeftPoint(player, destination);
+		player.animate({
+				left: playerTopLeftPoint.x,
+				top: playerTopLeftPoint.y
+			}, callback);
 	};
 
-	var removeScene = function () {
-		$('#scene .scene-entity').remove();
+	var playerGroundToTopLeftPoint = function (player, groundPoint) {
+		var topLeftPoint = {
+			x: groundPoint.x - player.width() / 2,
+			y: groundPoint.y - player.height()
+		};
+		return topLeftPoint;
 	};
 
-	var pageToSceneCoordinates = function (coordinates) {
+	var putPlayerAt = function (destination) {
+		var player = $("#player");
+		var destinationOnPage = sceneToPageCoordinates(destination);
+		var playerTopLeftPoint = playerGroundToTopLeftPoint(player, destinationOnPage);
+		player.offset({
+				left: playerTopLeftPoint.x,
+				top: playerTopLeftPoint.y
+		});
+	};
+
+	var sceneToPageCoordinates = function (coordinates) {
 		var screen = $("#screen"),
 			offset = screen.offset(),
-			result = {x: coordinates.x - offset.left, y: coordinates.y - offset.top};
-		return result;
-	};
-
-	var sceneCoordinatesAreOnScreen = function (sceneCoordinates) {
-		var screen = $("#screen"),
-			isOnScreen =
-				sceneCoordinates.x >= 0 &&
-				sceneCoordinates.y >= 0 &&
-				sceneCoordinates.x <= screen.width() &&
-				sceneCoordinates.y <= screen.height();
-		return isOnScreen;
-	};
-
-	var mouseIsOnScreen = function () {
-		return sceneCoordinatesAreOnScreen(mousePosition);
-	};
-
-	var showActionDescription = function () {
-		var actionDescription = adventureProvider.getHotspotAt(mousePosition).description,
-			actionDescriptionElement = $("#action-description"),
-			actionDescriptionBox = $("#action-description-box");
-		if (!mouseIsOnScreen() || isInConversation() || !actionDescription) {
-			actionDescriptionBox.hide();
-			$('#screen').removeClass('is-clickable');
-		} else {
-			actionDescriptionElement.html(actionDescription);
-			actionDescriptionBox.show();
-			$('#screen').addClass('is-clickable');
-		}
-	};
-
-	var onMouseMove = function (event) {
-		mousePosition = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
-		showActionDescription();
-	};
-
-	var onArrive = function (event) {
-		var hotspot = adventureProvider.getHotspotAt(event);
-		if (hotspot.onArrive) { hotspot.onArrive() };
-		if (hotspot.destinationScene) {
-			adventureProvider.loadScene(scenes[hotspot.destinationScene]);
-		}
-		if (hotspot.destinationPosition) {
-			adventureProvider.putPlayerAt(
-				hotspot.destinationPosition.x, hotspot.destinationPosition.y);
-		}
-	};
-
-	var onHitHotspotWhereOnHitAllowsDefault = function (clickedPoint, hotspot) {
-		var shouldPreventMoveToClickedPoint = hotspot.shouldPreventDefault || hotspot.isSolid;
-		if (hotspot.positionToMovePlayerTo) {
-			adventureProvider.movePlayer(hotspot.positionToMovePlayerTo, function () {
-				makePlayerFaceRightWayForMove($('#player'), hotspot.shape.bottomRightCorner);
-			});
-			shouldPreventMoveToClickedPoint = true;
-		}
-		if (hotspot.conversationToStart) {
-			adventureProvider.startConversation(hotspot.conversationToStart);
-			shouldPreventMoveToClickedPoint = true;
-		}
-		if (!(shouldPreventMoveToClickedPoint)) {
-			adventureProvider.movePlayer(clickedPoint, function () { onArrive(clickedPoint); });
-		}
-	};
-
-	var hitHotspot = function (coordinates) {
-		// TODO: The this logic should go in scene manager
-		var hotspot = adventureProvider.getHotspotAt(coordinates);
-		if (hotspot.onHit) { 
-			var onHitResult = sceneFunctions[hotspot.onHit]();
-			var shouldPreventDefault = onHitResult === false;
-			if (shouldPreventDefault) { return; }
-		}
-		if (isInConversation()) return;
-		onHitHotspotWhereOnHitAllowsDefault(coordinates, hotspot);
-	};
-
-	var eventIsOnScreen = function (event) {
-		var sceneCoordinates = pageToSceneCoordinates({ x: event.pageX, y: event.pageY });
-		return sceneCoordinatesAreOnScreen(sceneCoordinates);
-	};
-
-	var onClick = function (event) {
-		onMouseMove(event);
-		if (!eventIsOnScreen(event)) { return; }
-		var coordinates = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
-		if (buildModeManager.isInBuildMode) {
-			buildModeManager.onClickWhenInBuildMode(coordinates);
-			return;
-		}
-		if (isInConversation()) return;
-		hitHotspot(coordinates);
-	};
-
-	var getTouchEventFromTouchesEvent = function (event) {
-		var touches = event.changedTouches || event.targetTouches;
-		var touch = touches[0];
-		return touch;
-	};
-
-	var onTouchEnd = function (event) {
-		var touchEvent =  getTouchEventFromTouchesEvent(event);
-		onClick(touchEvent);
-	};
-
-	var onTouchMove = function (event) {
-		var touchEvent =  getTouchEventFromTouchesEvent(event);
-		event.preventDefault();
-		onMouseMove(touch);
-	};
-	
-	var bindHandlers = function () {
-		$(document).click(onClick);
-		$(document).mousemove(onMouseMove);
-		document.addEventListener('touchend', onTouchEnd, false);
-		document.addEventListener('touchmove', onTouchMove, false);
-	};
-
-	var drawScene = function (scene, backgroundDirectory) {
-		removeScene();
-		setBackgroundImageOfScene(backgroundDirectory + scene.background);
-		addSceneImages(scene.images);
-		showActionDescription();
-	};
-
-	var init = function () {
-		mousePosition = {x: -1, y: -1};
-		buildModeManager = adventure.getBuildModeManager();
+			resultX = coordinates.x + offset.left,
+			resultY = coordinates.y + offset.top;
+		return {x: resultX, y: resultY};
 	};
 
 	init();
