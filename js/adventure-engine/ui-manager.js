@@ -28,60 +28,13 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 			return;
 		}
 		if (isInConversation()) return;
-		hitHotspot(coordinates);            
+		adventureProvider.hitHotspot(coordinates);            
     };
 
     var onMouseMove = function (coordinates) {
         mousePosition = coordinates;
 		showActionDescription();
     };
-
-	var hitHotspot = function (coordinates) {
-		// TODO: The this logic should go in scene manager
-		var hotspot = adventureProvider.getHotspotAt(coordinates);
-		if (hotspot.onHit) { 
-			var onHitResult = sceneFunctions[hotspot.onHit]();
-			var shouldPreventDefault = onHitResult === false;
-			if (shouldPreventDefault) { return; }
-		}
-		if (isInConversation()) return;
-		onHitHotspotWhereOnHitAllowsDefault(coordinates, hotspot);
-	};
-
-	var onHitHotspotWhereOnHitAllowsDefault = function (clickedPoint, hotspot) {
-		if (hotspot.positionToMovePlayerTo) {
-			movePlayerToHotspot(hotspot);
-		}
-		if (hotspot.conversationToStart) {
-			adventureProvider.startConversation(hotspot.conversationToStart);
-		}
-		if (shouldMoveToClickedPoint(hotspot)) {
-			adventureProvider.movePlayer(clickedPoint, function () { onArrive(clickedPoint); });
-		}
-	};
-
-    var shouldMoveToClickedPoint = function (hotspot) {
-        return !(hotspot.shouldPreventDefault || hotspot.isSolid ||
-            hotspot.positionToMovePlayerTo || hotspot.conversationToStart);
-    };
-
-    var movePlayerToHotspot = function (hotspot) {
-		adventureProvider.movePlayer(hotspot.positionToMovePlayerTo, function () {
-			makePlayerFaceRightWayForMove(hotspot.shape.bottomRightCorner);
-		});
-    };
-
-	var onArrive = function (event) {
-		var hotspot = adventureProvider.getHotspotAt(event);
-		if (hotspot.onArrive) { hotspot.onArrive() };
-		if (hotspot.destinationScene) {
-			adventureProvider.loadScene(scenes[hotspot.destinationScene]);
-		}
-		if (hotspot.destinationPosition) {
-			adventureProvider.putPlayerAt(
-				hotspot.destinationPosition.x, hotspot.destinationPosition.y);
-		}
-	};
 
 	var drawScene = function (scene, backgroundDirectory) {
 		graphicsManager.removeScene();

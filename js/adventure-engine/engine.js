@@ -48,7 +48,8 @@ adventure.getEngine = function () {
 			putPlayerAt: sceneManager.putPlayerAt,
 			movePlayer: sceneManager.movePlayer,
 			getHotspotAt: sceneManager.getHotspotAt,
-			startConversation: conversationManager.startConversation
+			startConversation: conversationManager.startConversation,
+            hitHotspot: sceneManager.hitHotspot
 		};
 
 		var scenes = adventure.getScenes();

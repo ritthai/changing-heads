@@ -135,6 +135,52 @@ adventure.getSceneManager = function () {
 		loadScene(scenes[name]);
 	};
 
+	var hitHotspot = function (coordinates) {
+		var hotspot = getHotspotAt(coordinates);
+		if (hotspot.onHit) { 
+			var onHitResult = sceneFunctions[hotspot.onHit]();
+			var shouldPreventDefault = onHitResult === false;
+			if (shouldPreventDefault) { return; }
+		}
+		if (isInConversation()) return;
+		onHitHotspotWhereOnHitAllowsDefault(coordinates, hotspot);
+	};
+
+	var onHitHotspotWhereOnHitAllowsDefault = function (clickedPoint, hotspot) {
+		if (hotspot.positionToMovePlayerTo) {
+			movePlayerToHotspot(hotspot);
+		}
+		if (hotspot.conversationToStart) {
+			conversationManager.startConversation(hotspot.conversationToStart);
+		}
+		if (shouldMoveToClickedPoint(hotspot)) {
+			movePlayer(clickedPoint, function () { onArrive(clickedPoint); });
+		}
+	};
+
+    var shouldMoveToClickedPoint = function (hotspot) {
+        return !(hotspot.shouldPreventDefault || hotspot.isSolid ||
+            hotspot.positionToMovePlayerTo || hotspot.conversationToStart);
+    };
+
+    var movePlayerToHotspot = function (hotspot) {
+		movePlayer(hotspot.positionToMovePlayerTo, function () {
+			makePlayerFaceRightWayForMove(hotspot.shape.bottomRightCorner);
+		});
+    };
+
+	var onArrive = function (event) {
+		var hotspot = getHotspotAt(event);
+		if (hotspot.onArrive) { hotspot.onArrive() };
+		if (hotspot.destinationScene) {
+			loadScene(scenes[hotspot.destinationScene]);
+		}
+		if (hotspot.destinationPosition) {
+			uiManager.putPlayerAt(
+				hotspot.destinationPosition.x, hotspot.destinationPosition.y);
+		}
+	};
+
 	var sceneManagerToReturn = {
 		getHotspotAt: getHotspotAt,
 		putPlayerAt: putPlayerAt,
@@ -147,6 +193,7 @@ adventure.getSceneManager = function () {
 		flipSceneImageById: flipSceneImageById,
 		hideHotspotById: hideHotspotById,
 		isInConversation: isInConversation,
+        hitHotspot: hitHotspot,
 		configure: configure
 	};
 
