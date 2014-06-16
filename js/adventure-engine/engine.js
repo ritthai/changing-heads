@@ -8,11 +8,15 @@ var adventure = {};
 
 adventure.getEngine = function () {
 	var 	backgroundDirectory,
-		startSceneName;
+		startSceneName,
+        sceneManager,
+        uiManager;
 
 	var start = function () {
 		configure();
-		startAssumingConfigurationDone();
+		initializeModules();
+		sceneManager.loadSceneByName(startSceneName);
+		uiManager.bindHandlers();
 	};
 
 	var configure = function () {
@@ -21,8 +25,8 @@ adventure.getEngine = function () {
 		backgroundDirectory = configuration.backgroundDirectory;
 	};
 
-	var startAssumingConfigurationDone = function () {
-		var sceneManager = adventure.getSceneManager();
+	var initializeModules = function () {
+		sceneManager = adventure.getSceneManager();
 
 		var conversations = adventure.getConversations();
 
@@ -39,7 +43,9 @@ adventure.getEngine = function () {
 		};
 		var sceneFunctions = adventure.getSceneFunctions(providerForSceneFunctions);
 
-		var conversationManager = adventure.getConversationManager(conversations, sceneFunctions);
+        var util = adventure.util;
+
+		var conversationManager = adventure.getConversationManager(conversations, sceneFunctions, util);
 
 		providerForSceneFunctions.startConversation = conversationManager.startConversation;
 
@@ -54,39 +60,26 @@ adventure.getEngine = function () {
 
 		var scenes = adventure.getScenes();
 
-		// TODO: UI Manager and Scene Functions shouldn't really need the scenes.
-		// loadScene should be modified to also work with just a scene name
-
         var userInputManager = adventure.getUserInputManager();
-        var buildModeManager = adventure.getBuildModeManager();
         var graphicsManager = adventure.getGraphicsManager();
+        var buildModeManager = adventure.getBuildModeManager();
 
-		var uiManager = adventure.getUIManager(
+		uiManager = adventure.getUIManager(
 				providerForUIManager,
 				sceneManager.isInConversation,
-				scenes,
 				sceneFunctions,
                 userInputManager,
                 graphicsManager,
                 buildModeManager
             );
 
-
-		var currentScene = scenes[startSceneName];
-
-		// TODO: Scene Manager doesn't have scenes, but UI Manager and Scene Functions do.
-		// Clearly the logic was divided up incorrectly here.
 		sceneManager.configure({
-			currentScene: currentScene,
 			backgroundDirectory: backgroundDirectory,
 			uiManager: uiManager,
 			conversationManager: conversationManager,
 			sceneFunctions: sceneFunctions,
 			scenes: scenes
 		});
-
-		sceneManager.loadScene(currentScene);
-		uiManager.bindHandlers();
 	};
 
 	return { start: start };

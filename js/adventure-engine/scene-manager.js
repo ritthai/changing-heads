@@ -17,7 +17,6 @@ adventure.getSceneManager = function () {
 		scenes;
 
 	var configure = function (configuration) {
-		currentScene = configuration.currentScene;
 		backgroundDirectory	= configuration.backgroundDirectory;
 		uiManager = configuration.uiManager;
 		conversationManager = configuration.conversationManager;
