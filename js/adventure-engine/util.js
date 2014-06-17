@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.util = (function () {
+adventure.getUtil = function () {
 	var clone = function (objectToClone) {
 		return $.extend(true, {}, objectToClone);
 	};
@@ -12,4 +12,4 @@ adventure.util = (function () {
 	return {
 		clone: clone
 	};
-}());
+};

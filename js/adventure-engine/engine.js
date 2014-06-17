@@ -26,7 +26,9 @@ adventure.getEngine = function () {
 	};
 
 	var initializeModules = function () {
-		sceneManager = adventure.getSceneManager();
+        var util = adventure.getUtil();
+
+		sceneManager = adventure.getSceneManager(util);
 
 		var conversations = adventure.getConversations();
 
@@ -43,9 +45,11 @@ adventure.getEngine = function () {
 		};
 		var sceneFunctions = adventure.getSceneFunctions(providerForSceneFunctions);
 
-        var util = adventure.util;
+        var conversationDisplayer = adventure.getConversationDisplayer();
+        var soundManager = adventure.makeSoundManager();
 
-		var conversationManager = adventure.getConversationManager(conversations, sceneFunctions, util);
+		var conversationManager = adventure.getConversationManager(
+            conversations, sceneFunctions, util, conversationDisplayer, soundManager);
 
 		providerForSceneFunctions.startConversation = conversationManager.startConversation;
 

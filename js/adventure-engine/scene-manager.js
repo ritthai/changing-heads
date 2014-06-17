@@ -4,8 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getSceneManager = function () {
-	var util = adventure.util;
+adventure.getSceneManager = function (util) {
 
 	var nullObjectHotspot = {description: '', shape: {type: ''}, onArrive: function () {}};
 

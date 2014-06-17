@@ -4,30 +4,33 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getConversationManager = function (conversations, sceneFunctions, util) {
+adventure.getConversationManager = function (conversations, sceneFunctions, util, conversationDisplayer, soundManager) {
+
+    var object = {};
+
 	var isInConversation = false;
 	var currentConversation = {};
 	var currentLine = 0;
 	var overridingDialog;
 	var isEndingConversation = false;
 
-	var getIsInConversation = function () {
+	object.isInConversation = function () {
 		return isInConversation;
 	};
 
-	var startConversation = function (conversationName) {
+	object.startConversation = function (conversationName) {
 		isInConversation = true;
 		currentConversation = conversations[conversationName];
 		resetVariablesForSubConverstion();
 		clearDialog();
-		showDialogBox();
-		hideActionDescriptionBox();
+		conversationDisplayer.showDialogBox();
+		conversationDisplayer.hideActionDescriptionBox();
 		proceedConversation();
 	};
 
 	var proceedConversation = function (shouldPreventSound) {
 		if (!shouldPreventSound) {
-            playClickSound();
+            soundManager.playClickSound();
 		}
 		if (currentLine === 0 && currentConversation.onEnter) {
 			var overridingOptions = sceneFunctions[currentConversation.onEnter](currentConversation);
@@ -59,20 +62,20 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
 		for (var i = 0; i < options.length; i++) {
 			showOption(options[i], i);
 		}
-		writeOptionLn(''); // TODO: This is hacky. Use actual styling instead of adding an empty option
+		conversationDisplayer.writeOptionLn(''); // TODO: This is hacky. Use actual styling instead of adding an empty option
 	};
 
 	var showOption = function (option, i) {
 		var optionDescription = option.description;
 		var description = optionDescription ?
 				optionDescription : option.dialog[1];
-        printOptionLink(description, i, function () {
+        conversationDisplayer.printOptionLink(description, i, function () {
             chooseOption(option);
         });
 	};
 
 	var showProceedConversationLink = function () {
-        printProceedConversationLink('Next', function () {
+        conversationDisplayer.printProceedConversationLink('Next', function () {
 			currentLine += 1;
 			clearDialog();
 			proceedConversation();
@@ -131,70 +134,13 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
 		// because this gets evaluated before the click handler. If the click handler sees
 		// that we are not in a conversation, the character will interact with the clicked
 		// spot, even though the click was actually meant to end the conversation.
-		hideDialogBox(function () {
+		conversationDisplayer.hideDialogBox(function () {
 			isInConversation = false;
 		});
 	};
 
+	var writeDialogLn = conversationDisplayer.writeDialogLn;
+	var clearDialog = conversationDisplayer.clearDialog;
 
-    // TODO: Stuff to move into a sound  manager
-
-    var playClickSound = function () {
-        clickSound.play();
-    };
-
-	var clickSound = (new buzz.sound( "audio/sounds/click", {
-				formats: [ "wav" ]
-			}));
-
-
-    // TODO: Stuff to move into a conversation UI manager
-
-	var $ = jQuery;
-
-    var printOptionLink = function (description, i, handler) {
-        printOptionLinkWithId(description, 'option-' + i, handler);
-    };
-
-    var printProceedConversationLink = function (description, handler) {
-        printOptionLinkWithId(description, 'proceed-conversation-link', handler);
-    };
-
-    printOptionLinkWithId = function (description, id, handler) {
-		writeOptionLn('<a id="' + id + '">' + description + '</a>');
-		document.getElementById(id).onclick = function (event) {
-			event.preventDefault();
-            handler();
-		};
-    };
-	
-	var writeDialogLn = function (text) {
-		$("#dialog").append(text + "<br />");
-	};
-
-	var writeOptionLn = function (text) {
-		$("#options").append(text + "<br />");
-	};
-
-	var clearDialog = function () {
-		$('#dialog').html('');
-		$("#options").html('');
-	};
-
-    var showDialogBox = function () {
-		$("#dialog-box").show();
-    };
-
-    var hideDialogBox = function (callback) {
-		$('#dialog-box').fadeOut(callback);
-    };
-
-    var hideActionDescriptionBox = function () {
-		$("#action-description-box").hide();
-    };
-
-	return {
-		startConversation: startConversation,
-		isInConversation: getIsInConversation
-	};
+	return object;
 };
