@@ -4,18 +4,18 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getGraphicsManager = function () {
-    var object = {};
+adventure.getGraphicsManager = (function () {
+    var prototype = {};
 
-	object.removeScene = function () {
+	prototype.removeScene = function () {
 		$('#scene .scene-entity').remove();
 	};
 
-	object.setBackgroundImageOfScene = function (url) {
+	prototype.setBackgroundImageOfScene = function (url) {
 		$('#scene').css('background-image', 'url(' + url + ')');
 	};
 
-    object.addSceneImages = function (images) {
+    prototype.addSceneImages = function (images) {
 		var i, image;
 		if (!images) { return; }
 		for (i = 0; i < images.length; i++) {
@@ -45,7 +45,7 @@ adventure.getGraphicsManager = function () {
 		}
 	};
 
-    object.showActionDescription = function (description) {
+    prototype.showActionDescription = function (description) {
 		if (!description) {
 			$("#action-description-box").hide();
 			$('#screen').removeClass('is-clickable');
@@ -56,22 +56,23 @@ adventure.getGraphicsManager = function () {
 		}
     };
 
-	object.flipSceneImageById = function (id) {
+	prototype.flipSceneImageById = function (id) {
 		var htmlId = 'scene-image_' + id;
 		$('#' + htmlId).addClass('is-flipped-horizontally');		
 	};
 
-	object.hideSceneImageById = function (id) {
+	prototype.hideSceneImageById = function (id) {
 		var htmlId = 'scene-image_' + id;
 		$('#' + htmlId).hide();
 	};
 
-	object.movePlayer = function (destination, callback) {
+	prototype.movePlayer = function (destination, callback) {
 		makePlayerFaceRightWayForMove(destination);
 		animatePlayerMove(destination, callback);
 	};
 
-	var makePlayerFaceRightWayForMove = function (destination) {
+	var makePlayerFaceRightWayForMove =
+    prototype.makePlayerFaceRightWayForMove = function (destination) {
         var player = $('#player');
 		if (destination.x < player.position().left + player.width()/2) {
 			facePlayerLeft();
@@ -81,13 +82,13 @@ adventure.getGraphicsManager = function () {
 	};
 
 	var facePlayerLeft =
-    object.facePlayerLeft = function () {
+    prototype.facePlayerLeft = function () {
 		$("#player").addClass('is-flipped-horizontally');
 	};
     
 
 	var facePlayerRight =
-    object.facePlayerRight = function () {
+    prototype.facePlayerRight = function () {
 		$("#player").removeClass('is-flipped-horizontally');
 	};
 
@@ -100,7 +101,7 @@ adventure.getGraphicsManager = function () {
 			}, callback);
 	};
 
-	object.putPlayerAt = function (destination) {
+	prototype.putPlayerAt = function (destination) {
 		var player = $("#player");
 		var destinationOnPage = sceneToPageCoordinates(destination);
 		var playerTopLeftPoint = playerGroundToTopLeftPoint(player, destinationOnPage);
@@ -126,5 +127,9 @@ adventure.getGraphicsManager = function () {
 		return {x: resultX, y: resultY};
 	};
 
-    return object;
-};
+    return function () {
+        var F = function () {};
+        F.prototype = prototype;
+        return new F();
+    };
+}());

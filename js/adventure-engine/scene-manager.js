@@ -163,7 +163,7 @@ adventure.getSceneManager = function (util) {
 
     var movePlayerToHotspot = function (hotspot) {
 		movePlayer(hotspot.positionToMovePlayerTo, function () {
-			makePlayerFaceRightWayForMove(hotspot.shape.bottomRightCorner);
+			uiManager.makePlayerFaceRightWayForMove(hotspot.shape.bottomRightCorner);
 		});
     };
 

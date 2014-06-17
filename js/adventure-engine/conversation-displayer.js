@@ -4,16 +4,10 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-(function () {
+adventure.getConversationDisplayer = (function () {
 	var $ = jQuery;
 
     var prototype = {};
-
-    adventure.getConversationDisplayer = function () {
-        var F = function () {};
-        F.prototype = prototype;
-        return new F();
-    };
 
     prototype.printOptionLink = function (description, i, handler) {
         printOptionLinkWithId(description, 'option-' + i, handler);
@@ -56,4 +50,9 @@ See the file license.txt for copying permission.
 		$("#action-description-box").hide();
     };
 
+    return function () {
+        var F = function () {};
+        F.prototype = prototype;
+        return new F();
+    };
 }());

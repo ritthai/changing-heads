@@ -59,6 +59,7 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 		facePlayerLeft: graphicsManager.facePlayerLeft,
 		facePlayerRight: graphicsManager.facePlayerRight,
 		hideSceneImageById: graphicsManager.hideSceneImageById,
-		flipSceneImageById: graphicsManager.flipSceneImageById
+		flipSceneImageById: graphicsManager.flipSceneImageById,
+        makePlayerFaceRightWayForMove: graphicsManager.makePlayerFaceRightWayForMove
 	};
 };
