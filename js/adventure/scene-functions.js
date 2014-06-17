@@ -4,19 +4,11 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getSceneFunctions = function (adventureProvider) {
+adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 	var worldState = {};
 
 	// TODO: This is hacky, and for debugging
 	window.worldState = worldState;
-
-	var cassandraIntroMusic = new buzz.sound( "audio/music/cassandras-intro", {
-		formats: [ "ogg", "mp3" ]
-	});
-
-	var startMusic = new buzz.sound( "audio/music/starting-the-brew-short", {
-		formats: [ "ogg", "mp3" ]
-	});
 
 	var addInterviewCassandraOptionIfDoneAskingWhatWasUp = function () {
 		if (worldState['hasAskedCassandraWhatWasUp'] &&
@@ -70,16 +62,13 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'playLittleDitty': function () {
-			startMusic.play().fadeIn();
+			soundManager.playSound('startMusic');
 		},
 
 		'onEnteringCaveOfCassandra': function () {
 			if (!worldState['hasEnteredCaveOfCassandra']) {
 				worldState['hasEnteredCaveOfCassandra'] = true;
-				if (!startMusic.isPaused()) {
-					startMusic.fadeOut(1000, function () { this.stop(); });
-				}
-				cassandraIntroMusic.play();
+				soundManager.playSound('cassandraIntroMusic');
 			}
 		},
 
@@ -98,9 +87,6 @@ adventure.getSceneFunctions = function (adventureProvider) {
 		},
 
 		'enterChangingHeads': function () {
-			if (!startMusic.isPaused()) {
-				startMusic.fadeOut(1000, function () { this.stop(); });
-			}
 			if (worldState['isPlanningToSeeChangingHeadsAgain']) {
 				worldState['hasSeemSimonAtHeadsAfterFixingHim'] = true;
 			} else {

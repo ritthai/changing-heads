@@ -10,11 +10,14 @@ adventure.getEngine = function () {
 	var 	backgroundDirectory,
 		startSceneName,
         sceneManager,
-        uiManager;
+        uiManager,
+        soundManager,
+        sounds;
 
 	var start = function () {
 		configure();
 		initializeModules();
+        soundManager.addSounds(sounds);
 		sceneManager.loadSceneByName(startSceneName);
 		uiManager.bindHandlers();
 	};
@@ -32,6 +35,8 @@ adventure.getEngine = function () {
 
 		var conversations = adventure.getConversations();
 
+        soundManager = adventure.makeSoundManager();
+
 		var providerForSceneFunctions = {
 			loadScene: sceneManager.loadSceneByName,
 			putPlayerAt: sceneManager.putPlayerAt,
@@ -43,10 +48,11 @@ adventure.getEngine = function () {
 			flipSceneImageById: sceneManager.flipSceneImageById,
 			startConversation: function () {}
 		};
-		var sceneFunctions = adventure.getSceneFunctions(providerForSceneFunctions);
+		var sceneFunctions = adventure.getSceneFunctions(providerForSceneFunctions, soundManager);
 
         var conversationDisplayer = adventure.getConversationDisplayer();
-        var soundManager = adventure.makeSoundManager();
+
+        sounds = adventure.getSounds();
 
 		var conversationManager = adventure.getConversationManager(
             conversations, sceneFunctions, util, conversationDisplayer, soundManager);

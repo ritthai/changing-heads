@@ -174,7 +174,7 @@ adventure.getSceneManager = function (util) {
 			loadScene(scenes[hotspot.destinationScene]);
 		}
 		if (hotspot.destinationPosition) {
-			uiManager.putPlayerAt(
+			putPlayerAt(
 				hotspot.destinationPosition.x, hotspot.destinationPosition.y);
 		}
 	};
