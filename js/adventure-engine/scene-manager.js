@@ -22,7 +22,7 @@ adventure.getSceneManager = function (util) {
 		sceneFunctions = configuration.sceneFunctions;
 		scenes = configuration.scenes;
 	};
-	
+
 	var putPlayerAt = function (x, y)  {
 		uiManager.putPlayerAt({x: x, y: y});
 	};
@@ -125,8 +125,33 @@ adventure.getSceneManager = function (util) {
 
 	var loadScene = function (scene) {
 		currentScene = util.clone(scene);
+		var scope = {};
+		var controller = sceneFunctions[currentScene.controller];
+		if (controller) { controller(scope); }
+		evaluateShowCondition(scope);
 		performSceneActions();
 		uiManager.drawScene(currentScene, backgroundDirectory);
+	};
+
+	var evaluateShowCondition = function (scope) {
+		evaluateShowConditionOnElements(currentScene.images, scope);
+		evaluateShowConditionOnElements(currentScene.hotspots, scope);
+	};
+
+	var evaluateShowConditionOnElements = function (elements, scope) {
+		each(elements, function (element) {
+			if (element.hasOwnProperty('showCondition') && !scope[element.showCondition]) {
+				element.hidden = true;
+			}
+		});
+	};
+
+	var each = function (array, lambda) {
+		var i, element;
+		for (i = 0; i < array.length; i++) {
+			element = array[i];
+			lambda(element);
+		}
 	};
 
 	var loadSceneByName = function (name) {
@@ -135,7 +160,7 @@ adventure.getSceneManager = function (util) {
 
 	var hitHotspot = function (coordinates) {
 		var hotspot = getHotspotAt(coordinates);
-		if (hotspot.onHit) { 
+		if (hotspot.onHit) {
 			var onHitResult = sceneFunctions[hotspot.onHit]();
 			var shouldPreventDefault = onHitResult === false;
 			if (shouldPreventDefault) { return; }
@@ -156,16 +181,16 @@ adventure.getSceneManager = function (util) {
 		}
 	};
 
-    var shouldMoveToClickedPoint = function (hotspot) {
-        return !(hotspot.shouldPreventDefault || hotspot.isSolid ||
-            hotspot.positionToMovePlayerTo || hotspot.conversationToStart);
-    };
+	var shouldMoveToClickedPoint = function (hotspot) {
+		return !(hotspot.shouldPreventDefault || hotspot.isSolid ||
+			hotspot.positionToMovePlayerTo || hotspot.conversationToStart);
+	};
 
-    var movePlayerToHotspot = function (hotspot) {
+	var movePlayerToHotspot = function (hotspot) {
 		movePlayer(hotspot.positionToMovePlayerTo, function () {
 			uiManager.makePlayerFaceRightWayForMove(hotspot.shape.bottomRightCorner);
 		});
-    };
+	};
 
 	var onArrive = function (event) {
 		var hotspot = getHotspotAt(event);
@@ -191,7 +216,7 @@ adventure.getSceneManager = function (util) {
 		flipSceneImageById: flipSceneImageById,
 		hideHotspotById: hideHotspotById,
 		isInConversation: isInConversation,
-        hitHotspot: hitHotspot,
+		hitHotspot: hitHotspot,
 		configure: configure
 	};
 

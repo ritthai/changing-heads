@@ -5,7 +5,7 @@ See the file license.txt for copying permission.
 */
 
 adventure.getConversations = function () {
-	var conversations = 
+	var conversations =
 
 {
 	"startMenu": {
@@ -22,7 +22,7 @@ adventure.getConversations = function () {
 			"Kylie",
 			"Geez, Simon said he's be here an hour ago. Where are you?",
 			"Kylie",
-            "Oh, there he is! Yo, Simon! I should go talk to him."
+			"Oh, there he is! Yo, Simon! I should go talk to him."
 		],
 		"onEnter": "playLittleDitty"
 	},
@@ -70,7 +70,7 @@ adventure.getConversations = function () {
 		"onEnter": "onTalkingToSimonAboutAnimation",
 		"dialog": [
 			"Kylie",
-            "Hey, so what's it like being an animator?",
+			"Hey, so what's it like being an animator?",
 			"Simon",
 			"Oh, no, I'm a storyboard artist / writer not an animator. We outsource that stuff. It's cool. It's alright. I don't know; I've kind of got writer's block or something. In a bit of a slump.",
 			"Kylie",
@@ -102,7 +102,7 @@ adventure.getConversations = function () {
 		"dialog": [
 			"Kylie", "You're okay getting there on your bike?",
 			"Simon", "Sure am; I'm in the best shape of my life.",
-            "Tom (the owner)", "Lookin' good, Simon!",
+			"Tom (the owner)", "Lookin' good, Simon!",
 			"Kylie", "Ok then. Well, see ya."
 		]
 	},
@@ -178,19 +178,15 @@ adventure.getConversations = function () {
 	"talkToTheChangingHeads": {
 		"dialog": [
 			"Kylie",
-			"Hey! Can you folks hear me?",
+			"Hey! Can you hear me?",
 			"Heads",
 			"We hear you, brother!",
 			"Kylie",
 			"I’m a girl.",
 			"Heads",
-			"Wait, really? I thought girls have long beautiful hair.",
-            "Kylie",
-            "Hey!",
-            "Heads",
-            "No no! We meant your *short* hair is beautiful? Look, kid, we're all just giant heads trying our best.",
-            "Head A",
-            "Well, except the jerk that ran off.",
+			"Crap! No no! We meant brother as in... Look, kid, we're all just giant heads trying our best to fit in.",
+			"Head A",
+			"Well, except the jerk that ran off.",
 			"Kylie",
 			"What jerk?",
 			"Head A",
@@ -207,8 +203,8 @@ adventure.getConversations = function () {
 			"So... she knew this would happen. She probably knows a thing.",
 			"Head C",
 			"Yeah, yeah. Real smart lady.",
-            "Kylie",
-            "Ugh... I usually *avoid* her cave when walk by the pond. Geez, I don't wanna burn to death. But I guess Simon needs a body..."
+			"Kylie",
+			"Ugh... I usually *avoid* her cave when walk by the pond. Geez, I don't wanna burn to death. But I guess Simon needs a body..."
 		]
 	},
 	"mentionFearOfCassandra": {
@@ -673,15 +669,15 @@ adventure.getConversations = function () {
 				"Tom",
 				"Cool. Do you wanna go now?"
 			],
-        "options": [
-            {
-                "description": "Yeah, let's go.",
-                "next": "talkToTomAboutGoingToMedicineMan"
-            },
-            {
-                "description": "Uh, just give me a minute."
-            },
-        ]
+		"options": [
+			{
+				"description": "Yeah, let's go.",
+				"next": "talkToTomAboutGoingToMedicineMan"
+			},
+			{
+				"description": "Uh, just give me a minute."
+			},
+		]
 	},
 	"talkToTomAboutGoingToMedicineMan": {
 		"dialog":
@@ -941,25 +937,25 @@ adventure.getConversations = function () {
 				"Kylie",
 				" So what do we do?",
 				"Cassandra",
-                "If you don't mind, could we discuss this back home? I could use a cup of tea after all this excitement.",
+				"If you don't mind, could we discuss this back home? I could use a cup of tea after all this excitement.",
 				"Kylie",
 				"Of course! Sure. Think it over.",
 			]
 	},
 	"talkToFaintedThiefHead": {
-        dialog:
-            [
-                "Kylie",
-                "Looks like he's out cold. Good riddance!"
-            ]
-    },
-    "askCassandraHowSimonIs": {
-        dialog:
-            [
+		dialog:
+			[
+				"Kylie",
+				"Looks like he's out cold. Good riddance!"
+			]
+	},
+	"askCassandraHowSimonIs": {
+		dialog:
+			[
 				"Kylie",
 				"Hey so how's Simon's body?",
 				"Cassandra",
-                "I have it resting in the back, but we still need to separate the head. I have an idea, but the details remain unclear.",
+				"I have it resting in the back, but we still need to separate the head. I have an idea, but the details remain unclear.",
 				"Cassandra",
 				"He has now experienced the joy of owning a body, but he has not yet experienced true pain. If we sufficiently hurt him, he will leave the body. But we must not harm the body either, or I would use my flames. We need something that will cause sufficient pain without harm.",
 				"Kylie",
@@ -970,8 +966,8 @@ adventure.getConversations = function () {
 				"Uh... No! No one. But I have an idea. Pain without harm.",
 				"Cassandra",
 				"Very well. I will watch over the body until you are ready."
-        ]
-    },
+			]
+	},
 	"askForSomethingThatHurts": {
 		dialog:
 			[

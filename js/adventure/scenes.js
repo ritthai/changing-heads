@@ -7,6 +7,7 @@ See the file license.txt for copying permission.
 adventure.getScenes = function () {
 	var scenes = {
 		'teaShop': {
+			controller: "TeaShopController",
 			background: "tea-shop.jpg",
 			onEnter: 'enterTeaShopAndSeeSimon',
 			hotspots: [
@@ -23,7 +24,8 @@ adventure.getScenes = function () {
 					positionToMovePlayerTo: {x: 473, y: 436},
 					conversationToStart: 'talkingToSimonInTeaShop',
 					onHit: 'onHittingSimon',
-					isSolid: true
+					isSolid: true,
+					showCondition: 'simonIsHere'
 				}, {
 					description: "Shop Owner",
 					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 110}, bottomRightCorner: {x: 479, y: 330} },
@@ -37,7 +39,8 @@ adventure.getScenes = function () {
 				{
 					id: "simon",
 					url: "img/characters/simon.png",
-					shape: { type: "rectangle", topLeftCorner: {x: 570, y: 224}, bottomRightCorner: {x: 787, y: 433} }
+					shape: { type: "rectangle", topLeftCorner: {x: 570, y: 224}, bottomRightCorner: {x: 787, y: 433} },
+					showCondition: 'simonIsHere'
 				}, {
 					url: "img/characters/tom.png",
 					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 110}, bottomRightCorner: {x: 479, y: 330} }
@@ -131,7 +134,7 @@ adventure.getScenes = function () {
 			background: "changing-heads.jpg",
 			playerPositionOnEnter: {x: 415, y: 535},
 			onEnter: "enterChangingHeads",
-			hotspots: [ 
+			hotspots: [
 				{
 					id: "talkToSimon",
 					description: "Talk to Simon",

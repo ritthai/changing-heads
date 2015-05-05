@@ -42,11 +42,6 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 				adventureProvider.startConversation('startMenu');
 				return false;
 			}
-			if (worldState['hasWaitedForSimonAtChangingHeads'] && !worldState['hasSeenApologyOfCassandra']
-					|| 	worldState['hasSeemSimonAtHeadsAfterFixingHim']) {
-				adventureProvider.hideSceneImageById('simon');
-				adventureProvider.hideHotspotById('talkToSimon');
-			}
 		},
 
 		'onHittingSimon': function () {
@@ -88,7 +83,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 
 		'enterChangingHeads': function () {
 			if (worldState['isPlanningToSeeChangingHeadsAgain']) {
-				worldState['hasSeemSimonAtHeadsAfterFixingHim'] = true;
+				worldState['hasSeenSimonAtHeadsAfterFixingHim'] = true;
 			} else {
 				adventureProvider.hideSceneImageById('simon');
 				adventureProvider.hideHotspotById('talkToSimon');
@@ -283,7 +278,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 			if (worldState['isPlanningToSaveMalcom']) {
 				worldState['hasSeenApologyOfCassandra'] = true;
 				adventureProvider.startConversation('seeApologyOfCassandra');
-				return false;				
+				return false;
 			}
 			if (worldState['isLookingForSomethingThatHurts']) {
 				worldState['hasSomethingThatHurts'] = true;
@@ -302,12 +297,25 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 		},
 
 		'talkToThiefHead': function () {
-            if (worldState['isLookingForSomethingThatHurts']) {
-			    adventureProvider.startConversation("talkToFaintedThiefHead");
-                return false;
-            }
+			if (worldState['isLookingForSomethingThatHurts']) {
+				adventureProvider.startConversation("talkToFaintedThiefHead");
+				return false;
+			}
 			worldState['isLookingForSomethingThatHurts'] = true;
 			adventureProvider.startConversation("talkToThiefHead");
+		}
+	};
+
+	sceneFunctions['TeaShopController'] = function(scope) {
+		scope.simonIsHere = true;
+		if (worldState['hasWaitedForSimonAtChangingHeads']) {
+			scope.simonIsHere = false;
+		}
+		if (worldState['hasSeenApologyOfCassandra']) {
+			scope.simonIsHere = true;
+		}
+		if (worldState['hasSeenSimonAtHeadsAfterFixingHim']) {
+			scope.simonIsHere = false;
 		}
 	};
 
