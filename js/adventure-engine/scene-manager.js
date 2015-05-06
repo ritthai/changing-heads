@@ -6,6 +6,8 @@ See the file license.txt for copying permission.
 
 adventure.getSceneManager = function (util) {
 
+	var each = util.each;
+
 	var nullObjectHotspot = {description: '', shape: {type: ''}, onArrive: function () {}};
 
 	var currentScene,
@@ -71,35 +73,29 @@ adventure.getSceneManager = function (util) {
 	};
 
 	var hideSceneImageById = function (id) {
-		var images = currentScene.images;
-		for (var i = 0; i < images.length; i++) {
-			var image = images[i];
+		each(currentScene.images, function (image) {
 			if (image.id === id) {
 				image.hidden = true;
 			}
-		}
+		});
 		uiManager.hideSceneImageById(id);
 	};
 
 	var flipSceneImageById = function (id) {
-		var images = currentScene.images;
-		for (var i = 0; i < images.length; i++) {
-			var image = images[i];
+		each(currentScene.images, function (image) {
 			if (image.id === id) {
 				image.isFlipped = true;
 			}
-		}
+		});
 		uiManager.flipSceneImageById(id);
 	};
 
 	var hideHotspotById = function (id) {
-		var hotspots = currentScene.hotspots;
-		for (var i = 0; i < hotspots.length; i++) {
-			var hotspot = hotspots[i];
+		each(currentScene.hotspots, function(hotspot) {
 			if (hotspot.id === id) {
 				hotspot.hidden = true;
 			}
-		}
+		});
 	};
 
 	var performPreventableSceneActions = function () {
@@ -144,14 +140,6 @@ adventure.getSceneManager = function (util) {
 				element.hidden = true;
 			}
 		});
-	};
-
-	var each = function (array, lambda) {
-		var i, element;
-		for (i = 0; i < array.length; i++) {
-			element = array[i];
-			lambda(element);
-		}
 	};
 
 	var loadSceneByName = function (name) {

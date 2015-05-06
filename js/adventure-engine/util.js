@@ -9,7 +9,16 @@ adventure.getUtil = function () {
 		return $.extend(true, {}, objectToClone);
 	};
 
+	var each = function (array, lambda) {
+		var i, element;
+		for (i = 0; i < array.length; i++) {
+			element = array[i];
+			lambda(element);
+		}
+	};
+
 	return {
-		clone: clone
+		clone: clone,
+		each: each
 	};
 };

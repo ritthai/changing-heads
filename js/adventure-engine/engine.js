@@ -7,7 +7,7 @@ See the file license.txt for copying permission.
 var adventure = {};
 
 adventure.getEngine = function () {
-	var 	backgroundDirectory,
+	var backgroundDirectory,
 		startSceneName,
         sceneManager,
         uiManager,
