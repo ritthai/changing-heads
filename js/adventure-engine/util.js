@@ -11,6 +11,7 @@ adventure.getUtil = function () {
 
 	var each = function (array, lambda) {
 		var i, element;
+		if (!array) { return; }
 		for (i = 0; i < array.length; i++) {
 			element = array[i];
 			lambda(element);

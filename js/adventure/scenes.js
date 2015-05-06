@@ -93,6 +93,7 @@ adventure.getScenes = function () {
 			]
 		},
 		"pond": {
+			controller: "PondController",
 			background: "pond.jpg",
 			playerPositionOnEnter: {x: 585, y: 286},
 			hotspots: [
@@ -127,11 +128,16 @@ adventure.getScenes = function () {
 					id: 'exitToChangingHeadsIndicator',
 					url: 'img/icons/left-arrow.png',
 					shape: { type: "rectangle", topLeftCorner: {x: 23, y: 467}, bottomRightCorner: {x: 62, y: 508} }
-				}
-				, {
+				}, {
 					id: 'exitToTeaShopIndicator',
 					url: 'img/icons/right-arrow.png',
 					shape: { type: "rectangle", topLeftCorner: {x: 714, y: 501}, bottomRightCorner: {x: 750, y: 539} }
+				}, {
+					id: 'cassandra',
+					url: 'img/characters/cassandra.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 367, y: 311}, bottomRightCorner: {x: 419, y: 511} },
+					showCondition: "cassandraIsHere",
+					isFlipped: true
 				}
 			]
 		},
@@ -264,6 +270,7 @@ adventure.getScenes = function () {
 			]
 		},
 		'beach': {
+			controller: "BeachController",
 			background: "beach.jpg",
 			playerPositionOnEnter: {x: 290, y: 300},
 			hotspots: [
@@ -272,6 +279,7 @@ adventure.getScenes = function () {
 					shape: { type: "rectangle", topLeftCorner: {x: 385, y: 76}, bottomRightCorner: {x: 468, y: 306} },
 					onHit: "talkToThiefHead",
 					positionToMovePlayerTo: {x: 280, y: 312},
+					showCondition: "thiefIsHere"
 				}, {
 					description: "Fly back to the pond",
 					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 150}, bottomRightCorner: {x: 800, y: 600} },
@@ -282,12 +290,19 @@ adventure.getScenes = function () {
 			images: [
 				{
 					url: "img/characters/simon.png",
-					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} }
+					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} },
+					showCondition: "thiefIsHere"
 				},
 				{
 					id: 'exitToPondIndicator',
 					url: 'img/icons/left-arrow.png',
 					shape: { type: "rectangle", topLeftCorner: {x: 23, y: 467}, bottomRightCorner: {x: 62, y: 508} }
+				},
+				{
+					id: 'cassandra',
+					url: 'img/characters/cassandra.png',
+					shape: { type: "rectangle", topLeftCorner: {x: 216, y: 149}, bottomRightCorner: {x: 268, y: 349} },
+					showCondition: "cassandraIsHere"
 				}
 			]
 		}

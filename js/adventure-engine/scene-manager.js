@@ -167,7 +167,9 @@ adventure.getSceneManager = function (util) {
 		if (shouldMoveToClickedPoint(hotspot)) {
 			movePlayer(clickedPoint, function () { onArrive(clickedPoint); });
 		} else if (hotspot.shouldStandStill) {
-			onArrive(clickedPoint);
+			// TODO: A bit hacky. 50 seconds to debounce
+			// Android's use of both click and touch events
+			setTimeout(function () { onArrive(clickedPoint); }, 50);
 		}
 	};
 

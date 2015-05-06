@@ -11,10 +11,12 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 
 	var isInConversation = isInConversationHandler;
 
+    var isMoving;
 	var mousePosition;
 
 	var init = function () {
 		mousePosition = {x: -1, y: -1};
+        isMoving = false;
 	};
 
 	var bindHandlers = function () {
@@ -27,8 +29,11 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 			buildModeManager.onClickWhenInBuildMode(coordinates);
 			return;
 		}
-		if (isInConversation()) return;
-		adventureProvider.hitHotspot(coordinates);            
+		if (isInConversation()) { return; }
+        if (isMoving) {
+            return;
+        }
+		adventureProvider.hitHotspot(coordinates);
     };
 
     var onMouseMove = function (coordinates) {
@@ -49,12 +54,20 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
 		graphicsManager.showActionDescription(actionDescription);
 	};
 
+    var movePlayer = function (destination, callback) {
+        isMoving = true;
+        graphicsManager.movePlayer(destination, function () {
+            isMoving = false;
+            callback();
+        })
+    };
+
 	init();
 
 	return {
 		bindHandlers: bindHandlers,
 		drawScene: drawScene,
-		movePlayer: graphicsManager.movePlayer,
+		movePlayer: movePlayer,
 		putPlayerAt: graphicsManager.putPlayerAt,
 		facePlayerLeft: graphicsManager.facePlayerLeft,
 		facePlayerRight: graphicsManager.facePlayerRight,

@@ -319,5 +319,24 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 		}
 	};
 
+	sceneFunctions['PondController'] = function(scope) {
+		scope.cassandraIsHere = false;
+		if (worldState['hasGivenCassandraSalamanderTea']) {
+			scope.cassandraIsHere = true;
+		}
+		if (worldState['isLookingForSomethingThatHurts']) {
+			scope.cassandraIsHere = false;
+		}
+	};
+
+	sceneFunctions['BeachController'] = function (scope) {
+		scope.cassandraIsHere = true;
+		scope.thiefIsHere = true;
+		if (worldState['isLookingForSomethingThatHurts']) {
+			scope.cassandraIsHere = false;
+			scope.thiefIsHere = false;
+		}
+	};
+
 	return sceneFunctions;
 };
