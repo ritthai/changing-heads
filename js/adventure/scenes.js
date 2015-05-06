@@ -14,8 +14,7 @@ adventure.getScenes = function () {
 				{
 					description: "Leave",
 					shape: { type: "rectangle", topLeftCorner: {x: 40, y: 57}, bottomRightCorner: {x: 189, y: 315} },
-					destinationScene: 'hub',
-					destinationPosition: {x: 751, y: 432}
+					destinationScene: 'hub'
 				}
 				, {
 					id: 'talkToSimon',
@@ -49,23 +48,30 @@ adventure.getScenes = function () {
 		},
 		"hub": {
 			background: "hub.jpg",
-			playerPositionOnEnter: {x: 400, y: 500},
+			playerPositionOnEnter: {x: -1000, y: 0},
 			hotspots: [
 				{
 					description: "Go to the pond",
 					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 300}, bottomRightCorner: {x: 100, y: 600} },
+					shouldStandStill: true,
 					destinationScene: 'pond',
 					destinationPosition: {x: 751, y: 432}
 				}, {
 					description: "Go to the Tea Shop",
 					shape: { type: "rectangle", topLeftCorner: {x: 700, y: 300}, bottomRightCorner: {x: 800, y: 600} },
+					shouldStandStill: true,
 					destinationScene: 'teaShop',
 					destinationPosition: {x: 135, y: 374}
 				}, {
 					description: "Go to the Medicine Shop",
 					shape: { type: "rectangle", topLeftCorner: {x: 700, y: 0}, bottomRightCorner: {x: 800, y: 300} },
+					shouldStandStill: true,
 					destinationScene: 'pharmacy',
 					destinationPosition: {x: 135, y: 374}
+				}, {
+					description: "",
+					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 0}, bottomRightCorner: {x: 800, y: 600} },
+					isSolid: true
 				}
 			],
 			images: [
@@ -113,8 +119,7 @@ adventure.getScenes = function () {
 				}, {
 					description: "Enter the town",
 					shape: { type: "rectangle", topLeftCorner: {x: 700, y: 0}, bottomRightCorner: {x: 800, y: 600} },
-					destinationScene: 'hub',
-					destinationPosition: {x: 135, y: 374}
+					destinationScene: 'hub'
 				}
 			],
 			images: [
@@ -226,8 +231,7 @@ adventure.getScenes = function () {
 				}, {
 					description: "Leave",
 					shape: { type: "rectangle", topLeftCorner: {x: 2, y: 3}, bottomRightCorner: {x: 117, y: 595} },
-					destinationScene: 'hub',
-					destinationPosition: {x: 751, y: 432}
+					destinationScene: 'hub'
 				}
 			],
 			images: [

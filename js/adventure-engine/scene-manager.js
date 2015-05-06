@@ -166,11 +166,13 @@ adventure.getSceneManager = function (util) {
 		}
 		if (shouldMoveToClickedPoint(hotspot)) {
 			movePlayer(clickedPoint, function () { onArrive(clickedPoint); });
+		} else if (hotspot.shouldStandStill) {
+			onArrive(clickedPoint);
 		}
 	};
 
 	var shouldMoveToClickedPoint = function (hotspot) {
-		return !(hotspot.shouldPreventDefault || hotspot.isSolid ||
+		return !(hotspot.shouldPreventDefault || hotspot.isSolid || hotspot.shouldStandStill ||
 			hotspot.positionToMovePlayerTo || hotspot.conversationToStart);
 	};
 
