@@ -9,16 +9,18 @@ adventure.getConversations = function () {
 
 {
 	"startMenu": {
-		"dialog": ["", "<strong>Changing Heads</strong> <br /> By Ritchie Thai <br /> <br /> (The game has music; consider turning on sound.)"],
+		"dialog": ["", "<strong>Changing Heads</strong> <br /> By Ritchie Thai <br /> <br /> There's some music so consider turning on sound."],
 		"options": [
 			{
-				"description": "Start playing",
+				"description": "Start",
 				"next": "wonderWhereSimonIsAtTeaShop"
 			}
 		]
 	},
 	"wonderWhereSimonIsAtTeaShop": {
 		"dialog": [
+			"",
+			"Chapter 1 out of 5: Losing Your Head",
 			"Kylie",
 			"Yo, Simon! Geez, he was supposed to be here an hour ago.",
 			"Kylie",
@@ -210,6 +212,8 @@ adventure.getConversations = function () {
 	},
 	"talkToCassandra": {
 		"dialog": [
+			"",
+			"Chapter 2 out of 5: Tea Lady",
 			"Kylie",
 			"Excuse me, Miss Cassandra. I’m Kylie, and-",
 			"Cassandra",
@@ -648,6 +652,8 @@ adventure.getConversations = function () {
 		"onEnter": "askTomForSpecialTea",
 		"dialog":
 			[
+				"",
+				"Chapter 3 out of 5: Fixing Cone",
 				"Kylie",
 				"Tom?",
 				"Tom",
@@ -845,6 +851,8 @@ adventure.getConversations = function () {
 	"talkAboutPastOfCassandra": {
 		"dialog":
 			[
+				"",
+				"Chapter 4 out of 5: Fire",
 				"Cassandra",
 				" Kylie, you seem understanding. You want to know why I really burned that man's house down with him in it?",
 				"Kylie",
@@ -952,6 +960,8 @@ adventure.getConversations = function () {
 	"askCassandraHowSimonIs": {
 		dialog:
 			[
+				"",
+				"Chapter 5 out of 5: Burn",
 				"Kylie",
 				"Hey so how's Simon's body?",
 				"Cassandra",
@@ -1144,7 +1154,13 @@ adventure.getConversations = function () {
 				"Kylie",
 				"She’s changed, huh?",
 				"Malcolm",
-				"Not so much. She says she's calmer now, but there's a spark in her and I was dumb and wrong back then to douse it in gasoline. I'm glad she's putting that spark to good use now."
+				"Not so much. She says she's calmer now, but there's a spark in her and I was dumb and wrong back then to douse it in gasoline. I'm glad she's putting that spark to good use now.",
+				"",
+				"The End. But if you'd like to see what everyone's up to now.",
+				"",
+				"Epilogue",
+				"Kylie",
+				"Alright, time to meet Simon at Tea Song again."
 			]
 	},
 	"debriefWithSimon": {
@@ -1198,8 +1214,10 @@ adventure.getConversations = function () {
 				"Gone. I have so many thoughts. How about you?",
 				"Kylie",
 				"I don't even know. It was thing, I'll give you that.",
-				"The End",
-				"That's it. The end. You won. Go home. Or go see what the characters are up to now, but that's all."
+				"Simon",
+				"Hey, what do you think they did to that thief head?",
+				"Kylie",
+				"I don’t know. I’ll ask."
 			]
 	}
 };
