@@ -157,30 +157,6 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 			}
 		},
 
-		'beatAroundTheBushWithCassandra': function () {
-			if (worldState['hasToldCassandraAnExcuse'] && worldState['hasGivenCassandraTheGiftTea']) {
-				var options = [
-					{
-						"description": "Oh, uh, thanks, but I just had some.",
-						"next": "tellCassandraYouHadTeaAlready"
-					},
-					{
-						"description": "I’d love to, but the caffeine keeps me up all night.",
-						"next": "tellCassandraTeaKeepsYouUp"
-					},
-					{
-						"description": "Speaking of tea, I brought you some as a... cave warming gift. It’s... green?",
-						"next": "giveCassandraTheGiftTea"
-					},
-					{
-						"description": "It’s... safe, right?",
-						"next": "drinkTeaFromCassandra"
-					}
-				];
-				return options;
-			}
-		},
-
 		'tellCassandraAnExcuse': function () {
 			worldState['hasToldCassandraAnExcuse'] = true;
 		},
