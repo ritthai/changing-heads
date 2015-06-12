@@ -60,6 +60,21 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 			soundManager.playSound('startMusic');
 		},
 
+		'playIntroNarration': function () {
+			soundManager.playSound('introNarration');
+		},
+
+		'playChangingHeadsHum': function () {
+			soundManager.playSound('giantHeadsHum');
+		},
+
+		'playCassandraHum': function () {
+			if (!worldState['hasPlayedCassandraPond']) {
+				worldState['hasPlayedCassandraPond'] = true;
+				soundManager.playSound('cassandraHum');
+			}
+		},
+
 		'onEnteringCaveOfCassandra': function () {
 			if (!worldState['hasEnteredCaveOfCassandra']) {
 				worldState['hasEnteredCaveOfCassandra'] = true;
@@ -96,6 +111,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 					!worldState['hasWaitedForSimonAtChangingHeads']) {
 				worldState['hasWaitedForSimonAtChangingHeads'] = true;
 				adventureProvider.startConversation('introduceTheChangingHeads');
+				soundManager.playSound('giantHeadsHum');
 				return false;
 			}
 		},
@@ -198,6 +214,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 				worldState['hasFish'] = false;
 				worldState['hasFedSalamander'] = true;
 				adventureProvider.startConversation('feedSalamander');
+				soundManager.playSound('salamander');
 				return false;
 			}
 			adventureProvider.startConversation('examineSalamander');
@@ -231,6 +248,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 
 		'goToMedicineMan': function () {
 			worldState['tomIsInPharmacy'] = true;
+			soundManager.playSound('mask');
 			adventureProvider.loadScene('pharmacy');
 		},
 

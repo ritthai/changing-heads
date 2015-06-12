@@ -9,13 +9,23 @@ adventure.getConversations = function () {
 
 {
 	"startMenu": {
-		"dialog": ["", "<strong>Changing Heads</strong> <br /> By Ritchie Thai <br /> <br /> There's some music so consider turning on sound."],
+		"dialog": ["", "<strong>Changing Heads</strong> by Ritchie Thai. There's sound, so turn the sound on. <br /> The story? Kylie finds her friend Simon's body stolen, and seeks aid from the scary tea/fire lady, Cassandra, while discovering her fiery past. Some things you can't forgive or forget, only understand. But that's later..."],
 		"options": [
 			{
 				"description": "Start",
-				"next": "wonderWhereSimonIsAtTeaShop"
+				"next": "introNarration"
 			}
 		]
+	},
+	"introNarration": {
+		"dialog": ["", "We start our story in Tea Song where Kylie's meeting her old high school friend, but you're in control noooow-"],
+		"options": [
+			{
+				"description": "Continue",
+				"next": "wonderWhereSimonIsAtTeaShop"
+			}
+		],
+		"onEnter": "playIntroNarration"
 	},
 	"wonderWhereSimonIsAtTeaShop": {
 		"dialog": [
@@ -24,7 +34,7 @@ adventure.getConversations = function () {
 			"Kylie",
 			"Yo, Simon! Geez, he was supposed to be here an hour ago.",
 			"Kylie",
-			"...He's not paying attention. Better walk up to him."
+			"...He's not paying attention. Better walk up and say hi."
 		],
 		"onEnter": "playLittleDitty"
 	},

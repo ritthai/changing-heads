@@ -96,6 +96,7 @@ adventure.getScenes = function () {
 			controller: "PondController",
 			background: "pond.jpg",
 			playerPositionOnEnter: {x: 585, y: 286},
+			onEnter: "playCassandraHum",
 			hotspots: [
 				{
 					description: "Go to The Changing Heads",
