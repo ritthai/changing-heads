@@ -1,6 +1,6 @@
 # Changing Heads
 
-Changing Heads is a currently in development, MIT Licensed, JavaScript/HTML classic point and click adventure game in a custom game engine with no inventory and a focus on story and conversation over puzzles.
+Changing Heads is a currently in development, MIT Licensed, JavaScript/HTML classic point and click adventures in a custom engine with no inventory and a focus on story and conversation over puzzles.
 
 ## Demo
 

@@ -67,7 +67,7 @@ adventure.getScenes = function () {
 					shape: { type: "rectangle", topLeftCorner: {x: 700, y: 0}, bottomRightCorner: {x: 800, y: 300} },
 					shouldStandStill: true,
 					destinationScene: 'pharmacy',
-					destinationPosition: {x: 135, y: 374}
+					destinationPosition: {x: 135, y: 574}
 				}, {
 					description: "",
 					shape: { type: "rectangle", topLeftCorner: {x: 0, y: 0}, bottomRightCorner: {x: 800, y: 600} },
@@ -233,7 +233,7 @@ adventure.getScenes = function () {
 			hotspots: [
 				{
 					description: "Medicine Man",
-					shape: { type: "rectangle", topLeftCorner: {x: 385, y: 76}, bottomRightCorner: {x: 468, y: 306} },
+					shape: { type: "rectangle", topLeftCorner: {x: 385, y: 276}, bottomRightCorner: {x: 468, y: 506} },
 					onHit: "onHittingMedicineMan"
 				}, {
 					description: "Leave",
@@ -244,7 +244,7 @@ adventure.getScenes = function () {
 			images: [
 				{
 					url: "img/characters/doctor.png",
-					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 85}, bottomRightCorner: {x: 479, y: 305} }
+					shape: { type: "rectangle", topLeftCorner: {x: 404, y: 285}, bottomRightCorner: {x: 479, y: 505} }
 				},
 				{
 					id: 'exitIndicator',
@@ -254,7 +254,7 @@ adventure.getScenes = function () {
 				{
 					id: 'tom',
 					url: 'img/characters/tom.png',
-					shape: { type: "rectangle", topLeftCorner: {x: 269, y: 87}, bottomRightCorner: {x: 344, y: 307} }
+					shape: { type: "rectangle", topLeftCorner: {x: 269, y: 287}, bottomRightCorner: {x: 344, y: 507} }
 				}
 			]
 		},

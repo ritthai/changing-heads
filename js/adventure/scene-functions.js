@@ -249,6 +249,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 		'goToMedicineMan': function () {
 			worldState['tomIsInPharmacy'] = true;
 			soundManager.playSound('mask');
+			adventureProvider.putPlayerAt(135, 507);
 			adventureProvider.loadScene('pharmacy');
 		},
 
@@ -268,7 +269,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 		},
 
 		'onHittingMedicineMan': function () {
-			adventureProvider.movePlayer({x: 318, y: 305}, adventureProvider.facePlayerRight);
+			adventureProvider.movePlayer({x: 318, y: 505}, adventureProvider.facePlayerRight);
 			if (worldState['isPlanningToSaveMalcom']) {
 				worldState['hasSeenApologyOfCassandra'] = true;
 				adventureProvider.startConversation('seeApologyOfCassandra');
