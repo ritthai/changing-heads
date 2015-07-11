@@ -3,8 +3,7 @@ Copyright (c) 2013 Ritchie Thai
 
 See the file license.txt for copying permission.
 */
-
-adventure.getSounds = function () {
+adventure.getSounds = function() {
     return {
         "click": {
             "path": "audio/sounds/click",
@@ -23,21 +22,33 @@ adventure.getSounds = function () {
             "path": "audio/speech/intro-speech",
             "formats": ["ogg", "wav"]
         },
-		"giantHeadsHum": {
+        "giantHeadsHum": {
             "path": "audio/music/giant-heads-hum",
             "formats": ["ogg", "wav"]
-		},
-		"cassandraHum": {
+        },
+        "cassandraHum": {
             "path": "audio/music/cassandra-hum",
             "formats": ["ogg", "wav"]
-		},
-		"salamander": {
-			"path": "audio/music/salamander",
-			"formats": ["ogg", "wav"]
-		},
-		"mask": {
-			"path": "audio/music/why-the-mask",
-			"formats": ["ogg", "wav"]
-		}
+        },
+        "salamander": {
+            "path": "audio/music/salamander",
+            "formats": []
+        },
+        "mask": {
+            "path": "audio/music/bass-mal",
+            "formats": ["ogg", "wav"]
+        },
+        "map": {
+            "path": "audio/music/map",
+            "formats": ["ogg", "wav"]
+        },
+        "sky": {
+            "path": "audio/music/sky",
+            "formats": ["ogg", "wav"]
+        },
+        "beach": {
+            "path": "audio/music/closer-in-time",
+            "formats": ["ogg", "mp3"]
+        }
     };
 };

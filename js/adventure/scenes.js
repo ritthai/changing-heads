@@ -49,6 +49,7 @@ adventure.getScenes = function () {
 		"hub": {
 			background: "hub.jpg",
 			playerPositionOnEnter: {x: -1000, y: 0},
+            onEnter: "enterHub",
 			hotspots: [
 				{
 					description: "Go to the pond",

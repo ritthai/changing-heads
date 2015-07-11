@@ -75,6 +75,14 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 			}
 		},
 
+        'enterHub': function () {
+			adventureProvider.putPlayerAt(-1000, 0);
+            if (!worldState['hasPlayedMap']) {
+                worldState['hasPlayedMap'] = true;
+                soundManager.playSound('map');
+            }
+        },
+
 		'onEnteringCaveOfCassandra': function () {
 			if (!worldState['hasEnteredCaveOfCassandra']) {
 				worldState['hasEnteredCaveOfCassandra'] = true;
@@ -223,10 +231,12 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
 
 		'flyIntoTheSkies': function () {
 			adventureProvider.loadScene('sky');
+            soundManager.playSound('sky');
 		},
 
 		'landAtBeachParty': function () {
 			adventureProvider.loadScene('beach');
+            soundManager.playSound('beach');
 		},
 
 		'onHittingTeaShopOwner': function () {
