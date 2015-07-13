@@ -6,6 +6,11 @@ See the file license.txt for copying permission.
 
 adventure.getUserInputManager = function () {
 
+    var debounceTime = 310;
+
+    var isDebouncing = false;
+    var debounceTimer;
+
     var onClickAtCoordinates, onMouseMoveAtCoordinates;
 
     var bindHandlers = function (_onClickAtCoordinates, _onMouseMoveAtCoordinates) {
@@ -24,12 +29,19 @@ adventure.getUserInputManager = function () {
 
     var onTouchMove = function (event) {
         var touchEvent =  getTouchEventFromTouchesEvent(event);
-        event.preventDefault();
         onMouseMove(touch);
     };
 
     var onClick = function (event) {
+        if (isDebouncing) { return; }
+        debounce();
         callUsingSceneCoordinatesIfEventIsOnScreen(event, onClickAtCoordinates);
+    };
+
+    var debounce = function () {
+        isDebouncing = true;
+        if (debounceTimer) { clearTimeout(debounceTimer); }
+        debounceTimer = setTimeout(function () { isDebouncing = false; }, debounceTime);
     };
 
     var onMouseMove = function (event) {
