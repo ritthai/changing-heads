@@ -6,6 +6,9 @@ See the file license.txt for copying permission.
 
 adventure.getConversationManager = function (conversations, sceneFunctions, util, conversationDisplayer, soundManager) {
 
+    var writeDialogLn = conversationDisplayer.writeDialogLn;
+    var clearDialog = conversationDisplayer.clearDialog;
+
     var object = {};
 
     var activeConversation = null;
@@ -33,14 +36,14 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
     };
 
     var applyConversationOnEnter = function () {
-        var overridingOptions = sceneFunctions[activeConversation.onEnter](activeConversation);
-        if (overridingOptions) { overrideOptions(overridingOptions); }
+        var overrideOptions = sceneFunctions[activeConversation.onEnter](activeConversation);
+        if (overrideOptions) { applyOverrideOptions(overrideOptions); }
     }
 
-    var overrideOptions = function (overridingOptions) {
-        var overridingConversation = util.clone(activeConversation);
-        overridingConversation.options = overridingOptions;
-        activeConversation = overridingConversation;
+    var applyOverrideOptions = function (overrideOptions) {
+        var overrideConversation = util.clone(activeConversation);
+        overrideConversation.options = overrideOptions;
+        activeConversation = overrideConversation;
     };
 
     var showSpeechBubbleLinks = function (dialog) {
@@ -67,17 +70,8 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
     };
 
     var showOption = function (option, i) {
-        var optionDescription = option.description;
-        var description = optionDescription ? optionDescription : option.dialog[1];
+        var description = option.description || option.dialog[1];
         conversationDisplayer.printOptionLink(description, i, function () { chooseOption(option); });
-    };
-
-    var showAdvanceConversationLink = function () {
-        conversationDisplayer.printProceedConversationLink('Next', function () {
-            currentLine += 1;
-            clearDialog();
-            advanceConversation();
-        });
     };
 
     var chooseOption = function (option) {
@@ -92,36 +86,43 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
         advanceConversation();
     };
 
+    var showAdvanceConversationLink = function () {
+        conversationDisplayer.printProceedConversationLink('Next', function () {
+            currentLine += 1;
+            clearDialog();
+            advanceConversation();
+        });
+    };
+
     var setActiveConversation = function (conversation) {
         activeConversation = conversation;
         currentLine = 0;
     };
 
-    var writeAlternatingArrayDialog = function (dialog) {
-        var i;
-        for (i = 0; i < dialog.length; i += 2) {
-            if (i + 1 < dialog.length) {
-                if (dialog[i] === '') {
-                    writeDialogLn(dialog[i + 1]);
-                } else {
-                    writeDialogLn(dialog[i] + ': ' + dialog[i + 1]);
-                }
-            }
-        }
-    };
-
     var writeDialog = function (dialog, isOptionDialog) {
         if (!dialog) { return; }
         if (typeof dialog === 'string') {
-            writeDialogLn(dialog);
-        } else if (typeof dialog[0] === 'string') {
-            if (isOptionDialog) {
-                writeAlternatingArrayDialog(dialog);
-            } else {
-                var speaker = dialog[currentLine * 2];
-                var speech = dialog[currentLine * 2 + 1];
-                writeDialogLn((speaker ? speaker + ': ' : '') + speech);
+            writeDialogLn(dialog); // TODO: Remove this if it's not used
+            return;
+        }
+        if (typeof dialog[0] !== 'string') { return; }
+        if (isOptionDialog) {
+            // TODO: Is option dialog even used? This complicates things. Consider changing it.
+            for (var i = 0; i + 1 < dialog.length; i += 2) {
+                writeAlternatingArrayDialogLine(dialog, i);
             }
+        } else {
+            writeAlternatingArrayDialogLine(dialog, currentLine * 2);
+        }
+    };
+
+    var writeAlternatingArrayDialogLine = function (dialog, i) {
+        var speaker = dialog[i];
+        var speech = dialog[i + 1];
+        if (speaker === '') {
+            writeDialogLn(speech);
+        } else {
+            writeDialogLn(speaker + ': ' + speech);
         }
     };
 
@@ -134,9 +135,6 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
             activeConversation = null;
         });
     };
-
-    var writeDialogLn = conversationDisplayer.writeDialogLn;
-    var clearDialog = conversationDisplayer.clearDialog;
 
     return object;
 };
