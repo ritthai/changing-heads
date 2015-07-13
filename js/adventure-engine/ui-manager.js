@@ -9,50 +9,50 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
         graphicsManager,
         buildModeManager) {
 
-	var isInConversation = isInConversationHandler;
+    var isInConversation = isInConversationHandler;
 
     var isMoving;
-	var mousePosition;
+    var mousePosition;
 
-	var init = function () {
-		mousePosition = {x: -1, y: -1};
+    var init = function () {
+        mousePosition = {x: -1, y: -1};
         isMoving = false;
-	};
+    };
 
-	var bindHandlers = function () {
+    var bindHandlers = function () {
         userInputManager.bindHandlers(onClick, onMouseMove);
-	};
+    };
 
     var onClick = function (coordinates) {
         onMouseMove(coordinates);
-		if (buildModeManager.isInBuildMode) {
-			buildModeManager.onClickWhenInBuildMode(coordinates);
-			return;
-		}
-		if (isInConversation()) { return; }
+        if (buildModeManager.isInBuildMode) {
+            buildModeManager.onClickWhenInBuildMode(coordinates);
+            return;
+        }
+        if (isInConversation()) { return; }
         if (isMoving) {
             return;
         }
-		adventureProvider.hitHotspot(coordinates);
+        adventureProvider.hitHotspot(coordinates);
     };
 
     var onMouseMove = function (coordinates) {
         mousePosition = coordinates;
-		showActionDescription();
+        showActionDescription();
     };
 
-	var drawScene = function (scene, backgroundDirectory) {
-		graphicsManager.removeScene();
-		graphicsManager.setBackgroundImageOfScene(backgroundDirectory + scene.background);
-		graphicsManager.addSceneImages(scene.images);
-		showActionDescription();
-	};
+    var drawScene = function (scene, backgroundDirectory) {
+        graphicsManager.removeScene();
+        graphicsManager.setBackgroundImageOfScene(backgroundDirectory + scene.background);
+        graphicsManager.addSceneImages(scene.images);
+        showActionDescription();
+    };
 
-	var showActionDescription = function () {
-		var actionDescription = isInConversation() ?
+    var showActionDescription = function () {
+        var actionDescription = isInConversation() ?
             '' : adventureProvider.getHotspotAt(mousePosition).description;
-		graphicsManager.showActionDescription(actionDescription);
-	};
+        graphicsManager.showActionDescription(actionDescription);
+    };
 
     var movePlayer = function (destination, callback) {
         isMoving = true;
@@ -62,17 +62,17 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
         })
     };
 
-	init();
+    init();
 
-	return {
-		bindHandlers: bindHandlers,
-		drawScene: drawScene,
-		movePlayer: movePlayer,
-		putPlayerAt: graphicsManager.putPlayerAt,
-		facePlayerLeft: graphicsManager.facePlayerLeft,
-		facePlayerRight: graphicsManager.facePlayerRight,
-		hideSceneImageById: graphicsManager.hideSceneImageById,
-		flipSceneImageById: graphicsManager.flipSceneImageById,
+    return {
+        bindHandlers: bindHandlers,
+        drawScene: drawScene,
+        movePlayer: movePlayer,
+        putPlayerAt: graphicsManager.putPlayerAt,
+        facePlayerLeft: graphicsManager.facePlayerLeft,
+        facePlayerRight: graphicsManager.facePlayerRight,
+        hideSceneImageById: graphicsManager.hideSceneImageById,
+        flipSceneImageById: graphicsManager.flipSceneImageById,
         makePlayerFaceRightWayForMove: graphicsManager.makePlayerFaceRightWayForMove
-	};
+    };
 };

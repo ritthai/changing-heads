@@ -7,90 +7,90 @@ See the file license.txt for copying permission.
 var adventure = {};
 
 adventure.getEngine = function () {
-	var backgroundDirectory,
-		startSceneName,
+    var backgroundDirectory,
+        startSceneName,
         sceneManager,
         uiManager,
         soundManager,
         sounds;
 
-	var start = function () {
-		configure();
-		initializeModules();
+    var start = function () {
+        configure();
+        initializeModules();
         soundManager.addSounds(sounds);
-		sceneManager.loadSceneByName(startSceneName);
-		uiManager.bindHandlers();
-	};
+        sceneManager.loadSceneByName(startSceneName);
+        uiManager.bindHandlers();
+    };
 
-	var configure = function () {
-		var configuration = adventure.getConfiguration();
-		startSceneName = configuration.startSceneName;
-		backgroundDirectory = configuration.backgroundDirectory;
-	};
+    var configure = function () {
+        var configuration = adventure.getConfiguration();
+        startSceneName = configuration.startSceneName;
+        backgroundDirectory = configuration.backgroundDirectory;
+    };
 
-	var initializeModules = function () {
+    var initializeModules = function () {
         var util = adventure.getUtil();
 
-		sceneManager = adventure.getSceneManager(util);
+        sceneManager = adventure.getSceneManager(util);
 
-		var conversations = adventure.getConversations();
+        var conversations = adventure.getConversations();
 
         soundManager = adventure.makeSoundManager();
 
-		var providerForSceneFunctions = {
-			loadScene: sceneManager.loadSceneByName,
-			putPlayerAt: sceneManager.putPlayerAt,
-			movePlayer: sceneManager.movePlayer,
-			facePlayerLeft: sceneManager.facePlayerLeft,
-			facePlayerRight: sceneManager.facePlayerRight,
-			hideSceneImageById: sceneManager.hideSceneImageById,
-			hideHotspotById: sceneManager.hideHotspotById,
-			flipSceneImageById: sceneManager.flipSceneImageById,
-			startConversation: function () {}
-		};
-		var sceneFunctions = adventure.getSceneFunctions(providerForSceneFunctions, soundManager);
+        var providerForSceneFunctions = {
+            loadScene: sceneManager.loadSceneByName,
+            putPlayerAt: sceneManager.putPlayerAt,
+            movePlayer: sceneManager.movePlayer,
+            facePlayerLeft: sceneManager.facePlayerLeft,
+            facePlayerRight: sceneManager.facePlayerRight,
+            hideSceneImageById: sceneManager.hideSceneImageById,
+            hideHotspotById: sceneManager.hideHotspotById,
+            flipSceneImageById: sceneManager.flipSceneImageById,
+            startConversation: function () {}
+        };
+        var sceneFunctions = adventure.getSceneFunctions(providerForSceneFunctions, soundManager);
 
         var conversationDisplayer = adventure.getConversationDisplayer();
 
         sounds = adventure.getSounds();
 
-		var conversationManager = adventure.getConversationManager(
+        var conversationManager = adventure.getConversationManager(
             conversations, sceneFunctions, util, conversationDisplayer, soundManager);
 
-		providerForSceneFunctions.startConversation = conversationManager.startConversation;
+        providerForSceneFunctions.startConversation = conversationManager.startConversation;
 
-		var providerForUIManager = {
-			loadScene: sceneManager.loadScene,
-			putPlayerAt: sceneManager.putPlayerAt,
-			movePlayer: sceneManager.movePlayer,
-			getHotspotAt: sceneManager.getHotspotAt,
-			startConversation: conversationManager.startConversation,
+        var providerForUIManager = {
+            loadScene: sceneManager.loadScene,
+            putPlayerAt: sceneManager.putPlayerAt,
+            movePlayer: sceneManager.movePlayer,
+            getHotspotAt: sceneManager.getHotspotAt,
+            startConversation: conversationManager.startConversation,
             hitHotspot: sceneManager.hitHotspot
-		};
+        };
 
-		var scenes = adventure.getScenes();
+        var scenes = adventure.getScenes();
 
         var userInputManager = adventure.getUserInputManager();
         var graphicsManager = adventure.getGraphicsManager();
         var buildModeManager = adventure.getBuildModeManager();
 
-		uiManager = adventure.getUIManager(
-				providerForUIManager,
-				sceneManager.isInConversation,
-				sceneFunctions,
+        uiManager = adventure.getUIManager(
+                providerForUIManager,
+                sceneManager.isInConversation,
+                sceneFunctions,
                 userInputManager,
                 graphicsManager,
                 buildModeManager
             );
 
-		sceneManager.configure({
-			backgroundDirectory: backgroundDirectory,
-			uiManager: uiManager,
-			conversationManager: conversationManager,
-			sceneFunctions: sceneFunctions,
-			scenes: scenes
-		});
-	};
+        sceneManager.configure({
+            backgroundDirectory: backgroundDirectory,
+            uiManager: uiManager,
+            conversationManager: conversationManager,
+            sceneFunctions: sceneFunctions,
+            scenes: scenes
+        });
+    };
 
-	return { start: start };
+    return { start: start };
 };
