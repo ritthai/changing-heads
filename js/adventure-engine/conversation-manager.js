@@ -8,77 +8,75 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
 
     var object = {};
 
-    var isInConversation = false;
-    var currentConversation = {};
+    var activeConversation = null;
     var currentLine = 0;
-    var overridingDialog;
-    var isEndingConversation = false;
 
     object.isInConversation = function () {
-        return isInConversation;
+        return activeConversation != null;
     };
 
-    object.startConversation = function (conversationName) {
-        isInConversation = true;
-        currentConversation = conversations[conversationName];
-        resetVariablesForSubConverstion();
+    object.startConversation = function (conversationKey) {
+        setActiveConversation(conversations[conversationKey]);
         clearDialog();
         conversationDisplayer.showDialogBox();
         conversationDisplayer.hideActionDescriptionBox();
-        proceedConversation();
+        advanceConversation();
     };
 
-    var proceedConversation = function (shouldPreventSound) {
-        if (!shouldPreventSound) {
-            soundManager.playClickSound();
-        }
-        if (currentLine === 0 && currentConversation.onEnter) {
-            var overridingOptions = sceneFunctions[currentConversation.onEnter](currentConversation);
-            if (overridingOptions) {
-                var overridingConversation = util.clone(currentConversation);
-                overridingConversation.options = overridingOptions;
-                currentConversation = overridingConversation;
-            }
-        }
-        writeDialog(currentConversation.dialog);
+    var advanceConversation = function (shouldMute) {
+        if (!shouldMute) { soundManager.playClickSound(); }
+        if (currentLine === 0 && activeConversation.onEnter) { applyConversationOnEnter(); }
+        var dialog = activeConversation.dialog;
+        writeDialog(dialog);
         writeDialogLn('');
-        var dialog = currentConversation.dialog;
-        if (typeof dialog !== 'string' && typeof dialog[0] === 'string') {
-            if (currentLine + 1 === dialog.length / 2) {
-                showOptions();
-            } else {
-                showProceedConversationLink();
-            }
-        } else {
+        showSpeechBubbleLinks(dialog);
+    };
+
+    var applyConversationOnEnter = function () {
+        var overridingOptions = sceneFunctions[activeConversation.onEnter](activeConversation);
+        if (overridingOptions) { overrideOptions(overridingOptions); }
+    }
+
+    var overrideOptions = function (overridingOptions) {
+        var overridingConversation = util.clone(activeConversation);
+        overridingConversation.options = overridingOptions;
+        activeConversation = overridingConversation;
+    };
+
+    var showSpeechBubbleLinks = function (dialog) {
+        if (isOnLastLineOfDialog(dialog)) {
             showOptions();
+        } else {
+            showAdvanceConversationLink();
         }
+    };
+
+    var isOnLastLineOfDialog = function (dialog) {
+        return !dialogHasMultipleLines(dialog) || currentLine + 1 === dialog.length / 2;
+    };
+
+    var dialogHasMultipleLines = function (dialog) {
+        return typeof dialog !== 'string' && typeof dialog[0] === 'string';
     };
 
     var showOptions = function () {
-        var options = currentConversation.options;
-        if (!options) {
-            options = [{"description": "Continue"}];
-        }
-        for (var i = 0; i < options.length; i++) {
-            showOption(options[i], i);
-        }
+        var options = activeConversation.options;
+        if (!options) { options = [{"description": "Continue"}]; }
+        options.forEach(showOption);
         conversationDisplayer.writeOptionLn(''); // TODO: This is hacky. Use actual styling instead of adding an empty option
     };
 
     var showOption = function (option, i) {
         var optionDescription = option.description;
-        var description = optionDescription ?
-                optionDescription : option.dialog[1];
-        conversationDisplayer.printOptionLink(description, i, function () {
-            chooseOption(option);
-        });
+        var description = optionDescription ? optionDescription : option.dialog[1];
+        conversationDisplayer.printOptionLink(description, i, function () { chooseOption(option); });
     };
 
-    var showProceedConversationLink = function () {
+    var showAdvanceConversationLink = function () {
         conversationDisplayer.printProceedConversationLink('Next', function () {
             currentLine += 1;
             clearDialog();
-            proceedConversation();
+            advanceConversation();
         });
     };
 
@@ -90,14 +88,13 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
             return;
         }
         if (option.dialog) { writeDialog(option.dialog, true); }
-        currentConversation = conversations[option.next];
-        resetVariablesForSubConverstion();
-        proceedConversation();
+        setActiveConversation(conversations[option.next]);
+        advanceConversation();
     };
 
-    var resetVariablesForSubConverstion = function () {
+    var setActiveConversation = function (conversation) {
+        activeConversation = conversation;
         currentLine = 0;
-        overridingDialog = undefined;
     };
 
     var writeAlternatingArrayDialog = function (dialog) {
@@ -129,13 +126,12 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
     };
 
     var endConversation = function () {
-        currentConversation = {};
-        // NOTE: This is tricky. We cannot set isInConversation to false immediately,
+        // NOTE: This is tricky. We cannot end the conversation immediately,
         // because this gets evaluated before the click handler. If the click handler sees
         // that we are not in a conversation, the character will interact with the clicked
         // spot, even though the click was actually meant to end the conversation.
         conversationDisplayer.hideDialogBox(function () {
-            isInConversation = false;
+            activeConversation = null;
         });
     };
 
