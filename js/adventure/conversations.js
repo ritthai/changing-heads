@@ -604,6 +604,13 @@ adventure.getConversations = function () {
 				"Hey, what gives?!? Ugh, I guess I need a bigger fish from Cassandra."
 			]
 	},
+        "examineSalamanderAfterFeeding": {
+		"dialog":
+			[
+				"Kylie",
+				"Cone still won't let me on. Maybe Cassandra can help."
+			]
+	},
 	"treatSalamander": {
 		"dialog":
 			[

@@ -218,6 +218,10 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
                 adventureProvider.startConversation('treatSalamander');
                 return false;
             }
+            if (worldState['hasFedSalamander']) {
+                adventureProvider.startConversation('examineSalamanderAfterFeeding');
+                return false;
+            }
             if (worldState['hasFish']) {
                 worldState['hasFish'] = false;
                 worldState['hasFedSalamander'] = true;
