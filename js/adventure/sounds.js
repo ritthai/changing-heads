@@ -18,10 +18,6 @@ adventure.getSounds = function() {
             "formats": ["ogg", "mp3"],
             "shouldFadeIn": true
         },
-        "introNarration": {
-            "path": "audio/speech/intro-speech",
-            "formats": ["ogg", "wav"]
-        },
         "giantHeadsHum": {
             "path": "audio/music/giant-heads-hum",
             "formats": ["ogg", "wav"]

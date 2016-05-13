@@ -60,10 +60,6 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             soundManager.playSound('startMusic');
         },
 
-        'playIntroNarration': function () {
-            soundManager.playSound('introNarration');
-        },
-
         'playChangingHeadsHum': function () {
             soundManager.playSound('giantHeadsHum');
         },

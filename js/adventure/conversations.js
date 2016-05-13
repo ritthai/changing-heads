@@ -19,14 +19,13 @@ adventure.getConversations = function () {
 	},
 	"introNarration": {
 		"dialog": ["", 
-			"Chapter 1 out of 5: Losing Your Head <br /><br /> We start our story in Tea Song where Kylie's meeting her old high school friend, but you're in control noooow-"],
+			"Chapter 1 out of 5: Losing Your Head"],
 		"options": [
 			{
 				"description": "Continue",
 				"next": "wonderWhereSimonIsAtTeaShop"
 			}
-		],
-		"onEnter": "playIntroNarration"
+		]
 	},
 	"wonderWhereSimonIsAtTeaShop": {
 		"dialog": [
@@ -935,9 +934,21 @@ adventure.getConversations = function () {
 				"Thief Head",
 				" I don’t need a body made from dirt! I’ve got a perfectly good one right here!",
 				"Cassandra",
-				" Kylie, dear, let me handle this.",
-				"",
-				"The beach party erupts into flames",
+				" Kylie, dear, let me handle this."
+                        ],
+                    "options": [
+                        {
+                                "description": "Let her handle it",
+                                "next": "talkToThiefHeadAfterFire"
+                        }
+                    ]
+                },
+        "talkToThiefHeadAfterFire": {
+                "onEnter": "showBeachFire",
+		"dialog":
+                        [
+                                "",
+                                "The beach party erupts into flames",
 				"Party Goer",
 				"Sweet! Bonfire!",
 				"Another Party Goer",

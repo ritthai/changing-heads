@@ -305,6 +305,12 @@ adventure.getScenes = function () {
                     url: 'img/characters/cassandra.png',
                     shape: { type: "rectangle", topLeftCorner: {x: 216, y: 149}, bottomRightCorner: {x: 268, y: 349} },
                     showCondition: "cassandraIsHere"
+                },
+                {
+                    id: 'fire',
+                    url: 'img/scenery/beach-fire.png',
+                    shape: { type: "rectangle", topLeftCorner: {x: 0, y: 400}, bottomRightCorner: {x: 600, y: 600} },
+                    showCondition: "hasFire"
                 }
             ]
         }
