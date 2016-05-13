@@ -107,13 +107,31 @@ adventure.getSceneManager = function (util) {
     };
 
     var loadScene = function (scene) {
+        var prepared = prepareLoadedScene(scene);
+        uiManager.drawScene(prepared, backgroundDirectory);
+        currentScene = prepared;
+    };
+
+    var prepareLoadedScene = function (scene) {
+        return thread(scene, [
+            evaluateShowConditionsForScene,
+            performSceneActions]
+        );
+    };
+
+    var thread = function (value, functions) {
+        var x = value;
+        each(functions, function (f) {
+            x = f(x);
+        });
+        return x;
+    };
+
+    var evaluateShowConditionsForScene = function (scene) {
         var scope = {};
         var controller = sceneFunctions[scene.controller];
         if (controller) { controller(scope); }
-        var evaluatedScene = evaluateShowCondition(scene, scope);
-        performSceneActions(evaluatedScene);
-        uiManager.drawScene(evaluatedScene, backgroundDirectory);
-        currentScene = evaluatedScene;
+        return evaluateShowCondition(scene, scope);
     };
 
     var evaluateShowCondition = function (scene, scope) {
@@ -134,13 +152,23 @@ adventure.getSceneManager = function (util) {
     };
 
     var performSceneActions = function (scene) {
-        if (scene.onEnter) {
-            var sceneFunction = sceneFunctions[scene.onEnter];
-            var onEnterResult = sceneFunction(scene);
-            shouldPreventDefault = onEnterResult !== false;
-            if (shouldPreventDefault) { return; }
+        var onEnterResult = callOnEnterForScene(scene);
+        var newScene = onEnterResult.scene;
+        if (!onEnterResult.shouldPreventDefault) {
+            performPreventableSceneActions(newScene);
         }
-        performPreventableSceneActions(scene);
+        return newScene;
+    };
+
+    var callOnEnterForScene = function (scene) {
+        if (!scene.onEnter) { return false; }
+        var onEnter = sceneFunctions[scene.onEnter];
+        var newScene = util.clone(scene);
+        var result = onEnter(newScene);
+        return {
+            shouldPreventDefault: result !== false,
+            scene: newScene
+        };
     };
 
     var performPreventableSceneActions = function (scene) {
