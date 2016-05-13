@@ -100,16 +100,16 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             worldState['hasDecidedToGoToChangingHeads'] = true;
         },
 
-        'enterChangingHeads': function () {
+        'enterChangingHeads': function (scene) {
             if (worldState['isPlanningToSeeChangingHeadsAgain']) {
                 worldState['hasSeenSimonAtHeadsAfterFixingHim'] = true;
             } else {
-                adventureProvider.hideSceneImageById('simon');
-                adventureProvider.hideHotspotById('talkToSimon');
+                adventureProvider.hideSceneImageByIdForScene('simon', scene);
+                adventureProvider.hideHotspotById(scene, 'talkToSimon');
             }
             if (!worldState['hasDecidedToGoToChangingHeads'] || worldState['hasSomethingThatHurts']) {
-                adventureProvider.hideSceneImageById('simon-head');
-                adventureProvider.hideHotspotById('examineNormalSizedHead');
+                adventureProvider.hideSceneImageByIdForScene('simon-head', scene);
+                adventureProvider.hideHotspotById(scene, 'examineNormalSizedHead');
             }
             if (worldState['hasDecidedToGoToChangingHeads'] &&
                     !worldState['hasWaitedForSimonAtChangingHeads']) {
@@ -263,16 +263,16 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             adventureProvider.loadScene('pharmacy');
         },
 
-        'onEnterPharmacy': function () {
+        'onEnterPharmacy': function (scene) {
             if (!worldState['tomIsInPharmacy']) {
-                adventureProvider.hideSceneImageById('tom');
+                adventureProvider.hideSceneImageByIdForScene('tom', scene);
             }
-            adventureProvider.flipSceneImageById('tom');
+            adventureProvider.flipSceneImageById(scene, 'tom');
         },
 
-        'onGettingSpecialSalamanderTea': function () {
+        'onGettingSpecialSalamanderTea': function (scene) {
             worldState['tomIsInPharmacy'] = false;
-            adventureProvider.hideSceneImageById('tom');
+            adventureProvider.hideSceneImageByIdForScene('tom', scene);
             worldState['hasSpokenToMalWithTom'] = true;
             worldState['hasSalamanderTea'] = true;
             return false;

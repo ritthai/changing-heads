@@ -76,8 +76,8 @@ adventure.getSceneManager = function (util) {
         return conversationManager.isInConversation();
     };
 
-    var hideSceneImageById = function (id) {
-        each(currentScene.images, function (image) {
+    var hideSceneImageByIdForScene = function (id, scene) {
+        each(scene.images, function (image) {
             if (image.id === id) {
                 image.hidden = true;
             }
@@ -85,8 +85,8 @@ adventure.getSceneManager = function (util) {
         uiManager.hideSceneImageById(id);
     };
 
-    var flipSceneImageById = function (id) {
-        each(currentScene.images, function (image) {
+    var flipSceneImageById = function (scene, id) {
+        each(scene.images, function (image) {
             if (image.id === id) {
                 image.isFlipped = true;
             }
@@ -94,8 +94,8 @@ adventure.getSceneManager = function (util) {
         uiManager.flipSceneImageById(id);
     };
 
-    var hideHotspotById = function (id) {
-        each(currentScene.hotspots, function(hotspot) {
+    var hideHotspotById = function (scene, id) {
+        each(scene.hotspots, function(hotspot) {
             if (hotspot.id === id) {
                 hotspot.hidden = true;
             }
@@ -212,7 +212,7 @@ adventure.getSceneManager = function (util) {
         facePlayerRight: facePlayerRight,
         loadScene: loadScene,
         loadSceneByName: loadSceneByName,
-        hideSceneImageById: hideSceneImageById,
+        hideSceneImageByIdForScene: hideSceneImageByIdForScene,
         flipSceneImageById: flipSceneImageById,
         hideHotspotById: hideHotspotById,
         isInConversation: isInConversation,

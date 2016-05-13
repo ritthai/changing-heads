@@ -44,6 +44,7 @@ adventure.getEngine = function () {
             facePlayerLeft: sceneManager.facePlayerLeft,
             facePlayerRight: sceneManager.facePlayerRight,
             hideSceneImageById: sceneManager.hideSceneImageById,
+            hideSceneImageByIdForScene: sceneManager.hideSceneImageByIdForScene,
             hideHotspotById: sceneManager.hideHotspotById,
             flipSceneImageById: sceneManager.flipSceneImageById,
             startConversation: function () {}
