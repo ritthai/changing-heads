@@ -98,48 +98,52 @@ adventure.getSceneManager = function (util) {
         });
     };
 
-    var performPreventableSceneActions = function () {
-        var position = currentScene.playerPositionOnEnter;
+    var performPreventableSceneActions = function (scene) {
+        var position = scene.playerPositionOnEnter;
         if (position) {
             putPlayerAtPoint(position);
         }
-        var conversation = currentScene.conversationToStartOnEnter;
+        var conversation = scene.conversationToStartOnEnter;
         if (conversation) {
             conversationManager.startConversation(conversation);
         }
     };
 
-    var performSceneActions = function () {
-        if (currentScene.onEnter) {
-            var sceneFunction = sceneFunctions[currentScene.onEnter];
-            var onEnterResult = sceneFunction(currentScene);
+    var performSceneActions = function (scene) {
+        if (scene.onEnter) {
+            var sceneFunction = sceneFunctions[scene.onEnter];
+            var onEnterResult = sceneFunction(scene);
             shouldPreventDefault = onEnterResult !== false;
             if (shouldPreventDefault) { return; }
         }
-        performPreventableSceneActions();
+        performPreventableSceneActions(scene);
     };
 
     var loadScene = function (scene) {
-        currentScene = util.clone(scene);
         var scope = {};
-        var controller = sceneFunctions[currentScene.controller];
+        var controller = sceneFunctions[scene.controller];
         if (controller) { controller(scope); }
-        evaluateShowCondition(scope);
-        performSceneActions();
-        uiManager.drawScene(currentScene, backgroundDirectory);
+        var evaluatedScene = evaluateShowCondition(scene, scope);
+        performSceneActions(evaluatedScene);
+        uiManager.drawScene(evaluatedScene, backgroundDirectory);
+        currentScene = evaluatedScene;
     };
 
-    var evaluateShowCondition = function (scope) {
-        evaluateShowConditionOnElements(currentScene.images, scope);
-        evaluateShowConditionOnElements(currentScene.hotspots, scope);
+    var evaluateShowCondition = function (scene, scope) {
+        var newScene = util.clone(scene);
+        newScene.images = evaluateShowConditionOnElements(scene.images, scope);
+        newScene.hotspots = evaluateShowConditionOnElements(scene.hotspots, scope);
+        return newScene;
     };
 
     var evaluateShowConditionOnElements = function (elements, scope) {
-        each(elements, function (element) {
+        var newElements = util.clone(elements);
+        each(newElements, function (element) {
             if (element.hasOwnProperty('showCondition') && !scope[element.showCondition]) {
                 element.hidden = true;
             }
         });
+        return newElements;
     };
 
     var loadSceneByName = function (name) {

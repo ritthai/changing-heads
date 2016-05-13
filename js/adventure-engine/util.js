@@ -6,7 +6,7 @@ See the file license.txt for copying permission.
 
 adventure.getUtil = function () {
 	var clone = function (objectToClone) {
-		return $.extend(true, {}, objectToClone);
+		return JSON.parse(JSON.stringify(objectToClone));
 	};
 
 	var each = function (array, lambda) {
