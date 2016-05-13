@@ -98,25 +98,8 @@ adventure.getSceneManager = function (util) {
         });
     };
 
-    var performPreventableSceneActions = function (scene) {
-        var position = scene.playerPositionOnEnter;
-        if (position) {
-            putPlayerAtPoint(position);
-        }
-        var conversation = scene.conversationToStartOnEnter;
-        if (conversation) {
-            conversationManager.startConversation(conversation);
-        }
-    };
-
-    var performSceneActions = function (scene) {
-        if (scene.onEnter) {
-            var sceneFunction = sceneFunctions[scene.onEnter];
-            var onEnterResult = sceneFunction(scene);
-            shouldPreventDefault = onEnterResult !== false;
-            if (shouldPreventDefault) { return; }
-        }
-        performPreventableSceneActions(scene);
+    var loadSceneByName = function (name) {
+        loadScene(scenes[name]);
     };
 
     var loadScene = function (scene) {
@@ -146,8 +129,25 @@ adventure.getSceneManager = function (util) {
         return newElements;
     };
 
-    var loadSceneByName = function (name) {
-        loadScene(scenes[name]);
+    var performSceneActions = function (scene) {
+        if (scene.onEnter) {
+            var sceneFunction = sceneFunctions[scene.onEnter];
+            var onEnterResult = sceneFunction(scene);
+            shouldPreventDefault = onEnterResult !== false;
+            if (shouldPreventDefault) { return; }
+        }
+        performPreventableSceneActions(scene);
+    };
+
+    var performPreventableSceneActions = function (scene) {
+        var position = scene.playerPositionOnEnter;
+        if (position) {
+            putPlayerAtPoint(position);
+        }
+        var conversation = scene.conversationToStartOnEnter;
+        if (conversation) {
+            conversationManager.startConversation(conversation);
+        }
     };
 
     var hitHotspot = function (coordinates) {
