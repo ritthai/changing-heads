@@ -58,7 +58,11 @@ adventure.getSceneManager = function (util) {
     };
 
     var getHotspotAt = function (point) {
-        var hotspots = currentScene.hotspots;
+        return getHotspotAtForScene(point, currentScene);
+    };
+
+    var getHotspotAtForScene = function (point, scene) {
+        var hotspots = scene.hotspots;
         for (var i = 0; i < hotspots.length; i += 1) {
             var hotspot = hotspots[i];
             if (!hotspot.hidden && pointIsInShape(point, hotspot.shape)) {
@@ -151,7 +155,7 @@ adventure.getSceneManager = function (util) {
     };
 
     var hitHotspot = function (coordinates) {
-        var hotspot = getHotspotAt(coordinates);
+        var hotspot = getHotspotAtForScene(coordinates, currentScene);
         if (hotspot.onHit) {
             var onHitResult = sceneFunctions[hotspot.onHit]();
             var shouldPreventDefault = onHitResult === false;
@@ -189,7 +193,7 @@ adventure.getSceneManager = function (util) {
     };
 
     var onArrive = function (event) {
-        var hotspot = getHotspotAt(event);
+        var hotspot = getHotspotAtForScene(event, currentScene);
         if (hotspot.onArrive) { hotspot.onArrive() };
         if (hotspot.destinationScene) {
             loadScene(scenes[hotspot.destinationScene]);
