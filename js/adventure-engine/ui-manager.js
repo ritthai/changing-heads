@@ -23,7 +23,7 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
         userInputManager.bindHandlers(onClick, onMouseMove);
     };
 
-    var onClick = function (coordinates) {
+    var onClick = function (coordinates, state) {
         onMouseMove(coordinates);
         if (buildModeManager.isInBuildMode) {
             buildModeManager.onClickWhenInBuildMode(coordinates);
@@ -33,7 +33,7 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler, s
         if (isMoving) {
             return;
         }
-        adventureProvider.hitHotspot(coordinates);
+        return adventureProvider.hitHotspot(coordinates, state);
     };
 
     var onMouseMove = function (coordinates) {

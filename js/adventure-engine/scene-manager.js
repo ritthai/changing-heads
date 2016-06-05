@@ -42,7 +42,7 @@ adventure.getSceneManager = function (util) {
     };
 
     var movePlayer = function (destination, callback) {
-        uiManager.movePlayer(destination, callback)
+        return [[uiManager.movePlayer, destination, callback]];
     };
 
     var pointIsInShape = function (point, shape) {
@@ -190,23 +190,25 @@ adventure.getSceneManager = function (util) {
             if (shouldPreventDefault) { return; }
         }
         if (isInConversation()) return;
-        onHitHotspotWhereOnHitAllowsDefault(coordinates, hotspot);
+        return onHitHotspotWhereOnHitAllowsDefault(coordinates, hotspot);
     };
 
     var onHitHotspotWhereOnHitAllowsDefault = function (clickedPoint, hotspot) {
+        var actions = [];
         if (hotspot.positionToMovePlayerTo) {
-            movePlayerToHotspot(hotspot);
+            actions = actions.concat(movePlayerToHotspot(hotspot));
         }
         if (hotspot.conversationToStart) {
             conversationManager.startConversation(hotspot.conversationToStart);
         }
         if (shouldMoveToClickedPoint(hotspot)) {
-            movePlayer(clickedPoint, function () { onArrive(clickedPoint); });
+            actions = actions.concat(movePlayer(clickedPoint, function () { onArrive(clickedPoint); }));
         } else if (hotspot.shouldStandStill) {
             // TODO: A bit hacky. 50 seconds to debounce
             // Android's use of both click and touch events
-            setTimeout(function () { onArrive(clickedPoint); }, 50);
+            actions.push([setTimeout, function () { onArrive(clickedPoint); }, 50]);
         }
+        return { actions: actions };
     };
 
     var shouldMoveToClickedPoint = function (hotspot) {
@@ -215,7 +217,7 @@ adventure.getSceneManager = function (util) {
     };
 
     var movePlayerToHotspot = function (hotspot) {
-        movePlayer(hotspot.positionToMovePlayerTo, function () {
+        return movePlayer(hotspot.positionToMovePlayerTo, function () {
             uiManager.makePlayerFaceRightWayForMove(hotspot.shape.bottomRightCorner);
         });
     };

@@ -6,12 +6,21 @@ See the file license.txt for copying permission.
 
 adventure.getUserInputManager = function () {
 
+    var state;
+
     var debounceTime = 310;
 
     var isDebouncing = false;
     var debounceTimer;
 
     var onClickAtCoordinates, onMouseMoveAtCoordinates;
+
+    var applyActions = function (actions) {
+        for (var i = 0; i < actions.length; i++) {
+            var action = actions[i];
+            action[0].apply(null, action.slice(1));
+        }
+    };
 
     var bindHandlers = function (_onClickAtCoordinates, _onMouseMoveAtCoordinates) {
         onClickAtCoordinates = _onClickAtCoordinates
@@ -51,7 +60,11 @@ adventure.getUserInputManager = function () {
     var callUsingSceneCoordinatesIfEventIsOnScreen = function (event, callback) {
         if (!eventIsOnScreen(event)) { return; }
         var coordinates = pageToSceneCoordinates({x: event.pageX, y: event.pageY});
-        callback(coordinates);
+        var result = callback(coordinates, state);
+        if (result) {
+            if (result.state) { state = result.state; }
+            if (result.actions) { applyActions(result.actions); }
+        }
     };
 
     var getTouchEventFromTouchesEvent = function (event) {
