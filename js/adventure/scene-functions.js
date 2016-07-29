@@ -17,7 +17,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
                 "description": "Continue",
                 "next": "interviewCassandra"
             }];
-            return options;
+            return { options: options };
         }
     };
 
@@ -29,8 +29,12 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
                     "next": "hearSimonSuggestSeeingTheHeads"
                 }
             ];
-            return options;
+            return { overrideOptions: options };
         }
+    };
+
+    var disableDefault = function () {
+        return { shouldPreventDefault: true };
     };
 
     var sceneFunctions = {
@@ -40,7 +44,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
                 worldState['hasSeenSimonInTeaShop'] = true;
                 adventureProvider.putPlayerAt(135, 374);
                 adventureProvider.startConversation('startMenu');
-                return false;
+                return disableDefault();
             }
         },
 
@@ -49,7 +53,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             if (worldState['hasSeenApologyOfCassandra']) {
                 worldState['isPlanningToSeeChangingHeadsAgain'] = true;
                 adventureProvider.startConversation('debriefWithSimon');
-                return false;
+                return disableDefault();
             }
             if (worldState['hasDecidedToGoToChangingHeads']) {
                 adventureProvider.startConversation('tellSimonToMeetAtHeads');
@@ -116,7 +120,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
                 worldState['hasWaitedForSimonAtChangingHeads'] = true;
                 adventureProvider.startConversation('introduceTheChangingHeads');
                 soundManager.playSound('giantHeadsHum');
-                return false;
+                return disableDefault();
             }
         },
 
@@ -124,7 +128,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             adventureProvider.movePlayer({x: 471, y: 455}, adventureProvider.facePlayerRight);
             if (worldState['isPlanningToSeeChangingHeadsAgain']) {
                 adventureProvider.startConversation('askSimonAboutWritersBlock');
-                return false;
+                return disableDefault();
             }
             if (worldState['hasFoundSimon']) {
                 adventureProvider.startConversation('reassureHeadOfSimon');
@@ -136,18 +140,18 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             adventureProvider.facePlayerLeft();
             if (worldState['isPlanningToSeeChangingHeadsAgain']) {
                 adventureProvider.startConversation('debriefWithChangingHeads');
-                return false;
+                return disableDefault();
             }
             if (!worldState['hasFoundSimon']) { return; }
             adventureProvider.startConversation('talkToTheChangingHeads');
             worldState['hasDecidedToSeeCassandra'] = true;
-            return false;
+            return disableDefault();
         },
 
         'onHittingCaveOfCassandra': function () {
             if (!worldState['hasDecidedToSeeCassandra']) {
                 adventureProvider.startConversation('mentionFearOfCassandra');
-                return false;
+                return disableDefault();
             }
         },
 
@@ -156,24 +160,24 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             if (worldState['hasSomethingThatHurts']) {
                 worldState['isPlanningToSaveMalcom'] = true;
                 adventureProvider.startConversation('fixSimon');
-                return false;
+                return disableDefault();
             }
             if (worldState['isLookingForSomethingThatHurts']) {
                 adventureProvider.startConversation('askCassandraHowSimonIs');
-                return false;
+                return disableDefault();
             }
             if (worldState['hasSalamanderTea']) {
                 adventureProvider.startConversation('giveCassandraSalamanderTea');
-                return false;
+                return disableDefault();
             }
             if (worldState['hasFedSalamander']) {
                 worldState['isPlanningToAskTomForSpecialTea'] = true;
                 adventureProvider.startConversation('askCassandraForAnotherFish');
-                return false;
+                return disableDefault();
             }
             if (worldState['hasStartedInterviewingCassandra']) {
                 adventureProvider.startConversation('interviewCassandraAboutThings');
-                return false;
+                return disableDefault();
             }
         },
 
@@ -207,26 +211,26 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             adventureProvider.movePlayer({x: 194, y: 500}, adventureProvider.facePlayerRight);
             if (worldState['hasTreatedSalamander']) {
                 adventureProvider.loadScene('beach');
-                return false;
+                return disableDefault();
             }
             if (worldState['hasGivenCassandraSalamanderTea']) {
                 worldState['hasTreatedSalamander'] = true;
                 adventureProvider.startConversation('treatSalamander');
-                return false;
+                return disableDefault();
             }
             if (worldState['hasFedSalamander']) {
                 adventureProvider.startConversation('examineSalamanderAfterFeeding');
-                return false;
+                return disableDefault();
             }
             if (worldState['hasFish']) {
                 worldState['hasFish'] = false;
                 worldState['hasFedSalamander'] = true;
                 adventureProvider.startConversation('feedSalamander');
                 soundManager.playSound('salamander');
-                return false;
+                return disableDefault();
             }
             adventureProvider.startConversation('examineSalamander');
-            return false;
+            return disableDefault();
         },
 
         'flyIntoTheSkies': function () {
@@ -243,12 +247,12 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             if (worldState['isPlanningToSeeMedicineMan']) {
                 adventureProvider.movePlayer({x: 323, y: 326}, adventureProvider.facePlayerRight);
                 adventureProvider.startConversation('talkToTomAboutGoingToMedicineMan');
-                return false;
+                return disableDefault();
             }
             if (worldState['isPlanningToAskTomForSpecialTea']) {
                 adventureProvider.movePlayer({x: 323, y: 326}, adventureProvider.facePlayerRight);
                 adventureProvider.startConversation('askTomForSpecialTea');
-                return false;
+                return disableDefault();
             }
         },
 
@@ -275,7 +279,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             adventureProvider.hideSceneImageByIdForScene('tom', scene);
             worldState['hasSpokenToMalWithTom'] = true;
             worldState['hasSalamanderTea'] = true;
-            return false;
+            return disableDefault();
         },
 
         'onHittingMedicineMan': function () {
@@ -283,16 +287,16 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
             if (worldState['isPlanningToSaveMalcom']) {
                 worldState['hasSeenApologyOfCassandra'] = true;
                 adventureProvider.startConversation('seeApologyOfCassandra');
-                return false;
+                return disableDefault();
             }
             if (worldState['isLookingForSomethingThatHurts']) {
                 worldState['hasSomethingThatHurts'] = true;
                 adventureProvider.startConversation('askForSomethingThatHurts');
-                return false;
+                return disableDefault();
             }
             if (    worldState['hasSpokenToMalWithTom']) {
                 adventureProvider.startConversation("talkToMedicineManAfterGettingTea");
-                return false;
+                return disableDefault();
             }
             adventureProvider.startConversation('tellMalcomYouAreJustBrowsing');
         },
@@ -304,7 +308,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
         'talkToThiefHead': function () {
             if (worldState['isLookingForSomethingThatHurts']) {
                 adventureProvider.startConversation("talkToFaintedThiefHead");
-                return false;
+                return disableDefault();
             }
             worldState['isLookingForSomethingThatHurts'] = true;
             adventureProvider.startConversation("talkToThiefHead");

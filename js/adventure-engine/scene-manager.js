@@ -186,7 +186,7 @@ adventure.getSceneManager = function (util) {
         var hotspot = getHotspotAtForScene(coordinates, currentScene);
         if (hotspot.onHit) {
             var onHitResult = sceneFunctions[hotspot.onHit]();
-            var shouldPreventDefault = onHitResult === false;
+            var shouldPreventDefault = onHitResult && onHitResult.shouldPreventDefault;
             if (shouldPreventDefault) { return; }
         }
         if (isInConversation()) return;

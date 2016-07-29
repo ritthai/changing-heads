@@ -36,14 +36,17 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
     };
 
     var applyConversationOnEnter = function () {
-        var overrideOptions = sceneFunctions[activeConversation.onEnter](activeConversation);
-        if (overrideOptions) { applyOverrideOptions(overrideOptions); }
+        var onEnterResult = sceneFunctions[activeConversation.onEnter](activeConversation);
+        var overrideOptions = onEnterResult ? onEnterResult.overrideOptions : null;
+        if (overrideOptions) {
+            activeConversation = applyOverrideOptions(activeConversation, overrideOptions);
+        }
     }
 
-    var applyOverrideOptions = function (overrideOptions) {
-        var overrideConversation = util.clone(activeConversation);
+    var applyOverrideOptions = function (conversation, overrideOptions) {
+        var overrideConversation = util.clone(conversation);
         overrideConversation.options = overrideOptions;
-        activeConversation = overrideConversation;
+        return overrideConversation;
     };
 
     var showSpeechBubbleLinks = function (dialog) {
