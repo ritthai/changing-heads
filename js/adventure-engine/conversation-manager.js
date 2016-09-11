@@ -7,7 +7,6 @@ See the file license.txt for copying permission.
 adventure.getConversationManager = function (conversations, sceneFunctions, util, conversationDisplayer, soundManager) {
 
     var writeDialogLn = conversationDisplayer.writeDialogLn;
-    var clearDialog = conversationDisplayer.clearDialog;
 
     var object = {};
 
@@ -20,12 +19,12 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
     object.startConversation = function (conversationKey) {
         var conversation = conversations[conversationKey];
         isInConversation = true;
-        clearDialog();
         conversationDisplayer.showDialogBox();
         advanceConversation(conversation, 0);
     };
 
     var advanceConversation = function (conversation, line) {
+        conversationDisplayer.clearDialog();
         soundManager.playClickSound();
         if (line === 0 && conversation.onEnter) {
             conversation = applyConversationOnEnter(conversation);
@@ -79,7 +78,6 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
     };
 
     var chooseOption = function (option) {
-        clearDialog();
         if (option.onEnter) { option.onEnter(); }
         if (!option.next) {
             endConversation();
@@ -91,7 +89,6 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
 
     var showAdvanceConversationLink = function (conversation, line) {
         conversationDisplayer.printProceedConversationLink('Next', function () {
-            clearDialog();
             advanceConversation(conversation, line + 1);
         });
     };
