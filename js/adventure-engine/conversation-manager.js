@@ -22,7 +22,6 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
         isInConversation = true;
         clearDialog();
         conversationDisplayer.showDialogBox();
-        conversationDisplayer.hideActionDescriptionBox();
         advanceConversation(conversation, 0);
     };
 

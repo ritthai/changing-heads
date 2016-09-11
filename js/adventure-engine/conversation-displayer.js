@@ -40,14 +40,11 @@ adventure.getConversationDisplayer = (function () {
 
     prototype.showDialogBox = function () {
         $("#dialog-box").show();
+        $("#action-description-box").hide();
     };
 
     prototype.hideDialogBox = function (callback) {
         $('#dialog-box').fadeOut(callback);
-    };
-
-    prototype.hideActionDescriptionBox = function () {
-        $("#action-description-box").hide();
     };
 
     return function () {
