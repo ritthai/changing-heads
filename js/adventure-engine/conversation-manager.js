@@ -11,36 +11,38 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
 
     var object = {};
 
-    var activeConversation = null;
-    var currentLine = 0;
+    var isInConversation = false;
 
     object.isInConversation = function () {
-        return activeConversation != null;
+        return isInConversation;
     };
 
     object.startConversation = function (conversationKey) {
-        setActiveConversation(conversations[conversationKey]);
+        var conversation = conversations[conversationKey];
+        isInConversation = true;
         clearDialog();
         conversationDisplayer.showDialogBox();
         conversationDisplayer.hideActionDescriptionBox();
-        advanceConversation();
+        advanceConversation(conversation, 0);
     };
 
-    var advanceConversation = function (shouldMute) {
-        if (!shouldMute) { soundManager.playClickSound(); }
-        if (currentLine === 0 && activeConversation.onEnter) { applyConversationOnEnter(); }
-        var dialog = activeConversation.dialog;
-        writeDialog(dialog);
-        writeDialogLn('');
-        showSpeechBubbleLinks(dialog);
-    };
-
-    var applyConversationOnEnter = function () {
-        var onEnterResult = sceneFunctions[activeConversation.onEnter](activeConversation);
-        var overrideOptions = onEnterResult ? onEnterResult.overrideOptions : null;
-        if (overrideOptions) {
-            activeConversation = applyOverrideOptions(activeConversation, overrideOptions);
+    var advanceConversation = function (conversation, line) {
+        soundManager.playClickSound();
+        if (line === 0 && conversation.onEnter) {
+            conversation = applyConversationOnEnter(conversation);
         }
+        var dialog = conversation.dialog;
+        writeDialog(dialog, line);
+        writeDialogLn('');
+        showSpeechBubbleLinks(conversation, line);
+    };
+
+    var applyConversationOnEnter = function (conversation) {
+        var onEnterResult = sceneFunctions[conversation.onEnter](conversation);
+        var overrideOptions = onEnterResult ? onEnterResult.overrideOptions : null;
+        return (overrideOptions ?
+            applyOverrideOptions(conversation, overrideOptions) :
+            conversation);
     }
 
     var applyOverrideOptions = function (conversation, overrideOptions) {
@@ -49,24 +51,24 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
         return overrideConversation;
     };
 
-    var showSpeechBubbleLinks = function (dialog) {
-        if (isOnLastLineOfDialog(dialog)) {
-            showOptions();
+    var showSpeechBubbleLinks = function (conversation, line) {
+        var dialog = conversation.dialog;
+        if (isLastLineOfDialog(dialog, line)) {
+            showOptions(conversation.options);
         } else {
-            showAdvanceConversationLink();
+            showAdvanceConversationLink(conversation, line);
         }
     };
 
-    var isOnLastLineOfDialog = function (dialog) {
-        return !dialogHasMultipleLines(dialog) || currentLine + 1 === dialog.length / 2;
+    var isLastLineOfDialog = function (dialog, line) {
+        return !dialogHasMultipleLines(dialog) || line + 1 === dialog.length / 2;
     };
 
     var dialogHasMultipleLines = function (dialog) {
         return typeof dialog !== 'string' && typeof dialog[0] === 'string';
     };
 
-    var showOptions = function () {
-        var options = activeConversation.options;
+    var showOptions = function (options) {
         if (!options) { options = [{"description": "Continue"}]; }
         options.forEach(showOption);
         conversationDisplayer.writeOptionLn(''); // TODO: This is hacky. Use actual styling instead of adding an empty option
@@ -84,39 +86,25 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
             endConversation();
             return;
         }
-        if (option.dialog) { writeDialog(option.dialog, true); }
-        setActiveConversation(conversations[option.next]);
-        advanceConversation();
+        var conversation = conversations[option.next];
+        advanceConversation(conversation, 0);
     };
 
-    var showAdvanceConversationLink = function () {
+    var showAdvanceConversationLink = function (conversation, line) {
         conversationDisplayer.printProceedConversationLink('Next', function () {
-            currentLine += 1;
             clearDialog();
-            advanceConversation();
+            advanceConversation(conversation, line + 1);
         });
     };
 
-    var setActiveConversation = function (conversation) {
-        activeConversation = conversation;
-        currentLine = 0;
-    };
-
-    var writeDialog = function (dialog, isOptionDialog) {
+    var writeDialog = function (dialog, line) {
         if (!dialog) { return; }
         if (typeof dialog === 'string') {
             writeDialogLn(dialog); // TODO: Remove this if it's not used
             return;
         }
         if (typeof dialog[0] !== 'string') { return; }
-        if (isOptionDialog) {
-            // TODO: Is option dialog even used? This complicates things. Consider changing it.
-            for (var i = 0; i + 1 < dialog.length; i += 2) {
-                writeAlternatingArrayDialogLine(dialog, i);
-            }
-        } else {
-            writeAlternatingArrayDialogLine(dialog, currentLine * 2);
-        }
+        writeAlternatingArrayDialogLine(dialog, line * 2);
     };
 
     var writeAlternatingArrayDialogLine = function (dialog, i) {
@@ -135,7 +123,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
         // that we are not in a conversation, the character will interact with the clicked
         // spot, even though the click was actually meant to end the conversation.
         conversationDisplayer.hideDialogBox(function () {
-            activeConversation = null;
+            isInConversation = false;
         });
     };
 
