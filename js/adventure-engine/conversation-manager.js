@@ -51,8 +51,10 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
     var showConversation = function (conversation, line) {
         soundManager.playClickSound();
         conversationDisplayer.clearDialog();
-        writeDialog(conversation.dialog, line);
-        writeDialogLn('');
+        if (conversation.dialog) {
+            writeDialog(conversation.dialog, line);
+            writeDialogLn('');
+        }
         showSpeechBubbleLinks(conversation, line);
     };
 
@@ -96,12 +98,6 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
     };
 
     var writeDialog = function (dialog, line) {
-        if (!dialog) { return; }
-        if (typeof dialog === 'string') {
-            writeDialogLn(dialog); // TODO: Remove this if it's not used
-            return;
-        }
-        if (typeof dialog[0] !== 'string') { return; }
         writeAlternatingArrayDialogLine(dialog, line * 2);
     };
 
