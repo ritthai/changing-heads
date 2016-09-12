@@ -18,21 +18,20 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
 
     object.startConversation = function (conversationKey) {
         var conversation = conversations[conversationKey];
+        startConversation(conversation);
+    };
+
+    var startConversation = function (conversation) {
         isInConversation = true;
-        conversationDisplayer.showDialogBox();
         advanceConversation(conversation, 0);
+        conversationDisplayer.showDialogBox();
     };
 
     var advanceConversation = function (conversation, line) {
-        conversationDisplayer.clearDialog();
-        soundManager.playClickSound();
         if (line === 0 && conversation.onEnter) {
             conversation = applyConversationOnEnter(conversation);
         }
-        var dialog = conversation.dialog;
-        writeDialog(dialog, line);
-        writeDialogLn('');
-        showSpeechBubbleLinks(conversation, line);
+        showConversation(conversation, line);
     };
 
     var applyConversationOnEnter = function (conversation) {
@@ -49,9 +48,16 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
         return overrideConversation;
     };
 
+    var showConversation = function (conversation, line) {
+        soundManager.playClickSound();
+        conversationDisplayer.clearDialog();
+        writeDialog(conversation.dialog, line);
+        writeDialogLn('');
+        showSpeechBubbleLinks(conversation, line);
+    };
+
     var showSpeechBubbleLinks = function (conversation, line) {
-        var dialog = conversation.dialog;
-        if (isLastLineOfDialog(dialog, line)) {
+        if (isLastLineOfDialog(conversation.dialog, line)) {
             showOptions(conversation.options);
         } else {
             showAdvanceConversationLink(conversation, line);
@@ -59,11 +65,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
     };
 
     var isLastLineOfDialog = function (dialog, line) {
-        return !dialogHasMultipleLines(dialog) || line + 1 === dialog.length / 2;
-    };
-
-    var dialogHasMultipleLines = function (dialog) {
-        return typeof dialog !== 'string' && typeof dialog[0] === 'string';
+        return line + 1 === dialog.length / 2;
     };
 
     var showOptions = function (options) {
