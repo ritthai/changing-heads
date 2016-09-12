@@ -53,7 +53,6 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
         conversationDisplayer.clearDialog();
         if (conversation.dialog) {
             writeDialog(conversation.dialog, line);
-            writeDialogLn('');
         }
         showSpeechBubbleLinks(conversation, line);
     };
