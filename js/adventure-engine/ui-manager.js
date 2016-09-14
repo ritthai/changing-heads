@@ -4,13 +4,14 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getUIManager = function (adventureProvider, isInConversationHandler,
-        userInputManager,
-        graphicsManager,
-        buildModeManager) {
-
-    var isInConversation = isInConversationHandler;
-
+adventure.getUIManager = function (
+    hitHotspot,
+    getHotspotAt,
+    isInConversation,
+    bindUserInputHandlers,
+    graphicsManager,
+    buildModeManager
+) {
     var isMoving;
     var mousePosition;
 
@@ -20,7 +21,7 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler,
     };
 
     var bindHandlers = function () {
-        userInputManager.bindHandlers(onClick, onMouseMove);
+        bindUserInputHandlers(onClick, onMouseMove);
     };
 
     var onClick = function (coordinates, state) {
@@ -33,7 +34,7 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler,
         if (isMoving) {
             return;
         }
-        return adventureProvider.hitHotspot(coordinates, state);
+        return hitHotspot(coordinates, state);
     };
 
     var onMouseMove = function (coordinates) {
@@ -50,7 +51,7 @@ adventure.getUIManager = function (adventureProvider, isInConversationHandler,
 
     var showActionDescription = function () {
         var actionDescription = isInConversation() ?
-            '' : adventureProvider.getHotspotAt(mousePosition).description;
+            '' : getHotspotAt(mousePosition).description;
         graphicsManager.showActionDescription(actionDescription);
     };
 

@@ -60,15 +60,6 @@ adventure.getEngine = function () {
 
         providerForSceneFunctions.startConversation = conversationManager.startConversation;
 
-        var providerForUIManager = {
-            loadScene: sceneManager.loadScene,
-            putPlayerAt: sceneManager.putPlayerAt,
-            movePlayer: sceneManager.movePlayer,
-            getHotspotAt: sceneManager.getHotspotAt,
-            startConversation: conversationManager.startConversation,
-            hitHotspot: sceneManager.hitHotspot
-        };
-
         var scenes = adventure.getScenes();
 
         var userInputManager = adventure.getUserInputManager();
@@ -76,9 +67,10 @@ adventure.getEngine = function () {
         var buildModeManager = adventure.getBuildModeManager();
 
         uiManager = adventure.getUIManager(
-                providerForUIManager,
+                sceneManager.hitHotspot,
+                sceneManager.getHotspotAt,
                 sceneManager.isInConversation,
-                userInputManager,
+                userInputManager.bindHandlers,
                 graphicsManager,
                 buildModeManager
             );
