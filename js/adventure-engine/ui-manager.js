@@ -7,6 +7,7 @@ See the file license.txt for copying permission.
 adventure.getUIManager = function (
     hitHotspot,
     getHotspotAt,
+    getHotspotAtForScene,
     isInConversation,
     bindUserInputHandlers,
     graphicsManager,
@@ -39,19 +40,18 @@ adventure.getUIManager = function (
 
     var onMouseMove = function (coordinates) {
         mousePosition = coordinates;
-        showActionDescription();
+        showActionDescription(getHotspotAt(mousePosition).description);
     };
 
     var drawScene = function (scene, backgroundDirectory) {
         graphicsManager.removeScene();
         graphicsManager.setBackgroundImageOfScene(backgroundDirectory + scene.background);
         graphicsManager.addSceneImages(scene.images);
-        showActionDescription();
+        showActionDescription(getHotspotAtForScene(mousePosition, scene).description);
     };
 
-    var showActionDescription = function () {
-        var actionDescription = isInConversation() ?
-            '' : getHotspotAt(mousePosition).description;
+    var showActionDescription = function (description) {
+        var actionDescription = isInConversation() ? '' : description;
         graphicsManager.showActionDescription(actionDescription);
     };
 

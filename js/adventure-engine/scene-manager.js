@@ -236,6 +236,7 @@ adventure.getSceneManager = function (util) {
 
     var sceneManagerToReturn = {
         getHotspotAt: getHotspotAt,
+        getHotspotAtForScene: getHotspotAtForScene,
         putPlayerAt: putPlayerAt,
         movePlayer: movePlayer,
         facePlayerLeft: facePlayerLeft,
