@@ -78,7 +78,6 @@ adventure.getEngine = function () {
         uiManager = adventure.getUIManager(
                 providerForUIManager,
                 sceneManager.isInConversation,
-                sceneFunctions,
                 userInputManager,
                 graphicsManager,
                 buildModeManager

@@ -4,7 +4,7 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getUIManager = function (adventureProvider, isInConversationHandler, sceneFunctions,
+adventure.getUIManager = function (adventureProvider, isInConversationHandler,
         userInputManager,
         graphicsManager,
         buildModeManager) {
