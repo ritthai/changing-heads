@@ -55,10 +55,18 @@ adventure.getEngine = function () {
 
         sounds = adventure.getSounds();
 
-        var conversationManager = adventure.getConversationManager(
-            conversations, sceneFunctions, util, conversationDisplayer, soundManager);
+        var isInConversation = false;
+        var onConversationEnded = function () { isInConversation = false; };
 
-        providerForSceneFunctions.startConversation = conversationManager.startConversation;
+        var conversationManager = adventure.getConversationManager(
+            conversations, sceneFunctions, util, conversationDisplayer, soundManager, onConversationEnded);
+
+        var startConversation = function (key) {
+            conversationManager.startConversation(key);
+            isInConversation = true;
+        };
+
+        providerForSceneFunctions.startConversation = startConversation;
 
         var scenes = adventure.getScenes();
 
@@ -70,7 +78,7 @@ adventure.getEngine = function () {
                 sceneManager.hitHotspot,
                 sceneManager.getHotspotAt,
                 sceneManager.getHotspotAtForScene,
-                sceneManager.isInConversation,
+                function () { return isInConversation; },
                 userInputManager.bindHandlers,
                 graphicsManager,
                 buildModeManager
@@ -79,7 +87,8 @@ adventure.getEngine = function () {
         sceneManager.configure({
             backgroundDirectory: backgroundDirectory,
             uiManager: uiManager,
-            conversationManager: conversationManager,
+            startConversation: startConversation,
+            isInConversation: function () { return isInConversation; },
             sceneFunctions: sceneFunctions,
             scenes: scenes
         });

@@ -4,13 +4,18 @@ Copyright (c) 2013 Ritchie Thai
 See the file license.txt for copying permission.
 */
 
-adventure.getConversationManager = function (conversations, sceneFunctions, util, conversationDisplayer, soundManager) {
+adventure.getConversationManager = function (
+    conversations,
+    sceneFunctions,
+    util,
+    conversationDisplayer,
+    soundManager,
+    onConversationEnded
+) {
 
     var writeDialogLn = conversationDisplayer.writeDialogLn;
 
     var object = {};
-
-    var isInConversation = false;
 
     object.isInConversation = function () {
         return isInConversation;
@@ -22,7 +27,6 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
     };
 
     var startConversation = function (conversation) {
-        isInConversation = true;
         advanceConversation(conversation, 0);
         conversationDisplayer.showDialogBox();
     };
@@ -64,7 +68,7 @@ adventure.getConversationManager = function (conversations, sceneFunctions, util
         // that we are not in a conversation, the character will interact with the clicked
         // spot, even though the click was actually meant to end the conversation.
         conversationDisplayer.hideDialogBox(function () {
-            isInConversation = false;
+            onConversationEnded();
         });
     };
 

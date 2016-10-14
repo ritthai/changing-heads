@@ -13,14 +13,16 @@ adventure.getSceneManager = function (util) {
     var currentScene,
         backgroundDirectory,
         uiManager,
-        conversationManager,
+        startConversation,
+        isInConversation,
         sceneFunctions,
         scenes;
 
     var configure = function (configuration) {
         backgroundDirectory    = configuration.backgroundDirectory;
         uiManager = configuration.uiManager;
-        conversationManager = configuration.conversationManager;
+        startConversation = configuration.startConversation;
+        isInConversation = configuration.isInConversation;
         sceneFunctions = configuration.sceneFunctions;
         scenes = configuration.scenes;
     };
@@ -70,10 +72,6 @@ adventure.getSceneManager = function (util) {
             }
         }
         return nullObjectHotspot;
-    };
-
-    var isInConversation = function () {
-        return conversationManager.isInConversation();
     };
 
     var hideSceneImageByIdForScene = function (id, scene) {
@@ -178,7 +176,7 @@ adventure.getSceneManager = function (util) {
         }
         var conversation = scene.conversationToStartOnEnter;
         if (conversation) {
-            conversationManager.startConversation(conversation);
+            startConversation(conversation);
         }
     };
 
@@ -199,7 +197,7 @@ adventure.getSceneManager = function (util) {
             actions = actions.concat(movePlayerToHotspot(hotspot));
         }
         if (hotspot.conversationToStart) {
-            conversationManager.startConversation(hotspot.conversationToStart);
+            startConversation(hotspot.conversationToStart);
         }
         if (shouldMoveToClickedPoint(hotspot)) {
             actions = actions.concat(movePlayer(clickedPoint, function () { onArrive(clickedPoint); }));
@@ -246,7 +244,6 @@ adventure.getSceneManager = function (util) {
         hideSceneImageByIdForScene: hideSceneImageByIdForScene,
         flipSceneImageById: flipSceneImageById,
         hideHotspotById: hideHotspotById,
-        isInConversation: isInConversation,
         hitHotspot: hitHotspot,
         configure: configure
     };
