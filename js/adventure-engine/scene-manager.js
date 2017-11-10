@@ -155,7 +155,7 @@ adventure.getSceneManager = function (util) {
 
     var performSceneActions = function (scene) {
         var onEnterResult = callOnEnterForScene(scene);
-        var newScene = onEnterResult.scene || scene;
+        var newScene = onEnterResult.scene;
         if (!onEnterResult.shouldPreventDefault) {
             performPreventableSceneActions(newScene);
         }
@@ -163,10 +163,26 @@ adventure.getSceneManager = function (util) {
     };
 
     var callOnEnterForScene = function (scene) {
-        if (!scene.onEnter) { return false; }
+        if (!scene.onEnter) {
+            return { shouldPreventDefault: false, scene: scene }
+        }
+
+        // onEnter directly modifies its scene argument from the original more mutable principles
+        // followed by the code.
+        // Now with the transition to something more functional and immutable,
+        // it is necessary to clone the scene object to make this a pure immutable function
+        // wrapping compatibly around something written for an originally more mutable interface.
+
         var onEnter = sceneFunctions[scene.onEnter];
         var newScene = util.clone(scene);
-        var result = onEnter(newScene);
+
+        // Originally the idea was to follow a convention from the DOM or something where
+        // returning false prevents default behaviour.
+        // Since no return value would also be falsey, an equality check with false is needed.
+        // Now, I think that behaviour is strange and prefer to be more explicity,
+        // but checking the return value from onEnter is necessary to maintain compatability.
+
+        var result = !onEnter ? null : onEnter(newScene);
         return {
             shouldPreventDefault: result !== false,
             scene: newScene
