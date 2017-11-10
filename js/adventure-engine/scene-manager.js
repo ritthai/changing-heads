@@ -134,8 +134,12 @@ adventure.getSceneManager = function (util) {
 
     var evaluateShowCondition = function (scene, scope) {
         var newScene = util.clone(scene);
-        newScene.images = evaluateShowConditionOnElements(scene.images, scope);
-        newScene.hotspots = evaluateShowConditionOnElements(scene.hotspots, scope);
+        if (scene.images) {
+            newScene.images = evaluateShowConditionOnElements(scene.images, scope);
+        }
+        if (scene.hotspots) {
+            newScene.hotspots = evaluateShowConditionOnElements(scene.hotspots, scope);
+        }
         return newScene;
     };
 
