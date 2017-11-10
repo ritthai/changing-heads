@@ -347,5 +347,7 @@ adventure.getSceneFunctions = function (adventureProvider, soundManager) {
         }
     };
 
+    sceneFunctions['showBeachFire'] = () => {};
+
     return sceneFunctions;
 };
