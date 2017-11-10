@@ -155,7 +155,7 @@ adventure.getSceneManager = function (util) {
 
     var performSceneActions = function (scene) {
         var onEnterResult = callOnEnterForScene(scene);
-        var newScene = onEnterResult.scene;
+        var newScene = onEnterResult.scene || scene;
         if (!onEnterResult.shouldPreventDefault) {
             performPreventableSceneActions(newScene);
         }
